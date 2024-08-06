@@ -1,0 +1,9 @@
+.idea
+*.iml
+/**/node_modules/
+**/.gradle
+**/build
+**/node_modules
+**/.angular
+*.css
+*.css.map
