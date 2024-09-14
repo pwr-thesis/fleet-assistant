@@ -1,0 +1,25 @@
+name: Run Frontend Tests
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+    paths:
+      - 'frontend/**'
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm run test:ci
