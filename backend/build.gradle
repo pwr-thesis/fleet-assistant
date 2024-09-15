@@ -28,7 +28,7 @@ test {
     finalizedBy jacocoTestReport
 }
 
-jacocoTestReport{
+jacocoTestReport {
     dependsOn test
     reports {
         xml.required = true
@@ -41,5 +41,7 @@ sonar {
         property "sonar.projectKey", "pwr-thesis_fleet-assistant"
         property "sonar.organization", "pwr-thesis"
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.gradle.skipCompile", true
+        property "sonar.log.level", "DEBUG"
     }
 }
