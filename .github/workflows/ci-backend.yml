@@ -1,0 +1,32 @@
+name: CI for Backend
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+    paths:
+      - 'backend/**'
+
+jobs:
+  setup:
+    uses: ./.github/workflows/setup.yml
+
+  cache:
+    needs: setup
+    uses: ./.github/workflows/cache.yml
+
+  test:
+    needs: cache
+    uses: ./.github/workflows/backend-test-report.yml
+
+  analyze:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Analyze
+        run: ./gradlew sonar --info
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
