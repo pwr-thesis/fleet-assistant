@@ -9,22 +9,47 @@ on:
       - 'backend/**'
 
 jobs:
-  setup:
-    uses: ./.github/workflows/setup.yml
-
-  cache:
-    needs: setup
-    uses: ./.github/workflows/cache.yml
-
   test:
-    needs: cache
-    uses: ./.github/workflows/backend-test-report.yml
-
-  analyze:
-    needs: test
     runs-on: ubuntu-latest
-
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: 'adopt'
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Run Gradle tests
+        run: ./gradlew test --no-daemon
+
+      - name: Generate JaCoCo Report
+        run: ./gradlew jacocoTestReport --no-daemon
+
+      - name: Check Generated Report
+        run: cat build/reports/jacoco/test/jacocoTestReport.csv
+
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true
+          jacoco-csv-file: backend/build/reports/jacoco/test/jacocoTestReport.csv
+
       - name: Analyze
         run: ./gradlew sonar --info
         env:
