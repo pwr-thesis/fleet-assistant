@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: vburmus
+      changes:
+        - createTable:
+            tableName: example
+            columns:
+              - column:
+                  autoIncrement: true
+                  name: id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_example
+              - column:
+                  name: exampleColumn
+                  type: VARCHAR(255)

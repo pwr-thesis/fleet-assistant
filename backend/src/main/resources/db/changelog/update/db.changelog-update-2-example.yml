@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: vburmus
+      changes:
+        - addColumn:
+            tableName: example
+            columns:
+              - column:
+                  name: updated_example
+                  type: INT
