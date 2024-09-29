@@ -1,0 +1,25 @@
+<header class="sticky top-0 w-full z-50 bg-white shadow-lg">
+    <mat-toolbar class="flex-row items-center justify-between">
+        <a routerLink="/" class="logo flex items-center space-x-4">
+            <img src="logo.png" alt="Logo" class="w-12 h-12" />
+            <span class="text-xl font-semibold">Fleet Assistant</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-4">
+            <a routerLink="/login" class="link">Sign In</a>
+            <a routerLink="/register" class="link">Sign Up</a>
+        </div>
+        <div class="flex md:hidden">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon class="text-white">menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <span>Sign In</span>
+                </button>
+                <button mat-menu-item>
+                    <span>Sign Up</span>
+                </button>
+            </mat-menu>
+        </div>
+    </mat-toolbar>
+</header>

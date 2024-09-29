@@ -1,0 +1,7 @@
+<app-header *ngIf="!showNavbar" />
+<main>
+    <app-sidenav>
+        <router-outlet />
+    </app-sidenav>
+</main>
+<app-footer *ngIf="!showNavbar" />

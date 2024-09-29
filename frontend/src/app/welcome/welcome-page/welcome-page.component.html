@@ -1,0 +1,64 @@
+<section id="top-section">
+    <div class="flex flex-wrap">
+        <div class="image-item">
+            <img src="management.jpg" alt="Management" />
+            <a routerLink="/management-info">Management</a>
+        </div>
+        <div class="image-item">
+            <img src="maintenance.jpg" alt="Maintenance" />
+            <a routerLink="/maintenance-info">Maintenance</a>
+        </div>
+        <div class="image-item">
+            <img src="tracking.jpg" alt="Tracking" />
+            <a routerLink="/tracking-info">Tracking</a>
+        </div>
+    </div>
+</section>
+<section id="ultimate-solution">
+    <app-double-column-paragraph>
+        <div>
+            <h2>Ultimate Solution</h2>
+            <p>
+                Our fleet management software is the ultimate solution for
+                managing your fleet. With our software, you can easily track
+                your vehicles, monitor driver behavior, and analyze your fleet's
+                performance. Our software also provides you with real-time data
+                on your fleet, so you can make informed decisions about your
+                business.
+            </p>
+        </div>
+        <div>
+            <img src="ultimate_solution.jpg" />
+        </div>
+    </app-double-column-paragraph>
+</section>
+<section id="intuitive">
+    <app-double-column-paragraph [reversed]="true">
+        <div>
+            <h2>Easy and Intuitive</h2>
+            <p>
+                Our fleet management software is easy to use and intuitive. With
+                our software, you can easily manage your fleet, track your
+                vehicles, and monitor driver behavior. Our software is designed
+                to be user-friendly, so you can focus on running your business,
+                not managing your fleet.
+            </p>
+        </div>
+        <div>
+            <img src="ultimate_solution_2.jpg" />
+        </div>
+    </app-double-column-paragraph>
+</section>
+<section id="contact">
+    <app-double-column-paragraph>
+        <div>
+            <h2>Contact Us</h2>
+            <p>
+                If you have any questions about our fleet management software,
+                or if you would like to schedule a demo, please contact us. We
+                are here to help you manage your fleet and grow your business.
+            </p>
+        </div>
+        <app-contact-form />
+    </app-double-column-paragraph>
+</section>

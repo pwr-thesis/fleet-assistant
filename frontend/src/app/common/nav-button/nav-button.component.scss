@@ -1,0 +1,14 @@
+@import 'variables';
+:host {
+    @apply w-3/4;
+}
+.mdc-button {
+    @apply w-full flex items-center;
+    .mat-icon,
+    span {
+        margin: 0;
+        padding: 0;
+        color: $basic-color;
+        transform: scale(1.5);
+    }
+}
