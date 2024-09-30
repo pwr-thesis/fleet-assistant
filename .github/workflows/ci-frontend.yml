@@ -9,7 +9,7 @@ on:
       - 'frontend/**'
 
 jobs:
-  test-frontend:
+  ci:
     runs-on: ubuntu-latest
     defaults:
       run:
