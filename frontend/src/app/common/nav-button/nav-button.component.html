@@ -1,0 +1,13 @@
+<button
+    mat-button
+    [routerLink]="link"
+    [ngStyle]="{
+        'justify-content': isTextVisible ? 'start' : 'center',
+        gap: isTextVisible ? '1rem' : '0',
+    }"
+>
+    <mat-icon>{{ iconName }}</mat-icon>
+    <span *ngIf="isTextVisible">
+        {{ text }}
+    </span>
+</button>

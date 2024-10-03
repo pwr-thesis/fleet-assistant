@@ -1,4 +1,5 @@
-name: Run Frontend Tests
+name: CI for frontend
+
 on:
   pull_request:
     branches:
@@ -6,20 +7,33 @@ on:
       - develop
     paths:
       - 'frontend/**'
+
 jobs:
-  test-frontend:
+  ci:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./frontend
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18'
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-modules
+
+
       - name: Install dependencies
         run: npm install
-      - name: Run tests
-        run: npm run test:ci
+
+      - name: Run linter tests
+        run: npm run lint

@@ -1,0 +1,11 @@
+@import 'variables';
+.double-column-paragraph {
+}
+.double-column-paragraph > * {
+    @apply flex flex-col text-center md:w-4/12;
+    padding: $padding;
+    margin: auto;
+    img {
+        width: 72vw;
+    }
+}
