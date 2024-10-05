@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { WelcomePageComponent } from './welcome/welcome-page/welcome-page.component';
-import { WelcomeManagementComponent } from './welcome/welcome-management/welcome-management.component';
-import { WelcomeMaintenanceComponent } from './welcome/welcome-maintenance/welcome-maintenance.component';
-import { WelcomeTrackingComponent } from './welcome/welcome-tracking/welcome-tracking.component';
-import { RegisterComponent } from './welcome/register/register.component';
-import { LoginComponent } from './welcome/login/login.component';
-import { PasswordResetComponent } from './welcome/password-reset/password-reset.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { WelcomeManagementComponent } from './welcome-page/welcome-management/welcome-management.component';
+import { WelcomeMaintenanceComponent } from './welcome-page/welcome-maintenance/welcome-maintenance.component';
+import { WelcomeTrackingComponent } from './welcome-page/welcome-tracking/welcome-tracking.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
+import { PasswordResetComponent } from './auth/password-reset/password-reset.component';
 
 export const routes: Routes = [
     { path: 'management-info', component: WelcomeManagementComponent },
