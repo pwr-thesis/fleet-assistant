@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: "269545"
+      changes:
+        - createTable:
+            tableName: fauser
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: VARCHAR(14)
+              - column:
+                  name: credentials_id
+                  type: BIGINT
+        - addForeignKeyConstraint:
+            constraintName: credentials_fk
+            baseTableName: fauser
+            baseColumnNames: credentials_id
+            referencedTableName: credentials
+            referencedColumnNames: id

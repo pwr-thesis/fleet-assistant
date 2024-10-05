@@ -3,5 +3,6 @@ databaseChangeLog:
   - includeAll:
       path: db/changelog/initial/
   - includeAll:
-      path: db/changelog/update/
-
+      path: db/changelog/test/
+#  - includeAll:
+#      path: db/changelog/update/

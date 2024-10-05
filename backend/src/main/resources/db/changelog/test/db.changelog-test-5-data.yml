@@ -1,0 +1,113 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: "269545"
+      changes:
+        - insert:
+            tableName: fauser
+            columns:
+              - column:
+                  name: name
+                  value: "John"
+              - column:
+                  name: surname
+                  value: "Doe"
+              - column:
+                  name: phone
+                  value: "1234567890"
+        - insert:
+            tableName: fauser
+            columns:
+              - column:
+                  name: name
+                  value: "Jane"
+              - column:
+                  name: surname
+                  value: "Smith"
+              - column:
+                  name: phone
+                  value: "0987654321"
+        - insert:
+            tableName: fauser
+            columns:
+              - column:
+                  name: name
+                  value: "Mike"
+              - column:
+                  name: surname
+                  value: "Brown"
+              - column:
+                  name: phone
+                  value: "1112223333"
+        - insert:
+            tableName: fauser
+            columns:
+              - column:
+                  name: name
+                  value: "Sarah"
+              - column:
+                  name: surname
+                  value: "Johnson"
+              - column:
+                  name: phone
+                  value: "4445556666"
+        - insert:
+            tableName: manager
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: created_on
+                  value: "2024-10-05"
+        - insert:
+            tableName: manager
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: created_on
+                  value: "2024-10-05"
+        - insert:
+            tableName: driver
+            columns:
+              - column:
+                  name: id
+                  value: 3
+              - column:
+                  name: driving_license_number
+                  value: "D123456789"
+              - column:
+                  name: driving_license_country_code
+                  value: "US"
+              - column:
+                  name: birth_date
+                  value: "1985-05-15"
+              - column:
+                  name: created_on
+                  value: "2024-10-05"
+              - column:
+                  name: manager_id
+                  value: 1
+        - insert:
+            tableName: driver
+            columns:
+              - column:
+                  name: id
+                  value: 4
+              - column:
+                  name: driving_license_number
+                  value: "B123456789"
+              - column:
+                  name: driving_license_country_code
+                  value: "PL"
+              - column:
+                  name: birth_date
+                  value: "1985-05-15"
+              - column:
+                  name: created_on
+                  value: "2024-10-05"
+              - column:
+                  name: manager_id
+                  value: 1
