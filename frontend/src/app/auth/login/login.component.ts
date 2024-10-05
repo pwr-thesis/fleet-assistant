@@ -10,7 +10,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { SignComponent } from '../sign/sign.component';
+import {  } from '../sign/sign.component';
 import { SnackbarService } from '../../../utilities/services/snackbar.service';
 import { INVALID_FORM_MESSAGE } from '../../../utilities/_constants';
 
