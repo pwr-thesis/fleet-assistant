@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './common/header/header.component';
-import { WelcomePageComponent } from './welcome/welcome-page/welcome-page.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { NgIf } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { NavbarService } from '../utilities/services/navbar.service';
-import { SidenavComponent } from './admin/sidenav/sidenav.component';
+import { SidenavComponent } from './common/sidenav/sidenav.component';
 
 @Component({
     selector: 'app-root',

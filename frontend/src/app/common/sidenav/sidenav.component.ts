@@ -21,7 +21,7 @@ import {
 import { NgStyle } from '@angular/common';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatBadge } from '@angular/material/badge';
-import { NavButtonComponent } from '../../common/nav-button/nav-button.component';
+import { NavButtonComponent } from '../nav-button/nav-button.component';
 
 @Component({
     selector: 'app-sidenav',
@@ -54,15 +54,7 @@ export class SidenavComponent {
     isMenuOpen = false;
     contentMargin = 240;
 
-    task: string[] = [
-        'Clearning out my closet',
-        'Take out trash bins',
-        'Wash car',
-        'Tank up the motorcycles',
-        'Go for flight training',
-    ];
     onToolbarMenuToggle(): void {
-        console.log('On toolbar toggled', this.isMenuOpen);
         this.isMenuOpen = !this.isMenuOpen;
 
         if (!this.isMenuOpen) {

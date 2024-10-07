@@ -36,7 +36,7 @@ import { INVALID_FORM_MESSAGE } from '../../../utilities/_constants';
         NgClass,
     ],
     templateUrl: './register.component.html',
-    styleUrl: './../sign/sign.component.scss',
+    styleUrl: '../sign/sign.component.scss',
 })
 export class RegisterComponent {
     registerForm: FormGroup;
