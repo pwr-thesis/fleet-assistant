@@ -35,8 +35,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Generate environment.ts
+        run: ./generate-environment.sh
+
       - name: Run ng build
-        run: npm run build:dev
+        run: npm run build
 
       - name: Run linter tests
         run: npm run lint
