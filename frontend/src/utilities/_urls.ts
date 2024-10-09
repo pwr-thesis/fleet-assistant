@@ -1,4 +1,4 @@
-import { environment } from '../environment/environment';
+import { environment } from '../environments/environment';
 
 //TODO CHECK API URLS
 export const LOGIN_URL = environment.apiUrl + '/login';

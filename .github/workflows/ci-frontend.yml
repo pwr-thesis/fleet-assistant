@@ -36,7 +36,7 @@ jobs:
         run: npm install
 
       - name: Run ng build
-        run: npm run build
+        run: npm run build:dev
 
       - name: Run linter tests
         run: npm run lint
