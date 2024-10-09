@@ -1,0 +1,18 @@
+@import 'variables';
+
+mat-toolbar {
+    background-color: $basic_color;
+    min-height: 10vh;
+
+    span {
+        color: $hover-color;
+    }
+
+    mat-menu {
+        color: $basic_color;
+    }
+}
+
+.user-info {
+    font-size: $font-size;
+}

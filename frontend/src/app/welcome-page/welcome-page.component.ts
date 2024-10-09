@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DoubleColumnParagraphComponent } from '../common/double-column-paragraph/double-column-paragraph.component';
-import { ContactFormComponent } from '../common/contact-form/contact-form.component';
+import { DoubleColumnParagraphComponent } from '../common/components/double-column-paragraph/double-column-paragraph.component';
+import { ContactFormComponent } from '../common/components/contact-form/contact-form.component';
 
 @Component({
     selector: 'app-welcome-page',

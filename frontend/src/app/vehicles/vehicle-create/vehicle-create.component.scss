@@ -1,0 +1,12 @@
+@import 'variables';
+
+:host {
+    .accent {
+        background-color: $basic_color;
+        color: $hover-color;
+    }
+
+    * {
+        color: $basic-color;
+    }
+}

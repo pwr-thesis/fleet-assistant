@@ -8,3 +8,4 @@
 *.css
 *.css.map
 **/package-lock.json
+**/dist

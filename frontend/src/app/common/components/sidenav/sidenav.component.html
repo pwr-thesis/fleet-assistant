@@ -1,0 +1,46 @@
+<mat-sidenav-container id="sidenavContainer" class="h-100">
+    <mat-sidenav
+        *ngIf="isLoggedIn()"
+        mode="side"
+        id="sidenav"
+        [class.menu-open]="isMenuOpen"
+        [class.menu-close]="!isMenuOpen"
+        opened
+    >
+        <div class="flex flex-col items-center pt-5 gap-5">
+            <button>
+                <mat-icon (click)="onToolbarMenuToggle()" id="toolbarMenu">
+                    menu
+                </mat-icon>
+            </button>
+            <app-nav-button
+                link="/dashboard"
+                iconName="dashboard"
+                text="Dashboard"
+                [isTextVisible]="isMenuOpen"
+            />
+
+            <app-nav-button
+                link="/vehicles"
+                iconName="directions_car"
+                text="Vehicles"
+                [isTextVisible]="isMenuOpen"
+            />
+            <app-nav-button
+                link="/locations"
+                iconName="location_on"
+                text="Locations"
+                [isTextVisible]="isMenuOpen"
+            />
+            <app-nav-button
+                link="/drivers"
+                iconName="group"
+                text="Drivers"
+                [isTextVisible]="isMenuOpen"
+            />
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <ng-content />
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,13 @@
+.vehicle-card {
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.vehicle-card:hover {
+    background-color: #ededed !important;
+}
+
+.vehicle-card:active {
+    background-color: #d3d3d3 !important;
+}
