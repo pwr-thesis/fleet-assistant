@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Make generate-environment.sh executable
+        run: chmod +x ./generate-environment.sh
+
       - name: Generate environment.ts
         run: ./generate-environment.sh
 
