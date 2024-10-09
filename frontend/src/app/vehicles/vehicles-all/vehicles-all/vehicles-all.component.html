@@ -1,0 +1,19 @@
+<div class="min-h-screen p-10">
+    <div *ngIf="vehicles && vehicles.length > 0">
+        <h3 class="text-center">Your fleet:</h3>
+        <div class="flex flex-wrap gap-10 justify-center">
+            <app-vehicle-add-card routerLink="/new-vehicle" />
+            <app-vehicle-card
+                *ngFor="let vehicle of vehicles"
+                [vehicle]="vehicle"
+            />
+        </div>
+    </div>
+    <div
+        *ngIf="vehicles && vehicles.length === 0"
+        class="text-center flex flex-col items-center gap-5"
+    >
+        <h3>You don't have any vehicle in your fleet!</h3>
+        <app-vehicle-add-card routerLink="/new-vehicle" />
+    </div>
+</div>
