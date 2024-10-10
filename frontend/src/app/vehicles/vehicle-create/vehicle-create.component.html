@@ -6,11 +6,19 @@
         (ngSubmit)="onCreateVehicle()"
     >
         <div
-            class="flex max-w-[500px] w-full flex-col mb-2 max-sm:w-5/6 transition-all duration-500 ease-in-out gap-2 items-center"
+            class="flex max-w-[500px] w-full flex-col mb-2 max-sm:w-5/6 transition-all duration-500 ease-in-out gap-3 items-center"
         >
             <mat-form-field class="w-full">
                 <mat-label>VIN</mat-label>
                 <input matInput type="text" required formControlName="vin" />
+                <mat-error
+                    *ngIf="
+                        createVehicleForm.get('vin')?.hasError('minlength') ||
+                        createVehicleForm.get('vin')?.hasError('maxLength')
+                    "
+                >
+                    Please provide valid VIN number
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
                 <mat-label>Plate number</mat-label>
@@ -31,26 +39,85 @@
                 />
             </mat-form-field>
             <mat-form-field class="w-full">
-                <mat-label>Driver</mat-label>
+                <mat-label>Insurance date</mat-label>
                 <input
-                    type="text"
-                    placeholder="Assign driver"
                     matInput
-                    formControlName="driver"
-                    [matAutocomplete]="auto"
+                    [matDatepicker]="insurancePicker"
+                    (focus)="insurancePicker.open()"
+                    formControlName="insuranceDate"
                 />
-                <mat-autocomplete #auto="matAutocomplete">
-                    @for (
-                        option of of(['dasdas', 'saddsad', 'ads']) | async;
-                        track option
-                    ) {
-                        <mat-option [value]="option">{{ option }}</mat-option>
-                    }
-                </mat-autocomplete>
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker #insurancePicker></mat-datepicker>
+                <mat-error
+                    *ngIf="
+                        createVehicleForm.get('insuranceDate')?.hasError('past')
+                    "
+                >
+                    Please select a future date
+                </mat-error>
             </mat-form-field>
-
+            <mat-form-field class="w-full">
+                <mat-label>Last inspection date</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="inspectionPicker"
+                    (focus)="inspectionPicker.open()"
+                    formControlName="lastVehicleInspectionDate"
+                />
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker #inspectionPicker></mat-datepicker>
+                <mat-error
+                    *ngIf="
+                        createVehicleForm
+                            .get('lastVehicleInspectionDate')
+                            ?.hasError('future')
+                    "
+                >
+                    Please select a date that is today or in the past
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Vehicle year</mat-label>
+                <input
+                    matInput
+                    type="number"
+                    required
+                    formControlName="vehicleYear"
+                />
+                <mat-error
+                    *ngIf="
+                        createVehicleForm
+                            .get('vehicleYear')
+                            ?.hasError('validYear')
+                    "
+                >
+                    Please provide a valid year
+                </mat-error>
+                <mat-error
+                    *ngIf="
+                        createVehicleForm.get('vehicleDate')?.hasError('past')
+                    "
+                >
+                    Please select a future date
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" *ngIf="drivers.length > 0">
+                <mat-label>Assign driver</mat-label>
+                <select matNativeControl formControlName="driver">
+                    @for (driver of drivers; track driver) {
+                        <option [value]="driver.id">
+                            {{ getDriverText() }}
+                        </option>
+                    }
+                </select>
+            </mat-form-field>
             <div class="flex w-full justify-center gap-5">
-                <button mat-raised-button class="w-full" type="button">
+                <button
+                    routerLink="/vehicles"
+                    mat-raised-button
+                    class="w-full"
+                    type="button"
+                >
                     Cancel
                 </button>
                 <button mat-raised-button class="w-full accent" type="submit">
