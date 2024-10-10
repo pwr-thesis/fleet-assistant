@@ -5,6 +5,9 @@ export interface Vehicle {
     vin: string;
     plateNumber: string;
     countryCode: string;
+    insuranceDate: string;
+    lastInspectionDate: string;
+    vehicleYear: string;
     driver?: Driver;
     //locations: Location[];
 }
@@ -15,4 +18,15 @@ export interface Driver {
     drivingLicenseCountryCode: string;
     dateOfBirth: string;
     user: UserInfo;
+}
+
+export interface VehicleCreateRequest {
+    vin: string;
+    plateNumber: string;
+    countryCode: string;
+    insuranceDate: string;
+    lastInspectionDate: string;
+    vehicleYear: string;
+    driver?: Driver;
+    //locations: Location[];
 }

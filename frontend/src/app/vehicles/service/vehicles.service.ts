@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { VehiclesHttpService } from './vehicles-http.service';
-import { Vehicle } from '../types/vehicles';
+import { Vehicle, VehicleCreateRequest } from '../types/vehicles';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,5 +11,9 @@ export class VehiclesService {
 
     getAllVehicles(): Observable<Vehicle[]> {
         return this.vehiclesHttpService.getAllVehicles();
+    }
+
+    createVehicle(vehicleCreateRequest: VehicleCreateRequest): Observable<any> {
+        return this.vehiclesHttpService.createVehicle(vehicleCreateRequest);
     }
 }

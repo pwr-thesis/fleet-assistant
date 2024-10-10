@@ -7,6 +7,7 @@ import { NgIf } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { NavbarService } from '../utilities/services/navbar.service';
 import { SidenavComponent } from './common/components/sidenav/sidenav.component';
+import { BottomNavComponent } from './common/components/bottom-nav/bottom-nav.component';
 
 @Component({
     selector: 'app-root',
@@ -18,6 +19,7 @@ import { SidenavComponent } from './common/components/sidenav/sidenav.component'
         FooterComponent,
         NgIf,
         SidenavComponent,
+        BottomNavComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',

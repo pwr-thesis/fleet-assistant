@@ -2,6 +2,7 @@
 
 #sidenav {
     transition: width 0.3s ease;
+    display: none !important;
 }
 
 .menu-open {
@@ -10,4 +11,10 @@
 
 .menu-close {
     width: 80px;
+}
+
+@media (min-width: 768px) {
+    #sidenav {
+        display: flex !important;
+    }
 }

@@ -67,26 +67,12 @@ export class RegisterComponent {
     onSubmit(): void {
         if (this.registerForm.valid) {
             const formValues = this.registerForm.value;
-
             this.authService.register({
                 name: formValues.name,
                 surname: formValues.surname,
                 email: formValues.email,
                 password: formValues.password,
             });
-
-            alert(
-                'Form Submitted' +
-                    formValues.name +
-                    ' ' +
-                    formValues.surname +
-                    ' ' +
-                    formValues.email +
-                    ' ' +
-                    formValues.password +
-                    ' ' +
-                    formValues.repeatPassword
-            );
             this.registerForm.reset();
         } else {
             this.snackBarService.openSnackBar(INVALID_FORM_MESSAGE);

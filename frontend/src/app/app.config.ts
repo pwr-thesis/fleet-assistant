@@ -6,6 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { authInterceptor } from '../utilities/auth.interceptor';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -14,5 +15,6 @@ export const appConfig: ApplicationConfig = {
         provideAnimationsAsync(),
         provideHttpClient(withInterceptors([authInterceptor])),
         provideOAuthClient(),
+        provideNativeDateAdapter(),
     ],
 };
