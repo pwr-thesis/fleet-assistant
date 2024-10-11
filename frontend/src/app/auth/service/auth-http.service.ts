@@ -20,7 +20,6 @@ export class AuthHttpService {
     }
 
     //TODO: Introduce DTO interface for API response (remove any)
-
     register(registerForm: RegisterForm): Observable<any> {
         return this.http.post(REGISTER_URL, registerForm);
     }

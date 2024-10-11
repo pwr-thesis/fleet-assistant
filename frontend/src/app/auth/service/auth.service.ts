@@ -28,9 +28,9 @@ export class AuthService {
                     localStorage.setItem(
                         'userInfo',
                         JSON.stringify({
-                            name: 'Maryush',
-                            surname: 'Padhol',
-                            email: 'maryushp@gmail.com',
+                            name: 'USER',
+                            surname: 'SURNAME',
+                            email: 'user@gmail.com',
                             role: 'Manager',
                         })
                     );
@@ -40,9 +40,9 @@ export class AuthService {
                     localStorage.setItem(
                         'userInfo',
                         JSON.stringify({
-                            name: 'Maryush',
-                            surname: 'Padhol',
-                            email: 'maryushp@gmail.com',
+                            name: 'USER',
+                            surname: 'SURNAME',
+                            email: 'user@gmail.com',
                             role: 'Manager',
                         })
                     );
@@ -55,6 +55,8 @@ export class AuthService {
         this.httpAuthService.login(loginForm).subscribe(
             (response) => {
                 //TODO: set userData and accessToken to localStorage
+                //localStorage.setItem('useInfo', response.userInfo)
+                //localStorage.setItem('accessToken', response.accessToken)
                 console.log(response);
                 this.router.navigate(['/']);
             },
@@ -68,6 +70,8 @@ export class AuthService {
         this.httpAuthService.register(registerForm).subscribe(
             (response) => {
                 //TODO: set userData and accessToken to localStorage
+                //localStorage.setItem('useInfo', response.userInfo)
+                //localStorage.setItem('accessToken', response.accessToken)
                 console.log(response);
                 this.router.navigate(['/']);
             },
@@ -80,6 +84,7 @@ export class AuthService {
     getUserData(): void {
         this.httpAuthService.getUserData().subscribe((response) => {
             //TODO: set userData to localStorage
+            //localStorage.setItem('userInfo', response);
             console.log(response);
         });
     }
