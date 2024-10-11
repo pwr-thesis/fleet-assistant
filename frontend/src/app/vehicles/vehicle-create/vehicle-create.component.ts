@@ -13,18 +13,12 @@ import {
     MatLabel,
 } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import {
-    MatAutocomplete,
-    MatAutocompleteTrigger,
-    MatOption,
-} from '@angular/material/autocomplete';
 import { Driver, VehicleCreateRequest } from '../types/vehicles';
 import {
     MatDatepicker,
     MatDatepickerInput,
     MatDatepickerToggle,
 } from '@angular/material/datepicker';
-import { MatIcon } from '@angular/material/icon';
 import {
     DateAdapter,
     MAT_DATE_FORMATS,
@@ -35,6 +29,7 @@ import { SnackbarService } from '../../../utilities/services/snackbar.service';
 import { INVALID_FORM_MESSAGE } from '../../../utilities/_constants';
 import { NgIf } from '@angular/common';
 import {
+    CUSTOM_DATEFORMAT,
     futureDateValidator,
     pastDateValidator,
     yearValidator,
@@ -44,38 +39,22 @@ import { VehiclesService } from '../service/vehicles.service';
 import moment from 'moment/moment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-const MY_DATE_FORMAT = {
-    parse: {
-        dateInput: 'DD/MM/YYYY',
-    },
-    display: {
-        dateInput: 'DD/MM/YYYY',
-        monthYearLabel: 'MMMM YYYY',
-        dateA11yLabel: 'LL',
-        monthYearA11yLabel: 'MMMM YYYY',
-    },
-};
-
 @Component({
     selector: 'app-vehicle-create',
     standalone: true,
     imports: [
-        ReactiveFormsModule,
         MatButton,
         MatFormField,
         MatInput,
         MatLabel,
-        MatAutocomplete,
-        MatOption,
-        MatAutocompleteTrigger,
         MatDatepickerInput,
         MatDatepickerToggle,
         MatDatepicker,
         MatHint,
         NgIf,
-        MatIcon,
         MatError,
         RouterLink,
+        ReactiveFormsModule,
     ],
     providers: [
         {
@@ -83,7 +62,7 @@ const MY_DATE_FORMAT = {
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE],
         },
-        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT },
+        { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATEFORMAT },
     ],
     templateUrl: './vehicle-create.component.html',
     styleUrl: './vehicle-create.component.scss',
