@@ -1,4 +1,4 @@
-package org.fleetassistant.backend.user.driver;
+package org.fleetassistant.backend.user.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.fleetassistant.backend.user.FAUser;
-import org.fleetassistant.backend.user.manager.Manager;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
@@ -20,7 +18,7 @@ import java.time.LocalDate;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Driver extends FAUser {
+public class Driver extends User {
     @Column(nullable = false, length = 20)
     private String drivingLicenseNumber;
     @Column(nullable = false, length = 3)
