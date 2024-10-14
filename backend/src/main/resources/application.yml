@@ -28,12 +28,8 @@ spring:
         jwt:
           issuer-uri: https://accounts.google.com
           jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
-access-token:
-  private: ${ACCESS_TOKEN_PRIVATE_KEY:keys/private_access.pem}
-  public: ${ACCESS_TOKEN_PUBLIC_KEY:keys/public_access.pem}
-refresh-token:
-  private: ${REFRESH_TOKEN_PRIVATE_KEY:keys/private_refresh.pem}
-  public: ${REFRESH_TOKEN_PUBLIC_KEY:keys/public_refresh.pem}
+  jwt:
+    secret:   ${JWT_SECRET:MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMGBoG93o/faIHuvPr0eryGKSX3FsQUkdeWJo62tTU8xD8hFqDlj7iMrZFz/I7e01bpqx8sGr4sVM8gmoIUj1zUCAwEAAQ==}
 logging:
   level:
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG

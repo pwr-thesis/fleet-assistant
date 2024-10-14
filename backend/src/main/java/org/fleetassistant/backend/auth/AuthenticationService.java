@@ -7,22 +7,24 @@ import org.fleetassistant.backend.auth.credentials.CredentialsService;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.auth.credentials.model.Role;
 import org.fleetassistant.backend.auth.models.AuthenticationRequest;
+import org.fleetassistant.backend.auth.models.AuthenticationResponse;
 import org.fleetassistant.backend.auth.models.RegisterRequest;
-import org.fleetassistant.backend.exceptionhandler.rest.EmailNotFoundException;
-import org.fleetassistant.backend.exceptionhandler.rest.InvalidTokenException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
-import org.fleetassistant.backend.jwt.TokenDTO;
 import org.fleetassistant.backend.jwt.service.JwtService;
 import org.fleetassistant.backend.jwt.service.TokenGenerator;
+import org.fleetassistant.backend.user.dto.UserDTO;
+import org.fleetassistant.backend.user.model.Manager;
+import org.fleetassistant.backend.user.model.User;
 import org.fleetassistant.backend.user.service.ManagerService;
+import org.fleetassistant.backend.user.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static org.fleetassistant.backend.utils.Constants.*;
+import static org.fleetassistant.backend.utils.Constants.ALREADY_REGISTERED;
+import static org.fleetassistant.backend.utils.Constants.USER_DOESNT_EXIST;
 
 
 @Service
@@ -35,50 +37,52 @@ public class AuthenticationService {
     private final TokenGenerator tokenGenerator;
     private final JwtService jwtService;
     private final ManagerService managerService;
+    private final UserService userService;
 
     @Transactional
-    public TokenDTO register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) {
         if (credentialsService.ifCredentialsExist(request.getEmail())) {
             throw new ObjectAlreadyExistsException(ALREADY_REGISTERED);
         }
         Credentials credentials = credentialsService.create(request.getEmail(),
                 passwordEncoder.encode(request.getPassword()), Role.MANAGER);
-        managerService.createManager(request);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(credentials,
-                        request.getPassword());
-        return tokenGenerator.createToken(usernamePasswordAuthenticationToken);
-
+        Manager manager = managerService.createManager(request);
+        manager.setCredentials(credentials);
+        return AuthenticationResponse.builder()
+                .token(tokenGenerator.createToken(credentials))
+                .user(
+                        UserDTO.builder().
+                                name(manager.getName()).
+                                surname(manager.getSurname()).
+                                role(credentials.getRole()).
+                                email(credentials.getEmail())
+                                .build())
+                .build();
     }
 
-    public TokenDTO authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),
                 request.getPassword()));
         Credentials credentials = credentialsService.loadUserByUsername(request.getEmail());
-
         if (credentials == null) {
             throw new UsernameNotFoundException(USER_DOESNT_EXIST);
         }
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(credentials,
-                        request.getPassword());
-
-
-        return tokenGenerator.createToken(usernamePasswordAuthenticationToken);
+        User user = userService.getUserByEmail(request.getEmail());
+        return AuthenticationResponse.builder()
+                .token(tokenGenerator.createToken(credentials))
+                .user(
+                        UserDTO.builder().
+                                name(user.getName()).
+                                surname(user.getSurname()).
+                                role(credentials.getRole()).
+                                email(credentials.getEmail())
+                                .build())
+                .build();
     }
 
     public String refreshToken(String jwt) {
-        String userEmail = jwtService.extractUsername(jwt);
-        if (userEmail == null) {
-            throw new EmailNotFoundException(MISSING_USER_EMAIL);
-        }
-        UserDetails userDetails = credentialsService.loadUserByUsername(userEmail);
-        if (!jwtService.isTokenValid(jwt, userDetails)) {
-            throw new InvalidTokenException(TOKEN_IS_INVALID);
-        }
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(userDetails,
-                        userDetails.getAuthorities());
-        return tokenGenerator.createAccessToken(usernamePasswordAuthenticationToken);
+        String email = jwtService.extractUsername(jwt);
+        Credentials credentials = credentialsService.loadUserByUsername(email);
+        return tokenGenerator.createAccessToken(credentials);
     }
 }

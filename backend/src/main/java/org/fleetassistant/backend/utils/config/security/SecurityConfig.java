@@ -44,7 +44,8 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(
                         jwt -> jwt.jwtAuthenticationConverter(jwtToUserConverter).decoder(decoder)))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/ok").authenticated()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/v1/user/**").authenticated()
                         .anyRequest().permitAll());
 
         return http.build();
