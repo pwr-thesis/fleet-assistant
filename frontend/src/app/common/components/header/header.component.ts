@@ -27,8 +27,7 @@ import { NgIf } from '@angular/common';
 })
 export class HeaderComponent {
     constructor(
-        private authService: AuthService,
-        private router: Router
+        private authService: AuthService
     ) {}
 
     onLogOut(): void {
@@ -36,7 +35,7 @@ export class HeaderComponent {
         this.authService.logout();
     }
 
-    isLogedIn(): boolean {
+    isLoggedIn(): boolean {
         return this.authService.isLoggedIn();
     }
 

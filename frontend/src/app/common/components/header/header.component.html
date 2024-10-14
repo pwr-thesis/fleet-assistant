@@ -5,7 +5,7 @@
             <span class="text-xl font-semibold">Fleet Assistant</span>
         </a>
         <div class="hidden md:flex items-center space-x-4 gap-2">
-            <ng-container *ngIf="isLogedIn(); else notLoggedIn">
+            <ng-container *ngIf="isLoggedIn(); else notLoggedIn">
                 <div class="flex flex-col" *ngIf="getUserRole()">
                     <span class="user-info text-center">{{
                         getUserRole()
@@ -28,14 +28,14 @@
             </ng-template>
         </div>
         <div class="flex md:hidden items-center gap-3">
-            <mat-icon class="white-icon cursor-pointer"
+            <mat-icon *ngIf="isLoggedIn()" class="white-icon cursor-pointer"
                 >account_circle</mat-icon
             >
             <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon class="text-white">menu</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <ng-container *ngIf="isLogedIn()">
+                <ng-container *ngIf="isLoggedIn()">
                     <button mat-menu-item>
                         <span
                             (keyup.enter)="onLogOut()"
@@ -46,7 +46,7 @@
                         >
                     </button>
                 </ng-container>
-                <ng-container *ngIf="!isLogedIn()">
+                <ng-container *ngIf="!isLoggedIn()">
                     <button mat-menu-item>
                         <span routerLink="/login">Sign In</span>
                     </button>
