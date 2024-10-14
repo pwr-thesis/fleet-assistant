@@ -6,10 +6,10 @@ import { WelcomeTrackingComponent } from './welcome-page/welcome-tracking/welcom
 import { RegisterComponent } from './auth/components/register/register.component';
 import { LoginComponent } from './auth/components/login/login.component';
 import { PasswordResetComponent } from './auth/components/password-reset/password-reset.component';
-import { loggedUserRestrictGuard } from '../utilities/guards/loggedUserRestrict.guard';
-import { VehiclesAllComponent } from './vehicles/vehicles-all/vehicles-all/vehicles-all.component';
+import { loggedUserRestrictGuard } from '../utilities/guards/logged-user-restrict.guard';
+import { VehiclesAllComponent } from './vehicles/components/vehicles-all/vehicles-all.component';
 import { authGuard } from '../utilities/guards/auth.guard';
-import { VehicleCreateComponent } from './vehicles/vehicle-create/vehicle-create.component';
+import { VehicleCreateComponent } from './vehicles/components/vehicle-create/vehicle-create.component';
 
 export const routes: Routes = [
     { path: 'management-info', component: WelcomeManagementComponent },

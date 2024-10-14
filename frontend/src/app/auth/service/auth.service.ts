@@ -56,7 +56,7 @@ export class AuthService {
             (response) => {
                 //TODO: set userData and accessToken to localStorage
                 //localStorage.setItem('useInfo', response.userInfo)
-                //localStorage.setItem('accessToken', response.accessToken)
+                //localStorage.setItem('accessToken', response.token.accessToken)
                 console.log(response);
                 this.router.navigate(['/']);
             },
@@ -71,7 +71,7 @@ export class AuthService {
             (response) => {
                 //TODO: set userData and accessToken to localStorage
                 //localStorage.setItem('useInfo', response.userInfo)
-                //localStorage.setItem('accessToken', response.accessToken)
+                //localStorage.setItem('accessToken', response.token.accessToken)
                 console.log(response);
                 this.router.navigate(['/']);
             },
@@ -79,14 +79,6 @@ export class AuthService {
                 this.snackbarService.openSnackBar(INVALID_FORM_MESSAGE);
             }
         );
-    }
-
-    getUserData(): void {
-        this.httpAuthService.getUserData().subscribe((response) => {
-            //TODO: set userData to localStorage
-            //localStorage.setItem('userInfo', response);
-            console.log(response);
-        });
     }
 
     logout(): void {
@@ -110,5 +102,13 @@ export class AuthService {
         const userInfo = localStorage.getItem('userInfo');
         if (!userInfo) return null;
         return JSON.parse(userInfo);
+    }
+
+    private getUserData(): void {
+        this.httpAuthService.getUserData().subscribe((response) => {
+            //TODO: set userData to localStorage
+            //localStorage.setItem('userInfo', response);
+            console.log(response);
+        });
     }
 }

@@ -15,4 +15,15 @@ export interface RegisterForm {
     surname: string;
     email: string;
     password: string;
+    number?: string;
+}
+
+export interface AuthResponse {
+    token: TokenDTO;
+    userInfo: UserInfo;
+}
+
+export interface TokenDTO {
+    accessToken: string;
+    refreshToken: string;
 }

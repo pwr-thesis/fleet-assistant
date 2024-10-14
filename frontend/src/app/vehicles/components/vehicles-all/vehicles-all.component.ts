@@ -12,7 +12,6 @@ import { VehiclesService } from '../../service/vehicles.service';
     selector: 'app-vehicles-all',
     standalone: true,
     templateUrl: './vehicles-all.component.html',
-    styleUrl: './vehicles-all.component.scss',
     imports: [
         VehicleCardComponent,
         NgForOf,

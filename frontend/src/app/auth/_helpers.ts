@@ -3,6 +3,8 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 export const PASSWORD_PATTERN =
     '^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[A-Z])(?=.*[\\_\\^\\@\\!\\-\\#\\$\\.\\%\\&\\*])(?=.*[a-zA-Z]).{8,16}$';
 
+export const PHONE_NUMBER_PATTERN = '^\\+?\\d{10,15}$';
+
 export const passwordMatchValidator: ValidatorFn = (
     control: AbstractControl
 ): ValidationErrors | null => {

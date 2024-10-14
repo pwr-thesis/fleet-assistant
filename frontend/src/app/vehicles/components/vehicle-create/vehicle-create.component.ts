@@ -13,7 +13,7 @@ import {
     MatLabel,
 } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { Driver, VehicleCreateRequest } from '../types/vehicles';
+import { Driver, VehicleCreateRequest } from '../../types/vehicles';
 import {
     MatDatepicker,
     MatDatepickerInput,
@@ -25,17 +25,17 @@ import {
     MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { SnackbarService } from '../../../utilities/services/snackbar.service';
-import { INVALID_FORM_MESSAGE } from '../../../utilities/_constants';
+import { SnackbarService } from '../../../../utilities/services/snackbar.service';
+import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
 import { NgIf } from '@angular/common';
 import {
     CUSTOM_DATEFORMAT,
     futureDateValidator,
     pastDateValidator,
     yearValidator,
-} from '../_helpers';
+} from '../../_helpers';
 import { Router, RouterLink } from '@angular/router';
-import { VehiclesService } from '../service/vehicles.service';
+import { VehiclesService } from '../../service/vehicles.service';
 import moment from 'moment/moment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

@@ -16,7 +16,8 @@ import { SnackbarService } from '../../../../utilities/services/snackbar.service
 import {
     PASSWORD_PATTERN,
     passwordMatchValidator,
-} from '../../../../utilities/_validators';
+    PHONE_NUMBER_PATTERN,
+} from '../../_helpers';
 import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
 import { AuthService } from '../../service/auth.service';
 
@@ -54,6 +55,10 @@ export class RegisterComponent {
                     Validators.required,
                     Validators.email,
                 ]),
+                phone: new FormControl(
+                    '',
+                    Validators.pattern(PHONE_NUMBER_PATTERN)
+                ),
                 password: new FormControl('', [
                     Validators.required,
                     Validators.pattern(PASSWORD_PATTERN),
@@ -72,6 +77,7 @@ export class RegisterComponent {
                 surname: formValues.surname,
                 email: formValues.email,
                 password: formValues.password,
+                number: formValues.phone || null,
             });
             this.registerForm.reset();
         } else {
