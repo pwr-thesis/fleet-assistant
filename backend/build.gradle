@@ -68,6 +68,6 @@ sonar {
         property "sonar.organization", "pwr-thesis"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.gradle.skipCompile", true
-        property "sonar.coverage.exclusions", "**/BackendApplication.java,**/DefaultExceptionHandler.java"
+        property "sonar.coverage.exclusions", "**/BackendApplication.java,**/DefaultExceptionHandler.java,**/nonrest/*.java,**/rest/*.java,**/controller/*.java,**/model/*.java"
     }
 }

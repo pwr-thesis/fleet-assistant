@@ -7,14 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.exceptionhandler.nonrest.IncorrectTokenTypeException;
-import org.fleetassistant.backend.exceptionhandler.rest.InvalidTokenException;
-import org.fleetassistant.backend.exceptionhandler.rest.TokenRequiredException;
 import org.fleetassistant.backend.utils.config.security.KeyService;
 import org.hibernate.cache.CacheException;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -35,14 +32,6 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public TokenType extractType(String token) {
-        return TokenType.valueOf(extractClaim(token, claims -> claims.get(TYPE, String.class)));
-    }
-
-    public long extractId(String token) {
-        return extractClaim(token, claims -> claims.get(ID, Long.class));
-    }
-
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -56,30 +45,6 @@ public class JwtService {
     public JwsHeader extractAllHeaders(String token) {
         return Jwts.parserBuilder().setSigningKey(keyService.getSignKey())
                 .build().parseClaimsJws(token).getHeader();
-    }
-
-    public void validateToken(String bearerToken) {
-        if (!StringUtils.hasText(bearerToken) ||
-                !bearerToken.startsWith(AUTHENTICATION_BEARER_TOKEN))
-            throw new TokenRequiredException(TOKEN_NEEDED);
-        String jwt = bearerToken.substring(7);
-        if (isTokenBanned(jwt))
-            throw new InvalidTokenException(TOKEN_HAS_BEEN_BANNED);
-        extractAllClaims(jwt);
-    }
-
-    public boolean isTokenBanned(String token) {
-        final long id = extractId(token);
-        Cache blackList = cacheManager.getCache(BLACK_LIST);
-        if (blackList == null) {
-            throw new CacheException(CACHE_NOT_FOUND);
-        }
-        var bannedUserTokensCache = blackList.get(id);
-        List<String> bannedJwt = (List<String>) (bannedUserTokensCache != null ? bannedUserTokensCache.get() : null);
-        if (bannedJwt == null) {
-            return false;
-        }
-        return bannedJwt.stream().anyMatch(o -> o.equals(token));
     }
 
     public void invalidateTokenIfExist(long userId, TokenType tokenType) throws IncorrectTokenTypeException {

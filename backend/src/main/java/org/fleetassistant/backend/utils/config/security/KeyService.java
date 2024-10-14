@@ -10,7 +10,7 @@ import java.security.Key;
 @Component
 public class KeyService {
     @Value("${spring.jwt.secret}")
-    private String secret = "secret";
+    private String secret;
 
     public Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
