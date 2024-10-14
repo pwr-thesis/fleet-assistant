@@ -4,7 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatIconButton } from '@angular/material/button';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../auth/service/auth.service';
 import { NgIf } from '@angular/common';
 
@@ -26,9 +26,7 @@ import { NgIf } from '@angular/common';
     styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-    constructor(
-        private authService: AuthService
-    ) {}
+    constructor(private authService: AuthService) {}
 
     onLogOut(): void {
         window.location.reload();
