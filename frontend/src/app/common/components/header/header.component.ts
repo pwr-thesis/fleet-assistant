@@ -48,6 +48,6 @@ export class HeaderComponent {
     }
 
     getUserRole(): string | undefined {
-        return this.authService.getUserInfo()?.role
+        return this.authService.getUserInfo()?.role;
     }
 }
