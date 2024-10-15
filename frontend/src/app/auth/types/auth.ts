@@ -20,7 +20,7 @@ export interface RegisterForm {
 
 export interface AuthResponse {
     token: TokenDTO;
-    userInfo: UserInfo;
+    user: UserInfo;
 }
 
 export interface TokenDTO {

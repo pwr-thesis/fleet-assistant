@@ -23,29 +23,9 @@ export class AuthService {
                         'accessToken',
                         authGoogleService.getToken()
                     );
-                    //TODO API Call to User-Info endpoint
-                    //this.getUserData();
-                    localStorage.setItem(
-                        'userInfo',
-                        JSON.stringify({
-                            name: 'USER',
-                            surname: 'SURNAME',
-                            email: 'user@gmail.com',
-                            role: 'Manager',
-                        })
-                    );
+                    this.getUserData();
                 } else if (!localStorage.getItem('userInfo')) {
-                    //TODO API Call to User-Info endpoint
-                    //this.getUserData();
-                    localStorage.setItem(
-                        'userInfo',
-                        JSON.stringify({
-                            name: 'USER',
-                            surname: 'SURNAME',
-                            email: 'user@gmail.com',
-                            role: 'Manager',
-                        })
-                    );
+                    this.getUserData();
                 }
             }
         });
@@ -54,10 +34,8 @@ export class AuthService {
     login(loginForm: LoginForm): void {
         this.httpAuthService.login(loginForm).subscribe(
             (response) => {
-                //TODO: set userData and accessToken to localStorage
-                //localStorage.setItem('useInfo', response.userInfo)
-                //localStorage.setItem('accessToken', response.token.accessToken)
-                console.log(response);
+                localStorage.setItem('userInfo', JSON.stringify(response.user));
+                localStorage.setItem('accessToken', response.token.accessToken);
                 this.router.navigate(['/']);
             },
             () => {
@@ -69,10 +47,8 @@ export class AuthService {
     register(registerForm: RegisterForm): void {
         this.httpAuthService.register(registerForm).subscribe(
             (response) => {
-                //TODO: set userData and accessToken to localStorage
-                //localStorage.setItem('useInfo', response.userInfo)
-                //localStorage.setItem('accessToken', response.token.accessToken)
-                console.log(response);
+                localStorage.setItem('userInfo', JSON.stringify(response.user))
+                localStorage.setItem('accessToken', response.token.accessToken)
                 this.router.navigate(['/']);
             },
             () => {
@@ -106,9 +82,7 @@ export class AuthService {
 
     private getUserData(): void {
         this.httpAuthService.getUserData().subscribe((response) => {
-            //TODO: set userData to localStorage
-            //localStorage.setItem('userInfo', response);
-            console.log(response);
+            localStorage.setItem('userInfo', JSON.stringify(response));
         });
     }
 }

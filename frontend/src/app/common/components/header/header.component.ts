@@ -47,14 +47,7 @@ export class HeaderComponent {
         );
     }
 
-    getUserRole(): string {
-        switch (this.authService.getUserInfo()?.role) {
-            case 'Manager':
-                return 'MANAGER';
-            case 'Driver':
-                return 'DRIVER';
-            default:
-                return '';
-        }
+    getUserRole(): string | undefined {
+        return this.authService.getUserInfo()?.role
     }
 }

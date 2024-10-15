@@ -48,7 +48,7 @@ export class LoginComponent {
     onSubmit(): void {
         if (this.loginForm.valid) {
             const formValues = this.loginForm.value;
-            this.authService.login(formValues);
+            this.authService.login({email: formValues.email, password: formValues.password});
         } else {
             this.snackbarService.openSnackBar(INVALID_FORM_MESSAGE);
         }
