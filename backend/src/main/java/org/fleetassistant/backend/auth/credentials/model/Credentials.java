@@ -1,4 +1,4 @@
-package org.fleetassistant.backend.credentials;
+package org.fleetassistant.backend.auth.credentials.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,11 +21,10 @@ public class Credentials implements UserDetails {
     private Long id;
     @Column(nullable = false, length = 50, unique = true)
     private String email;
-    @Column(nullable = false)
     private String password;
-    @Builder.Default
     @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
+    @Column(length = 7)
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

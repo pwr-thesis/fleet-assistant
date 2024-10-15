@@ -4,6 +4,54 @@ databaseChangeLog:
       author: "269545"
       changes:
         - insert:
+            tableName: credentials
+            columns:
+              - column:
+                  name: email
+                  value: "manager@manager.com"
+              - column:
+                  name: password
+                  value: "$2a$10$ikr2tYbJZ/d1qt2AiSk7eOimMC24ug.jCWoP9Q3VhkjRh7oMA0xp2"
+              - column:
+                  name: role
+                  value: "MANAGER"
+        - insert:
+            tableName: credentials
+            columns:
+              - column:
+                  name: email
+                  value: "manager2@manager.com"
+              - column:
+                  name: password
+                  value: "$2a$10$ikr2tYbJZ/d1qt2AiSk7eOimMC24ug.jCWoP9Q3VhkjRh7oMA0xp2"
+              - column:
+                  name: role
+                  value: "MANAGER"
+        - insert:
+            tableName: credentials
+            columns:
+              - column:
+                  name: email
+                  value: "driver@driver.com"
+              - column:
+                  name: password
+                  value: "$2a$10$ikr2tYbJZ/d1qt2AiSk7eOimMC24ug.jCWoP9Q3VhkjRh7oMA0xp2"
+              - column:
+                  name: role
+                  value: "DRIVER"
+        - insert:
+            tableName: credentials
+            columns:
+              - column:
+                  name: email
+                  value: "driver2@driver.com"
+              - column:
+                  name: password
+                  value: "$2a$10$ikr2tYbJZ/d1qt2AiSk7eOimMC24ug.jCWoP9Q3VhkjRh7oMA0xp2"
+              - column:
+                  name: role
+                  value: "DRIVER"
+        - insert:
             tableName: fauser
             columns:
               - column:
@@ -15,6 +63,9 @@ databaseChangeLog:
               - column:
                   name: phone
                   value: "1234567890"
+              - column:
+                  name: credentials_id
+                  value: 1
         - insert:
             tableName: fauser
             columns:
@@ -27,6 +78,10 @@ databaseChangeLog:
               - column:
                   name: phone
                   value: "0987654321"
+              - column:
+                  name: credentials_id
+                  value: 2
+
         - insert:
             tableName: fauser
             columns:
@@ -39,6 +94,9 @@ databaseChangeLog:
               - column:
                   name: phone
                   value: "1112223333"
+              - column:
+                  name: credentials_id
+                  value: 3
         - insert:
             tableName: fauser
             columns:
@@ -51,6 +109,9 @@ databaseChangeLog:
               - column:
                   name: phone
                   value: "4445556666"
+              - column:
+                  name: credentials_id
+                  value: 4
         - insert:
             tableName: manager
             columns:

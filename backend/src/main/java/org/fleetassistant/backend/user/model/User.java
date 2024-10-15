@@ -1,13 +1,14 @@
-package org.fleetassistant.backend.user;
+package org.fleetassistant.backend.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.fleetassistant.backend.credentials.Credentials;
+import org.fleetassistant.backend.auth.credentials.model.Credentials;
 
 @Entity
+@Table(name = "fauser")
 @Getter
 @Setter
 @ToString
@@ -15,7 +16,7 @@ import org.fleetassistant.backend.credentials.Credentials;
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class FAUser {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,12 +33,12 @@ public abstract class FAUser {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FAUser FAUser = (FAUser) o;
+        User User = (User) o;
         return new EqualsBuilder()
-                .append(id, FAUser.id)
-                .append(name, FAUser.name)
-                .append(surname, FAUser.surname)
-                .append(credentials, FAUser.credentials)
+                .append(id, User.id)
+                .append(name, User.name)
+                .append(surname, User.surname)
+                .append(credentials, User.credentials)
                 .isEquals();
     }
 
