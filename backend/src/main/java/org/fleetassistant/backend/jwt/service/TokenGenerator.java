@@ -3,7 +3,8 @@ package org.fleetassistant.backend.jwt.service;
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.exceptionhandler.rest.CacheException;
-import org.fleetassistant.backend.jwt.TokenDTO;
+import org.fleetassistant.backend.jwt.model.TokenDTO;
+import org.fleetassistant.backend.jwt.model.TokenType;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 

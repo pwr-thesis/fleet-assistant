@@ -7,7 +7,7 @@ import org.fleetassistant.backend.auth.models.AuthenticationRequest;
 import org.fleetassistant.backend.auth.models.AuthenticationResponse;
 import org.fleetassistant.backend.auth.models.RegisterRequest;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
-import org.fleetassistant.backend.jwt.TokenDTO;
+import org.fleetassistant.backend.jwt.model.TokenDTO;
 import org.fleetassistant.backend.jwt.service.JwtService;
 import org.fleetassistant.backend.jwt.service.TokenGenerator;
 import org.fleetassistant.backend.user.model.Manager;

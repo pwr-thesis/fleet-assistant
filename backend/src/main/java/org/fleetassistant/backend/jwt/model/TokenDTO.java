@@ -1,4 +1,4 @@
-package org.fleetassistant.backend.jwt;
+package org.fleetassistant.backend.jwt.model;
 
 import lombok.Builder;
 import lombok.Data;

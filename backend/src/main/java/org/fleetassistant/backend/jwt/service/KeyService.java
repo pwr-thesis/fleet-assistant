@@ -1,4 +1,4 @@
-package org.fleetassistant.backend.utils.config.security;
+package org.fleetassistant.backend.jwt.service;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

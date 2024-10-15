@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.exceptionhandler.nonrest.IncorrectTokenTypeException;
-import org.fleetassistant.backend.utils.config.security.KeyService;
+import org.fleetassistant.backend.jwt.model.TokenType;
 import org.hibernate.cache.CacheException;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;

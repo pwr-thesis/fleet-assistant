@@ -2,8 +2,8 @@ package org.fleetassistant.backend.jwt.service;
 
 import io.jsonwebtoken.Claims;
 import org.fleetassistant.backend.exceptionhandler.nonrest.IncorrectTokenTypeException;
+import org.fleetassistant.backend.jwt.model.TokenType;
 import org.fleetassistant.backend.utils.Constants;
-import org.fleetassistant.backend.utils.config.security.KeyService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

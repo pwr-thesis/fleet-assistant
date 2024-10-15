@@ -1,4 +1,4 @@
-package org.fleetassistant.backend.utils.config.security;
+package org.fleetassistant.backend.utils.config.security.decoders;
 
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;

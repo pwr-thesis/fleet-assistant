@@ -1,4 +1,4 @@
-package org.fleetassistant.backend.jwt.service;
+package org.fleetassistant.backend.jwt.model;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

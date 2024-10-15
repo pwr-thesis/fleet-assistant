@@ -2,7 +2,7 @@ package org.fleetassistant.backend.jwt.service;
 
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.exceptionhandler.rest.CacheException;
-import org.fleetassistant.backend.jwt.TokenDTO;
+import org.fleetassistant.backend.jwt.model.TokenDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

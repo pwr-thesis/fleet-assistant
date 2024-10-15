@@ -2,7 +2,7 @@ package org.fleetassistant.backend.utils.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.CredentialsService;
-import org.fleetassistant.backend.jwt.CustomJwtDecoder;
+import org.fleetassistant.backend.utils.config.security.decoders.CustomJwtDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

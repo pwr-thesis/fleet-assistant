@@ -1,7 +1,6 @@
-package org.fleetassistant.backend.jwt;
+package org.fleetassistant.backend.utils.config.security.decoders;
 
 import lombok.RequiredArgsConstructor;
-import org.fleetassistant.backend.utils.config.security.CustomLocalJwtDecoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
