@@ -36,22 +36,21 @@
             </button>
             <mat-menu #menu="matMenu">
                 <ng-container *ngIf="isLoggedIn()">
-                    <button mat-menu-item>
+                    <button (click)="onLogOut()" mat-menu-item>
                         <span
                             (keyup.enter)="onLogOut()"
                             (keyup.space)="onLogOut()"
                             tabindex="0"
-                            (click)="onLogOut()"
                             >Sign Out</span
                         >
                     </button>
                 </ng-container>
                 <ng-container *ngIf="!isLoggedIn()">
-                    <button mat-menu-item>
-                        <span routerLink="/login">Sign In</span>
+                    <button routerLink="/login" mat-menu-item>
+                        <span>Sign In</span>
                     </button>
-                    <button mat-menu-item>
-                        <span routerLink="/register">Sign Up</span>
+                    <button routerLink="/register" mat-menu-item>
+                        <span>Sign Up</span>
                     </button>
                 </ng-container>
             </mat-menu>
