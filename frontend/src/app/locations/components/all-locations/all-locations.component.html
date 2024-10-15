@@ -1,0 +1,16 @@
+<div class="flex flex-col items-center min-h-screen p-10 px-0 md:px-10">
+    <h3 class="text-center mb-4">Browse your fleet:</h3>
+    <div class="flex justify-center w-full">
+        <div
+            class="w-full sm:w-full md:max-w-[80%] lg:max-w-[70%] h-[50vh] sm:h-screen md:h-[70vh] lg:h-[70vh]"
+        >
+            <google-map
+                [zoom]="zoom"
+                [options]="mapOptions"
+                height="100%"
+                width="100%"
+            >
+            </google-map>
+        </div>
+    </div>
+</div>
