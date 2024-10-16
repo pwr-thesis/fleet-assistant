@@ -1,4 +1,5 @@
 import { UserInfo } from '../../auth/types/auth';
+import { Location } from '../../locations/types/locations';
 
 export interface Vehicle {
     id: number;
@@ -9,7 +10,7 @@ export interface Vehicle {
     lastInspectionDate: string;
     vehicleYear: string;
     driver?: Driver;
-    //locations: Location[];
+    locations: Location[];
 }
 
 export interface Driver {
@@ -28,5 +29,4 @@ export interface VehicleCreateRequest {
     lastInspectionDate: string;
     vehicleYear: string;
     driver?: Driver;
-    //locations: Location[];
 }

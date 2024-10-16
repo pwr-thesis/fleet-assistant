@@ -1,16 +1,29 @@
 <div class="flex flex-col items-center min-h-screen p-10 px-0 md:px-10">
-    <h3 class="text-center mb-4">Browse your fleet:</h3>
+    <h3 class="text-center mb-4">Browse your fleet on map:</h3>
     <div class="flex justify-center w-full">
         <div
-            class="w-full sm:w-full md:max-w-[80%] lg:max-w-[70%] h-[50vh] sm:h-screen md:h-[70vh] lg:h-[70vh]"
+            class="map-container"
         >
             <google-map
-                [zoom]="zoom"
+                [zoom]="mapInitialZoom"
                 [options]="mapOptions"
+                [center]="mapInitialCenter"
                 height="100%"
                 width="100%"
             >
+                <map-advanced-marker
+                    *ngFor="let marker of getMarkers()"
+                    [position]="marker.position"
+                    [title]="'Vehicle #' + marker.vehicle.id.toString()"
+                    [content]="selectedVehicle?.id === marker.vehicle.id ? selectedMarkerContent : marker.content"
+                    (mapClick)="onMarkerClick(marker)"
+                />
             </google-map>
         </div>
     </div>
+    <app-vehicle-card
+        class="mt-6"
+        *ngIf="selectedVehicle"
+        [vehicle]="selectedVehicle"
+    />
 </div>
