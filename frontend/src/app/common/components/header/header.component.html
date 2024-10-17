@@ -1,0 +1,59 @@
+<header class="sticky top-0 w-full z-50 bg-white shadow-lg">
+    <mat-toolbar class="flex-row items-center justify-between">
+        <a routerLink="/" class="logo flex items-center space-x-4">
+            <img src="logo.png" alt="Logo" class="w-12 h-12" />
+            <span class="text-xl font-semibold">Fleet Assistant</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-4 gap-2">
+            <ng-container *ngIf="isLoggedIn(); else notLoggedIn">
+                <div class="flex flex-col" *ngIf="getUserRole()">
+                    <span class="user-info text-center">{{
+                        getUserRole()
+                    }}</span>
+                    <span class="user-info">{{ getUsername() }}</span>
+                </div>
+
+                <a
+                    (keyup.enter)="onLogOut()"
+                    (keyup.space)="onLogOut()"
+                    tabindex="0"
+                    (click)="onLogOut()"
+                    class="link"
+                    >Sign Out</a
+                >
+            </ng-container>
+            <ng-template #notLoggedIn>
+                <a routerLink="/login" class="link">Sign In</a>
+                <a routerLink="/register" class="link">Sign Up</a>
+            </ng-template>
+        </div>
+        <div class="flex md:hidden items-center gap-3">
+            <mat-icon *ngIf="isLoggedIn()" class="white-icon cursor-pointer"
+                >account_circle</mat-icon
+            >
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon class="text-white">menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <ng-container *ngIf="isLoggedIn()">
+                    <button (click)="onLogOut()" mat-menu-item>
+                        <span
+                            (keyup.enter)="onLogOut()"
+                            (keyup.space)="onLogOut()"
+                            tabindex="0"
+                            >Sign Out</span
+                        >
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="!isLoggedIn()">
+                    <button routerLink="/login" mat-menu-item>
+                        <span>Sign In</span>
+                    </button>
+                    <button routerLink="/register" mat-menu-item>
+                        <span>Sign Up</span>
+                    </button>
+                </ng-container>
+            </mat-menu>
+        </div>
+    </mat-toolbar>
+</header>

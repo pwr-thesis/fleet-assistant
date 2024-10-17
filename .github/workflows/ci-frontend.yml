@@ -27,13 +27,18 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: frontend/node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-modules
 
 
       - name: Install dependencies
         run: npm install
+
+      - name: Generate environment.ts
+        run: |
+          chmod +x ./generate-environment.sh
+          ./generate-environment.sh
 
       - name: Run ng build
         run: npm run build

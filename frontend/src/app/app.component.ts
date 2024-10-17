@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './common/header/header.component';
+import { HeaderComponent } from './common/components/header/header.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
-import { FooterComponent } from './common/footer/footer.component';
+import { FooterComponent } from './common/components/footer/footer.component';
 import { NgIf } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { NavbarService } from '../utilities/services/navbar.service';
-import { SidenavComponent } from './common/sidenav/sidenav.component';
+import { SidenavComponent } from './common/components/sidenav/sidenav.component';
+import { BottomNavComponent } from './common/components/bottom-nav/bottom-nav.component';
 
 @Component({
     selector: 'app-root',
@@ -18,6 +19,7 @@ import { SidenavComponent } from './common/sidenav/sidenav.component';
         FooterComponent,
         NgIf,
         SidenavComponent,
+        BottomNavComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',

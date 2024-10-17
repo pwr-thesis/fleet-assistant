@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DoubleColumnParagraphComponent } from '../../common/double-column-paragraph/double-column-paragraph.component';
+import { DoubleColumnParagraphComponent } from '../../common/components/double-column-paragraph/double-column-paragraph.component';
 
 @Component({
     selector: 'app-welcome-maintenance',
