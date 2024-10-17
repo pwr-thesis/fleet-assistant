@@ -12,6 +12,19 @@ export const MOCK_VEHICLES: Vehicle[] = [
         insuranceDate: '2023-02-01',
         lastInspectionDate: '2023-06-10',
         vehicleYear: '2015',
+        driver: {
+            id: 1,
+            drivingLicenseNumber: 'DL1',
+            drivingLicenseCountryCode: 'US',
+            dateOfBirth: '1980-01-01',
+            user: {
+                name: 'John',
+                surname: 'Doe',
+                email: 'john.doe@example.com',
+                role: 'Driver',
+            },
+        },
+        locations: [{ id: 1, longitude: 17.058006, latitude: 51.110754 }],
     },
     {
         id: 2,
@@ -21,6 +34,19 @@ export const MOCK_VEHICLES: Vehicle[] = [
         insuranceDate: '2022-08-15',
         lastInspectionDate: '2023-01-20',
         vehicleYear: '2018',
+        driver: {
+            id: 2,
+            drivingLicenseNumber: 'DL2',
+            drivingLicenseCountryCode: 'US',
+            dateOfBirth: '1982-01-01',
+            user: {
+                name: 'Jane',
+                surname: 'Doe',
+                email: 'jane.doe@example.com',
+                role: 'Driver',
+            },
+        },
+        locations: [{ id: 2, longitude: 17.06345, latitude: 51.110285 }],
     },
     {
         id: 3,
@@ -30,6 +56,19 @@ export const MOCK_VEHICLES: Vehicle[] = [
         insuranceDate: '2023-03-12',
         lastInspectionDate: '2023-07-05',
         vehicleYear: '2017',
+        driver: {
+            id: 3,
+            drivingLicenseNumber: 'DL3',
+            drivingLicenseCountryCode: 'US',
+            dateOfBirth: '1985-01-01',
+            user: {
+                name: 'Alice',
+                surname: 'Smith',
+                email: 'alice.smith@example.com',
+                role: 'Driver',
+            },
+        },
+        locations: [{ id: 3, longitude: 17.06257, latitude: 51.112313 }],
     },
     {
         id: 4,
@@ -39,6 +78,19 @@ export const MOCK_VEHICLES: Vehicle[] = [
         insuranceDate: '2021-11-30',
         lastInspectionDate: '2022-12-15',
         vehicleYear: '2014',
+        driver: {
+            id: 4,
+            drivingLicenseNumber: 'DL4',
+            drivingLicenseCountryCode: 'US',
+            dateOfBirth: '1990-01-01',
+            user: {
+                name: 'Bob',
+                surname: 'Johnson',
+                email: 'bob.johnson@example.com',
+                role: 'Driver',
+            },
+        },
+        locations: [{ id: 4, longitude: 17.055268, latitude: 51.112973 }],
     },
     {
         id: 5,
@@ -48,6 +100,19 @@ export const MOCK_VEHICLES: Vehicle[] = [
         insuranceDate: '2022-06-25',
         lastInspectionDate: '2023-05-10',
         vehicleYear: '2019',
+        driver: {
+            id: 5,
+            drivingLicenseNumber: 'DL5',
+            drivingLicenseCountryCode: 'US',
+            dateOfBirth: '1995-01-01',
+            user: {
+                name: 'Charlie',
+                surname: 'Brown',
+                email: 'charlie.brown@example.com',
+                role: 'Driver',
+            },
+        },
+        locations: [{ id: 5, longitude: 17.060965, latitude: 51.107152 }],
     },
 ];
 

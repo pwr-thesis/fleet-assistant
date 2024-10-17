@@ -39,7 +39,9 @@ export class AuthService {
                 this.router.navigate(['/']);
             },
             () => {
-                this.snackbarService.openSnackBar(INVALID_FORM_MESSAGE);
+                this.snackbarService.openSnackBar(
+                    'Check your Email and Password and try again'
+                );
             }
         );
     }
