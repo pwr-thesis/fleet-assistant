@@ -39,7 +39,7 @@ export class AuthService {
                 this.router.navigate(['/']);
             },
             () => {
-                this.snackbarService.openSnackBar('Check your email and password and try again!');
+                this.snackbarService.openSnackBar('Check your Email and Password and try again');
             }
         );
     }
@@ -47,8 +47,8 @@ export class AuthService {
     register(registerForm: RegisterForm): void {
         this.httpAuthService.register(registerForm).subscribe(
             (response) => {
-                localStorage.setItem('userInfo', JSON.stringify(response.user));
-                localStorage.setItem('accessToken', response.token.accessToken);
+                localStorage.setItem('userInfo', JSON.stringify(response.user))
+                localStorage.setItem('accessToken', response.token.accessToken)
                 this.router.navigate(['/']);
             },
             () => {
