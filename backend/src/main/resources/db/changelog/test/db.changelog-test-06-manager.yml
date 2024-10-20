@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: "269545"
+      changes:
+        - insert:
+            tableName: manager
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: created_on
+                  value: "2024-10-05"
+        - insert:
+            tableName: manager
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: created_on
+                  value: "2024-10-05"

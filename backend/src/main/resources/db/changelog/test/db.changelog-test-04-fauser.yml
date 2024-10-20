@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: "269545"
+      changes:
+        - insert:
+            tableName: fauser
+            columns:
+              - column:
+                  name: name
+                  value: "John"
+              - column:
+                  name: surname
+                  value: "Doe"
+              - column:
+                  name: phone
+                  value: "1234567890"
+              - column:
+                  name: credentials_id
+                  value: 1
+        - insert:
+            tableName: fauser
+            columns:
+              - column:
+                  name: name
+                  value: "Jane"
+              - column:
+                  name: surname
+                  value: "Smith"
+              - column:
+                  name: phone
+                  value: "0987654321"
+              - column:
+                  name: credentials_id
+                  value: 2
+        - insert:
+            tableName: fauser
+            columns:
+              - column:
+                  name: name
+                  value: "Mike"
+              - column:
+                  name: surname
+                  value: "Brown"
+              - column:
+                  name: phone
+                  value: "1112223333"
+              - column:
+                  name: credentials_id
+                  value: 3
+        - insert:
+            tableName: fauser
+            columns:
+              - column:
+                  name: name
+                  value: "Sarah"
+              - column:
+                  name: surname
+                  value: "Johnson"
+              - column:
+                  name: phone
+                  value: "4445556666"
+              - column:
+                  name: credentials_id
+                  value: 4
