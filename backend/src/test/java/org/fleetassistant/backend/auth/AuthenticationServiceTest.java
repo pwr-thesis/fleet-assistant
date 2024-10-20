@@ -6,13 +6,15 @@ import org.fleetassistant.backend.auth.credentials.model.Role;
 import org.fleetassistant.backend.auth.models.AuthenticationRequest;
 import org.fleetassistant.backend.auth.models.AuthenticationResponse;
 import org.fleetassistant.backend.auth.models.RegisterRequest;
+import org.fleetassistant.backend.dto.User;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
-import org.fleetassistant.backend.jwt.model.TokenDTO;
+import org.fleetassistant.backend.dto.Token;
 import org.fleetassistant.backend.jwt.service.JwtService;
 import org.fleetassistant.backend.jwt.service.TokenGenerator;
 import org.fleetassistant.backend.user.model.Manager;
 import org.fleetassistant.backend.user.service.ManagerService;
 import org.fleetassistant.backend.user.service.UserService;
+import org.fleetassistant.backend.utils.EntityToDtoMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,11 +56,15 @@ class AuthenticationServiceTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private EntityToDtoMapper entityToDtoMapper;
+
     @InjectMocks
     private AuthenticationService authenticationService;
 
     private Credentials credentials;
     private Manager manager;
+    private User user;
 
     @BeforeEach
     void setUp() {
@@ -67,10 +73,8 @@ class AuthenticationServiceTest {
                 .password("password123")
                 .role(Role.MANAGER)
                 .build();
-        manager = new Manager();
-        manager.setName("John");
-        manager.setSurname("Doe");
-        manager.setCredentials(credentials);
+        manager = Manager.builder().name("John").surname("Doe").credentials(credentials).build();
+        user = User.builder().name("John").surname("Doe").email("test@example.com").role(Role.MANAGER).build();
     }
 
     @Test
@@ -91,18 +95,18 @@ class AuthenticationServiceTest {
         when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
         when(credentialsService.create(anyString(), anyString(), any(Role.class))).thenReturn(credentials);
         when(managerService.createManager(any(RegisterRequest.class))).thenReturn(manager);
-        when(tokenGenerator.createToken(any(Credentials.class))).thenReturn(TokenDTO.builder().accessToken("access").build());
-
+        when(tokenGenerator.createToken(any(Credentials.class))).thenReturn(Token.builder().accessToken("access").build());
+        when(entityToDtoMapper.userToUserDto(any(Manager.class))).thenReturn(user);
         // When
         AuthenticationResponse response = authenticationService.register(new RegisterRequest("John", "Doe", "new@example.com", "password", ""));
 
         // Then
         assertNotNull(response);
-        assertEquals("access", response.getToken().getAccessToken());
-        assertEquals("John", response.getUser().getName());
-        assertEquals("Doe", response.getUser().getSurname());
-        assertEquals(Role.MANAGER, response.getUser().getRole());
-        assertEquals("test@example.com", response.getUser().getEmail());
+        assertEquals("access", response.getToken().accessToken());
+        assertEquals("John", response.getUser().name());
+        assertEquals("Doe", response.getUser().surname());
+        assertEquals(Role.MANAGER, response.getUser().role());
+        assertEquals("test@example.com", response.getUser().email());
     }
 
     @Test
@@ -121,17 +125,17 @@ class AuthenticationServiceTest {
         // Given
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(null);
         when(credentialsService.loadUserByUsername(anyString())).thenReturn(credentials);
-        when(userService.getUserByEmail(anyString())).thenReturn(manager);
-        when(tokenGenerator.createToken(any(Credentials.class))).thenReturn(TokenDTO.builder().accessToken("access").build());
+        when(userService.getUserByEmail(anyString())).thenReturn(user);
+        when(tokenGenerator.createToken(any(Credentials.class))).thenReturn(Token.builder().accessToken("access").build());
         // When
         AuthenticationResponse response = authenticationService.authenticate(new AuthenticationRequest("valid@example.com", "password"));
         // Then
         assertNotNull(response);
-        assertEquals("access", response.getToken().getAccessToken());
-        assertEquals("John", response.getUser().getName());
-        assertEquals("Doe", response.getUser().getSurname());
-        assertEquals(Role.MANAGER, response.getUser().getRole());
-        assertEquals("test@example.com", response.getUser().getEmail());
+        assertEquals("access", response.getToken().accessToken());
+        assertEquals("John", response.getUser().name());
+        assertEquals("Doe", response.getUser().surname());
+        assertEquals(Role.MANAGER, response.getUser().role());
+        assertEquals("test@example.com", response.getUser().email());
     }
 
     @Test
