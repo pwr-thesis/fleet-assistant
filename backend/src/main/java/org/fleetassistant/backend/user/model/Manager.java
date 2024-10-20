@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.fleetassistant.backend.vehicle.model.Vehicle;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,4 +20,6 @@ public class Manager extends User {
     private LocalDate createdOn = LocalDate.now();
     @OneToMany(mappedBy = "manager")
     private List<Driver> assignedDrivers;
+    @OneToMany(mappedBy = "manager")
+    private List<Vehicle> assignedVehicles;
 }

@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -55,7 +55,7 @@ class UserServiceTest {
         when(userRepository.findByCredentials_Email(email)).thenReturn(Optional.of(manager));
         when(entityToDtoMapper.userToUserDto(manager)).thenReturn(user);
         // When
-        User foundManager =  userService.getUserByEmail(email);
+        User foundManager = userService.getUserByEmail(email);
         // Then
         assertNotNull(foundManager);
         assertEquals(manager.getName(), foundManager.name());
@@ -70,9 +70,7 @@ class UserServiceTest {
         String email = "johndoe@example.com";
         when(userRepository.findByCredentials_Email(email)).thenReturn(Optional.empty());
         // When
-        NoSuchObjectException exception = assertThrows(NoSuchObjectException.class, () -> {
-            userService.getUserByEmail(email);
-        });
+        NoSuchObjectException exception = assertThrows(NoSuchObjectException.class, () -> userService.getUserByEmail(email));
         // Then
         assertEquals(Constants.USER_DOESNT_EXIST, exception.getMessage());
         verify(userRepository).findByCredentials_Email(email);
