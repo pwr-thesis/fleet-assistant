@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9
+      author: "269545"
+      changes:
+        - createTable:
+            tableName: vehicle
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: vin
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: plate_number
+                  type: varchar(15)
+              - column:
+                  name: country_code
+                  type: varchar(3)
+              - column:
+                  name: insurance_date
+                  type: date
+              - column:
+                  name: last_inspection_date
+                  type: date
+              - column:
+                  name: next_inspection_date
+                  type: date
+              - column:
+                  name: production_date
+                  type: date
+              - column:
+                  name: driver_id
+                  type: bigint
+              - column:
+                    name: manager_id
+                    type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: vehicle
+            baseColumnNames: manager_id
+            referencedTableName: manager
+            referencedColumnNames: id
+            constraintName: fk_vehicle_manager
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: vehicle
+            baseColumnNames: driver_id
+            referencedTableName: driver
+            referencedColumnNames: id
+            constraintName: fk_vehicle_driver
+            onDelete: SET NULL

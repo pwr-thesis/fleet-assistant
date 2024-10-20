@@ -1,0 +1,140 @@
+databaseChangeLog:
+  - changeSet:
+      id: 10
+      author: "269545"
+      changes:
+        - insert:
+            tableName: vehicle
+            columns:
+              - column:
+                  name: name
+                  value: "Car A"
+              - column:
+                  name: vin
+                  value: "1HGCM82633A123456"
+              - column:
+                  name: plate_number
+                  value: "ABC123"
+              - column:
+                  name: country_code
+                  value: "USA"
+              - column:
+                  name: insurance_date
+                  value: "2024-10-20"
+              - column:
+                  name: last_inspection_date
+                  value: "2024-05-15"
+              - column:
+                  name: next_inspection_date
+                  value: "2025-05-15"
+              - column:
+                  name: production_date
+                  value: "2004-01-10"
+              - column:
+                  name: driver_id
+                  value: 3
+              - column:
+                  name: manager_id
+                  value: 1
+
+        - insert:
+            tableName: vehicle
+            columns:
+              - column:
+                  name: name
+                  value: "Car B"
+              - column:
+                  name: vin
+                  value: "1HGCM82633A654321"
+              - column:
+                  name: plate_number
+                  value: "XYZ789"
+              - column:
+                  name: country_code
+                  value: "USA"
+              - column:
+                  name: insurance_date
+                  value: "2024-10-20"
+              - column:
+                  name: last_inspection_date
+                  value: "2024-06-10"
+              - column:
+                  name: next_inspection_date
+                  value: "2025-06-10"
+              - column:
+                  name: production_date
+                  value: "2010-02-15"
+              - column:
+                  name: driver_id
+                  value: 4
+              - column:
+                  name: manager_id
+                  value: 1
+
+        - insert:
+            tableName: vehicle
+            columns:
+              - column:
+                  name: name
+                  value: "Car C"
+              - column:
+                  name: vin
+                  value: "1HGCM82633A987654"
+              - column:
+                  name: plate_number
+                  value: "LMN456"
+              - column:
+                  name: country_code
+                  value: "USA"
+              - column:
+                  name: insurance_date
+                  value: "2024-10-20"
+              - column:
+                  name: last_inspection_date
+                  value: "2024-07-05"
+              - column:
+                  name: next_inspection_date
+                  value: "2025-07-05"
+              - column:
+                  name: production_date
+                  value: "2010-03-20"
+              - column:
+                  name: driver_id
+                  value: null
+              - column:
+                  name: manager_id
+                  value: 1
+
+        - insert:
+            tableName: vehicle
+            columns:
+              - column:
+                  name: name
+                  value: "Car D"
+              - column:
+                  name: vin
+                  value: "1HGCM82633A246813"
+              - column:
+                  name: plate_number
+                  value: "QRS258"
+              - column:
+                  name: country_code
+                  value: "USA"
+              - column:
+                  name: insurance_date
+                  value: "2024-10-20"
+              - column:
+                  name: last_inspection_date
+                  value: "2024-08-20"
+              - column:
+                  name: next_inspection_date
+                  value: "2025-08-20"
+              - column:
+                  name: production_date
+                  value: "2012-11-30"
+              - column:
+                  name: driver_id
+                  value: null
+              - column:
+                  name: manager_id
+                  value: 1
