@@ -2,6 +2,7 @@ package org.fleetassistant.backend.user.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,5 +29,6 @@ public class Driver extends User {
     @CreatedDate
     private LocalDate createdOn;
     @ManyToOne
+    @JoinColumn(name = "manager_id")
     private Manager manager;
 }

@@ -2,7 +2,7 @@ package org.fleetassistant.backend.jwt.service;
 
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.exceptionhandler.rest.CacheException;
-import org.fleetassistant.backend.jwt.model.TokenDTO;
+import org.fleetassistant.backend.dto.Token;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -93,12 +93,12 @@ class TokenGeneratorTest {
         when(jwtService.createSignedJwt(any(), any())).thenReturn("accessToken", "refreshToken");
         when(cacheManager.getCache(anyString())).thenReturn(Mockito.mock(Cache.class));
         // When
-        TokenDTO tokenDTO = tokenGenerator.createToken(credentials);
+        Token token = tokenGenerator.createToken(credentials);
         // Then
-        assertNotNull(tokenDTO);
-        assertEquals(123L, tokenDTO.getUserId());
-        assertEquals("accessToken", tokenDTO.getAccessToken());
-        assertEquals("refreshToken", tokenDTO.getRefreshToken());
+        assertNotNull(token);
+        assertEquals(123L, token.userId());
+        assertEquals("accessToken", token.accessToken());
+        assertEquals("refreshToken", token.refreshToken());
     }
 
     @Test

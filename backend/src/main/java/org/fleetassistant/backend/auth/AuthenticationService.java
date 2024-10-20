@@ -9,14 +9,14 @@ import org.fleetassistant.backend.auth.credentials.model.Role;
 import org.fleetassistant.backend.auth.models.AuthenticationRequest;
 import org.fleetassistant.backend.auth.models.AuthenticationResponse;
 import org.fleetassistant.backend.auth.models.RegisterRequest;
+import org.fleetassistant.backend.dto.User;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
 import org.fleetassistant.backend.jwt.service.JwtService;
 import org.fleetassistant.backend.jwt.service.TokenGenerator;
-import org.fleetassistant.backend.user.dto.UserDTO;
 import org.fleetassistant.backend.user.model.Manager;
-import org.fleetassistant.backend.user.model.User;
 import org.fleetassistant.backend.user.service.ManagerService;
 import org.fleetassistant.backend.user.service.UserService;
+import org.fleetassistant.backend.utils.EntityToDtoMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,6 +38,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final ManagerService managerService;
     private final UserService userService;
+    private final EntityToDtoMapper entityToDtoMapper;
 
     @Transactional
     public AuthenticationResponse register(RegisterRequest request) {
@@ -48,15 +49,10 @@ public class AuthenticationService {
                 passwordEncoder.encode(request.getPassword()), Role.MANAGER);
         Manager manager = managerService.createManager(request);
         manager.setCredentials(credentials);
+
         return AuthenticationResponse.builder()
                 .token(tokenGenerator.createToken(credentials))
-                .user(
-                        UserDTO.builder().
-                                name(manager.getName()).
-                                surname(manager.getSurname()).
-                                role(credentials.getRole()).
-                                email(credentials.getEmail())
-                                .build())
+                .user(entityToDtoMapper.userToUserDto(manager))
                 .build();
     }
 
@@ -70,13 +66,7 @@ public class AuthenticationService {
         User user = userService.getUserByEmail(request.getEmail());
         return AuthenticationResponse.builder()
                 .token(tokenGenerator.createToken(credentials))
-                .user(
-                        UserDTO.builder().
-                                name(user.getName()).
-                                surname(user.getSurname()).
-                                role(credentials.getRole()).
-                                email(credentials.getEmail())
-                                .build())
+                .user(user)
                 .build();
     }
 

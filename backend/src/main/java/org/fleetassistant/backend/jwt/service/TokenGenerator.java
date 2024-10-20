@@ -3,7 +3,7 @@ package org.fleetassistant.backend.jwt.service;
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.exceptionhandler.rest.CacheException;
-import org.fleetassistant.backend.jwt.model.TokenDTO;
+import org.fleetassistant.backend.dto.Token;
 import org.fleetassistant.backend.jwt.model.TokenType;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -29,8 +29,8 @@ public class TokenGenerator {
         return putTokenInCache(REFRESH_TOKENS, credentials, jwt);
     }
 
-    public TokenDTO createToken(Credentials credentials) {
-        return TokenDTO.builder()
+    public Token createToken(Credentials credentials) {
+        return Token.builder()
                 .userId(credentials.getId())
                 .accessToken(createAccessToken(credentials))
                 .refreshToken(createRefreshToken(credentials)).build();
