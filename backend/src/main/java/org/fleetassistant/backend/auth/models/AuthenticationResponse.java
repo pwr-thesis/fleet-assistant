@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.fleetassistant.backend.jwt.model.TokenDTO;
-import org.fleetassistant.backend.user.dto.UserDTO;
+import org.fleetassistant.backend.dto.UserDTO;
 
 @Data
 @Builder

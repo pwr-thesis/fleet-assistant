@@ -2,7 +2,7 @@ package org.fleetassistant.backend.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
-import org.fleetassistant.backend.user.dto.UserDTO;
+import org.fleetassistant.backend.dto.UserDTO;
 import org.fleetassistant.backend.user.model.User;
 import org.fleetassistant.backend.user.service.UserService;
 import org.springframework.http.ResponseEntity;

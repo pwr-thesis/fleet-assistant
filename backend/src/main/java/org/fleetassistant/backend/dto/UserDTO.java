@@ -1,4 +1,4 @@
-package org.fleetassistant.backend.user.dto;
+package org.fleetassistant.backend.dto;
 
 
 import lombok.Builder;
