@@ -5,7 +5,7 @@
     <mat-card-header>
         <mat-card-title>
             <span class="font-bold">
-                {{ 'Vehicle #' + vehicle.id }}
+                {{ vehicle.name }}
             </span>
         </mat-card-title>
         <mat-card-subtitle>
@@ -27,16 +27,16 @@
             fieldName="Country Code"
         />
         <app-vehicle-card-field
-            [fieldValue]="vehicle.insuranceDate"
+            [fieldValue]="toDisplayDate(vehicle.insuranceDate)"
             fieldName="Insurance date"
         />
         <app-vehicle-card-field
-            [fieldValue]="vehicle.lastInspectionDate"
-            fieldName="Last inspection date"
+            [fieldValue]="toDisplayDate(vehicle.nextInspectionDate)"
+            fieldName="Next inspection date"
         />
         <app-vehicle-card-field
-            [fieldValue]="vehicle.vehicleYear"
-            fieldName="Vehicle Year"
+            [fieldValue]="toDisplayDate(vehicle.productionDate)"
+            fieldName="Production Date"
         />
     </mat-card-content>
 </mat-card>
