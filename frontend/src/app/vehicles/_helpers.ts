@@ -21,16 +21,6 @@ export function pastDateValidator(): ValidatorFn {
     };
 }
 
-export function yearValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-        const value = control.value;
-        if (value && (value > 2024 || value < 1940)) {
-            return { validYear: true };
-        }
-        return null;
-    };
-}
-
 export const CUSTOM_DATEFORMAT = {
     parse: {
         dateInput: 'DD/MM/YYYY',
