@@ -2,14 +2,20 @@ import { UserInfo } from '../../auth/types/auth';
 
 export interface Vehicle {
     id: number;
+    name: string;
     vin: string;
     plateNumber: string;
     countryCode: string;
-    insuranceDate: string;
-    lastInspectionDate: string;
-    vehicleYear: string;
+    insuranceDate: string[];
+    lastInspectionDate: string[];
+    nextInspectionDate: string[];
+    productionDate: string[];
     driver?: Driver;
     //locations: Location[];
+}
+
+export interface VehiclesPage {
+    content: Vehicle[];
 }
 
 export interface Driver {
@@ -21,12 +27,13 @@ export interface Driver {
 }
 
 export interface VehicleCreateRequest {
+    name: string;
     vin: string;
     plateNumber: string;
     countryCode: string;
     insuranceDate: string;
     lastInspectionDate: string;
-    vehicleYear: string;
+    productionDate: string;
     driver?: Driver;
     //locations: Location[];
 }

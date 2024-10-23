@@ -10,6 +10,7 @@ import {
 } from '@angular/material/card';
 import { Vehicle } from '../../types/vehicles';
 import { VehicleCardFieldComponent } from './vehicle-card-field/vehicle-card-field.component';
+import { toDisplayDate } from '../../../../utilities/date-utils';
 
 @Component({
     selector: 'app-vehicle-card',
@@ -41,4 +42,6 @@ export class VehicleCardComponent {
         }
         return ' N/A';
     }
+
+    protected readonly toDisplayDate = toDisplayDate;
 }

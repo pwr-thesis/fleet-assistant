@@ -32,7 +32,6 @@ import {
     CUSTOM_DATEFORMAT,
     futureDateValidator,
     pastDateValidator,
-    yearValidator,
 } from '../../_helpers';
 import { Router, RouterLink } from '@angular/router';
 import { VehiclesService } from '../../service/vehicles.service';
@@ -78,6 +77,7 @@ export class VehicleCreateComponent {
         private destroyRef: DestroyRef
     ) {
         this.createVehicleForm = new FormGroup({
+            name: new FormControl('', Validators.required),
             vin: new FormControl('', [
                 Validators.required,
                 Validators.maxLength(17),
@@ -85,9 +85,9 @@ export class VehicleCreateComponent {
             ]),
             plateNumber: new FormControl('', Validators.required),
             countryCode: new FormControl('', Validators.required),
-            vehicleYear: new FormControl('', [
+            productionDate: new FormControl('', [
                 Validators.required,
-                yearValidator(),
+                pastDateValidator(),
             ]),
             insuranceDate: new FormControl('', [
                 Validators.required,
@@ -105,6 +105,7 @@ export class VehicleCreateComponent {
         if (this.createVehicleForm.valid) {
             const vehicleFormValue = this.createVehicleForm.value;
             const vehicleCreateRequest: VehicleCreateRequest = {
+                name: vehicleFormValue.name,
                 vin: vehicleFormValue.vin,
                 plateNumber: vehicleFormValue.plateNumber,
                 countryCode: vehicleFormValue.countryCode,
@@ -114,7 +115,9 @@ export class VehicleCreateComponent {
                 lastInspectionDate: moment(
                     vehicleFormValue.lastVehicleInspectionDate
                 ).format('YYYY-MM-DD'),
-                vehicleYear: vehicleFormValue.vehicleYear,
+                productionDate: moment(vehicleFormValue.vehicleYear).format(
+                    'YYYY-MM-DD'
+                ),
             };
 
             this.vehicleService

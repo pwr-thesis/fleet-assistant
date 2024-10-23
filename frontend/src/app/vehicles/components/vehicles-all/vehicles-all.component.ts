@@ -29,8 +29,8 @@ export class VehiclesAllComponent implements OnInit {
     constructor(private vehiclesService: VehiclesService) {}
 
     ngOnInit(): void {
-        this.vehiclesService.getAllVehicles().subscribe((vehicles) => {
-            this.vehicles = vehicles;
+        this.vehiclesService.getAllVehicles().subscribe((page) => {
+            this.vehicles = page.content;
         });
     }
 }
