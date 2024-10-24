@@ -11,6 +11,7 @@ import {
 import { Vehicle } from '../../types/vehicles';
 import { VehicleCardFieldComponent } from './vehicle-card-field/vehicle-card-field.component';
 import { toDisplayDate } from '../../../../utilities/date-utils';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-vehicle-card',
@@ -24,6 +25,7 @@ import { toDisplayDate } from '../../../../utilities/date-utils';
         MatCardSubtitle,
         MatCardTitle,
         VehicleCardFieldComponent,
+        RouterLink,
     ],
     templateUrl: './vehicle-card.component.html',
     styleUrl: './vehicle-card.component.scss',

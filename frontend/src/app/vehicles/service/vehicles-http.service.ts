@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Vehicle, VehicleCreateRequest, VehiclesPage } from '../types/vehicles';
 import { HttpClient } from '@angular/common/http';
-import { VEHICLES_URL } from '../../../utilities/_urls';
+import { GET_VEHICLE_BY_ID_URL, VEHICLES_URL } from '../../../utilities/_urls';
 
 @Injectable({
     providedIn: 'root',
@@ -21,5 +21,9 @@ export class VehiclesHttpService {
             VEHICLES_URL,
             vehicleCreateRequest
         ) as Observable<Vehicle>;
+    }
+
+    getVehicle(id: string): Observable<Vehicle> {
+        return this.http.get(GET_VEHICLE_BY_ID_URL(id)) as Observable<Vehicle>;
     }
 }

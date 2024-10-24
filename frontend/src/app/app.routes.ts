@@ -10,6 +10,8 @@ import { loggedUserRestrictGuard } from '../utilities/guards/logged-user-restric
 import { VehiclesAllComponent } from './vehicles/components/vehicles-all/vehicles-all.component';
 import { authGuard } from '../utilities/guards/auth.guard';
 import { VehicleCreateComponent } from './vehicles/components/vehicle-create/vehicle-create.component';
+import { VehicleDetailsComponent } from './vehicles/components/vehicle-details/vehicle-details.component';
+import { vehicleDetailsResolver } from '../utilities/resolvers/vehicle-details.resolver';
 
 export const routes: Routes = [
     { path: 'management-info', component: WelcomeManagementComponent },
@@ -39,6 +41,12 @@ export const routes: Routes = [
         path: 'new-vehicle',
         component: VehicleCreateComponent,
         canActivate: [authGuard],
+    },
+    {
+        path: 'vehicles/details/:id',
+        component: VehicleDetailsComponent,
+        canActivate: [authGuard],
+        resolve: { vehicle: vehicleDetailsResolver },
     },
     { path: '', component: WelcomePageComponent },
     { path: '**', redirectTo: '' },
