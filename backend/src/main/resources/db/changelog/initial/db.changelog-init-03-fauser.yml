@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 2
+      id: 3
       author: "269545"
       changes:
         - createTable:
@@ -34,3 +34,4 @@ databaseChangeLog:
             baseColumnNames: credentials_id
             referencedTableName: credentials
             referencedColumnNames: id
+            onDelete: CASCADE
