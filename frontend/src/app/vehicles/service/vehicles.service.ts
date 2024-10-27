@@ -18,4 +18,8 @@ export class VehiclesService {
     ): Observable<Vehicle> {
         return this.vehiclesHttpService.createVehicle(vehicleCreateRequest);
     }
+
+    getVehicle(id: string): Observable<Vehicle> {
+        return this.vehiclesHttpService.getVehicle(id);
+    }
 }
