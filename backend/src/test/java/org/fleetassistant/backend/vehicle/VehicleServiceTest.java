@@ -239,6 +239,7 @@ class VehicleServiceTest {
     @Test
     void deleteLocations_success() {
         when(vehicleRepository.findById(anyLong())).thenReturn(Optional.of(vehicle));
+        vehicleService.deleteLocations(1L);
         verify(locationService).deleteAllByVehicleId(1L);
     }
 }
