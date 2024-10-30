@@ -4,8 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
-import org.fleetassistant.backend.location.model.Location;
 import org.fleetassistant.backend.location.LocationService;
+import org.fleetassistant.backend.location.model.Location;
 import org.fleetassistant.backend.utils.EntityToDtoMapper;
 import org.fleetassistant.backend.vehicle.model.Vehicle;
 import org.springframework.data.domain.Example;
@@ -22,7 +22,7 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 @RequiredArgsConstructor
 public class VehicleService {
     public static final String CAR_WITH_VIN_ALREADY_EXISTS = "Car with vin: %s already exists";
-    public static final String CAR_WITH_ID_NOT_FOUND = "Car with id: %d not found";
+    public static final String VEHICLE_WITH_ID_NOT_FOUND = "Car with id: %d not found";
     private final VehicleRepository vehicleRepository;
     private final EntityToDtoMapper entityToDtoMapper;
     private final LocationService locationService;
@@ -56,7 +56,7 @@ public class VehicleService {
 
     public org.fleetassistant.backend.dto.Location updateLocation(org.fleetassistant.backend.dto.Location locationDTO, Long id) {
         Location location = entityToDtoMapper.locationDtoToLocation(locationDTO);
-        Vehicle vehicle =  readVehicleById(id);
+        Vehicle vehicle = readVehicleById(id);
         location.setVehicle(vehicle);
         return locationService.create(location);
     }
@@ -69,7 +69,7 @@ public class VehicleService {
 
     private Vehicle readVehicleById(Long id) {
         return vehicleRepository.findById(id)
-                .orElseThrow(() -> new NoSuchObjectException(String.format(CAR_WITH_ID_NOT_FOUND, id)));
+                .orElseThrow(() -> new NoSuchObjectException(String.format(VEHICLE_WITH_ID_NOT_FOUND, id)));
     }
 
     static LocalDate calculateNextInspectionDate(LocalDate productionDate, LocalDate lastInspectionDate) {
