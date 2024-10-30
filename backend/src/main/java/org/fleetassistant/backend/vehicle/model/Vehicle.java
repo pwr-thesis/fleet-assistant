@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.fleetassistant.backend.location.model.Location;
 import org.fleetassistant.backend.user.model.Driver;
 import org.fleetassistant.backend.user.model.Manager;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -36,6 +38,8 @@ public class Vehicle {
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private Manager manager;
+    @OneToMany(mappedBy = "vehicle")
+    private List<Location> locations;
 
     @Override
     public boolean equals(Object o) {
