@@ -122,7 +122,7 @@ class VehicleServiceTest {
     void isCarExists_shouldReturnTrueIfCarExists() {
         when(vehicleRepository.exists(any())).thenReturn(true);
 
-        boolean exists = vehicleService.isCarExists(vehicle);
+        boolean exists = vehicleService.isVehicleExists(vehicle);
 
         assertTrue(exists);
     }
@@ -131,7 +131,7 @@ class VehicleServiceTest {
     void isCarExists_shouldReturnFalseIfCarDoesNotExist() {
         when(vehicleRepository.exists(any())).thenReturn(false);
 
-        boolean exists = vehicleService.isCarExists(vehicle);
+        boolean exists = vehicleService.isVehicleExists(vehicle);
 
         assertFalse(exists);
     }

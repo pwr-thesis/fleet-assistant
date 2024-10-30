@@ -3,20 +3,20 @@ import time
 import requests
 
 
-def delete_car_locations(car_id):
-    url = 'http://localhost:8080/api/v1/cars/{}/location'.format(car_id)
+def delete_vehicle_locations(vehicle_id):
+    url = 'http://localhost:8080/api/v1/vehicle/{}/location'.format(vehicle_id)
     headers = {'Content-Type': 'application/json'}
 
     response = requests.delete(url, headers=headers)
     if response.status_code == 204:
-        print('Locations deleted successfully for car with ID:', car_id)
+        print('Locations deleted successfully for ID:', vehicle_id)
     else:
         print('Response:', response.text)
-        raise Exception('Failed to delete locations for car with ID:', car_id)
+        raise Exception('Failed to delete locations for ID:', vehicle_id)
 
 
-def send_car_location(car_id, latitude, longitude):
-    url = 'http://localhost:8080/api/v1/cars/{}/location'.format(car_id)
+def send_vehicle_location(vehicle_id, latitude, longitude):
+    url = 'http://localhost:8080/api/v1/vehicle/{}/location'.format(vehicle_id)
     headers = {'Content-Type': 'application/json'}
 
     location_data = {
@@ -26,14 +26,14 @@ def send_car_location(car_id, latitude, longitude):
 
     response = requests.post(url, headers=headers, json=location_data)
     if response.status_code == 200:
-        print('Location sent successfully for car with ID:', car_id)
+        print('Location sent successfully for ID:', vehicle_id)
     else:
         print('Response:', response.text)
-        raise Exception('Failed to send location for car with ID:', car_id)
+        raise Exception('Failed to send location for ID:', vehicle_id)
 
 
-car_id = input("Enter car ID: ")
-delete_car_locations(car_id)
+vehicle_id = input("Enter ID: ")
+delete_vehicle_locations(vehicle_id)
 locations = [
     (51.104287, 17.085214),
     (51.104475, 17.081910),
@@ -64,5 +64,5 @@ locations = [
     (51.104287, 17.085214),
 ]
 for latitude, longitude in locations:
-    send_car_location(car_id, latitude, longitude)
+    send_vehicle_location(vehicle_id, latitude, longitude)
     time.sleep(5)
