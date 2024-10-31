@@ -37,12 +37,12 @@ jobs:
         run: |
           chmod +x ./generate-environment.sh
           ./generate-environment.sh
-
-      - name: Run ng build
-        run: npm run build
         env:
           OIDC_CLIENT_ID: ${{ secrets.OIDC_CLIENT_ID }}
           API_URL: ${{ secrets.API_URL }}
+
+      - name: Run ng build
+        run: npm run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
