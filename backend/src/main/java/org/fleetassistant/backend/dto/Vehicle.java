@@ -3,6 +3,7 @@ package org.fleetassistant.backend.dto;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 public record Vehicle(
@@ -14,5 +15,6 @@ public record Vehicle(
         LocalDate insuranceDate,
         LocalDate lastInspectionDate,
         LocalDate nextInspectionDate,
-        LocalDate productionDate) {
+        LocalDate productionDate,
+        List<Location> locations) {
 }
