@@ -1,4 +1,4 @@
-name: Deploy to S3
+name: CD for frontend
 
 on:
   pull_request:
