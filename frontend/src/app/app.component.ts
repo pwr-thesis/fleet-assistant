@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { NavbarService } from '../utilities/services/navbar.service';
 import { SidenavComponent } from './common/components/sidenav/sidenav.component';
 import { BottomNavComponent } from './common/components/bottom-nav/bottom-nav.component';
+import { environment } from '../environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -34,5 +35,6 @@ export class AppComponent {
             .subscribe((show) => {
                 this.showNavbar = show;
             });
+        console.log(JSON.stringify(environment))
     }
 }
