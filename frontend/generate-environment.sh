@@ -2,7 +2,7 @@
 mkdir -p src/environments
 cat <<EOF > src/environments/environment.ts
 export const environment = {
-  oidcClientId: 'oidcClientId',
-  apiUrl: 'API_URL'
+  oidcClientId: '$OIDC_CLIENT_ID',
+  apiUrl: '$API_URL'
 };
 EOF
