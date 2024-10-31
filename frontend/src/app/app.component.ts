@@ -35,6 +35,5 @@ export class AppComponent {
             .subscribe((show) => {
                 this.showNavbar = show;
             });
-        console.log(JSON.stringify(environment))
     }
 }
