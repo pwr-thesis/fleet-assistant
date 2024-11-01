@@ -12,6 +12,7 @@ import { authGuard } from '../utilities/guards/auth.guard';
 import { VehicleCreateComponent } from './vehicles/components/vehicle-create/vehicle-create.component';
 import { VehicleDetailsComponent } from './vehicles/components/vehicle-details/vehicle-details.component';
 import { vehicleDetailsResolver } from '../utilities/resolvers/vehicle-details.resolver';
+import { AllLocationsComponent } from './locations/components/all-locations/all-locations.component';
 
 export const routes: Routes = [
     { path: 'management-info', component: WelcomeManagementComponent },
@@ -40,6 +41,11 @@ export const routes: Routes = [
     {
         path: 'new-vehicle',
         component: VehicleCreateComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: 'locations',
+        component: AllLocationsComponent,
         canActivate: [authGuard],
     },
     {

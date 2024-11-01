@@ -1,11 +1,19 @@
 variable "private_s3_name" {
-  type=string
+  type = string
 }
 
 variable "public_s3_name" {
-  type=string
+  type = string
 }
 
-variable "subnet_id" {
-  
-}
+# variable "rds_instance_username" {
+#   type = string
+# }
+
+# variable "rds_instance_password" {
+#   type = string
+# }
+
+# variable "rds_instance_name" {
+#   type = string
+# }
