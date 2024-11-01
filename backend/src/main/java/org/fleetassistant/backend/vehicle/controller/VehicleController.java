@@ -52,18 +52,17 @@ public class VehicleController {
     }
 
     @GetMapping(path = "/{id}/location-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ServerSentEvent<Page<Location>>> locationStream(@PathVariable Long id,
-                                                                @PageableDefault Pageable pageable) {
-        Page<Location> initialPage = locationService.readAllByVehicleId(id, pageable);
+    public Flux<ServerSentEvent<Location>> locationStream(@PathVariable Long id) {
+        Location initialPage = locationService.readLastLocation(id);
 
-        Flux<ServerSentEvent<Page<Location>>> initialData = Flux.just(ServerSentEvent.<Page<Location>>builder()
+        Flux<ServerSentEvent<Location>> initialData = Flux.just(ServerSentEvent.<Location>builder()
                 .data(initialPage)
                 .build());
-        Flux<ServerSentEvent<Page<Location>>> periodicUpdates = Flux.interval(Duration.ofSeconds(5))
+        Flux<ServerSentEvent<Location>> periodicUpdates = Flux.interval(Duration.ofSeconds(5))
                 .flatMap(sequence -> {
-                    Page<Location> updatedPage =
-                            locationService.readAllByVehicleId(id, pageable);
-                    return Flux.just(ServerSentEvent.<Page<Location>>builder()
+                    Location updatedPage =
+                            locationService.readLastLocation(id);
+                    return Flux.just(ServerSentEvent.<Location>builder()
                             .id(String.valueOf(sequence))
                             .data(updatedPage)
                             .build());
