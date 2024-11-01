@@ -39,19 +39,18 @@ export class AllLocationsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        //TODO, CHECK WHEN CAR ENDPOINT WILL BE IMPLEMENTED
         this.vehicleService
             .getAllVehicles()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((response) => {
-                this.vehicles = response;
+                this.vehicles = response.content;
                 this.mapInitialCenter = {
                     lat: this.vehicles[0].locations[
                         this.vehicles[0].locations.length - 1
-                    ].latitude,
+                    ]?.latitude,
                     lng: this.vehicles[0].locations[
                         this.vehicles[0].locations.length - 1
-                    ].longitude,
+                    ]?.longitude,
                 };
             });
     }
@@ -64,8 +63,8 @@ export class AllLocationsComponent implements OnInit {
             imgTag.src = 'car-icon.png';
             return {
                 position: {
-                    lat: lastLocation.latitude,
-                    lng: lastLocation.longitude,
+                    lat: lastLocation?.latitude,
+                    lng: lastLocation?.longitude,
                 },
                 vehicle: vehicle,
                 content: imgTag,

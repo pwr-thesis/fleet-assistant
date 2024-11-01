@@ -12,7 +12,7 @@ export interface Vehicle {
     nextInspectionDate: string[];
     productionDate: string[];
     driver?: Driver;
-    locations: Location[];
+    locations: Location[] | [];
 }
 
 export interface VehiclesPage {
