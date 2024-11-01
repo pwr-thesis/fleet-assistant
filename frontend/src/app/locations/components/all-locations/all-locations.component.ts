@@ -61,15 +61,20 @@ export class AllLocationsComponent implements OnInit {
                 vehicle.locations[vehicle.locations.length - 1];
             const imgTag = document.createElement('img');
             imgTag.src = 'car-icon.png';
+
+            if (!lastLocation) {
+                return null;
+            }
+
             return {
                 position: {
-                    lat: lastLocation?.latitude,
-                    lng: lastLocation?.longitude,
+                    lat: lastLocation.latitude,
+                    lng: lastLocation.longitude,
                 },
                 vehicle: vehicle,
                 content: imgTag,
             };
-        });
+        }).filter((marker): marker is CustomMarker => marker !== null);
     }
 
     onMarkerClick(marker: CustomMarker): void {
