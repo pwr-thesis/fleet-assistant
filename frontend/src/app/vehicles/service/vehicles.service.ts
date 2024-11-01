@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { VehiclesHttpService } from './vehicles-http.service';
 import { Vehicle, VehicleCreateRequest, VehiclesPage } from '../types/vehicles';
 import { Observable } from 'rxjs';
+import { Location } from '../../locations/types/locations';
 
 @Injectable({
     providedIn: 'root',
@@ -21,5 +22,9 @@ export class VehiclesService {
 
     getVehicle(id: string): Observable<Vehicle> {
         return this.vehiclesHttpService.getVehicle(id);
+    }
+
+    getVehicleLocation(id: number): Observable<Location> {
+        return this.vehiclesHttpService.getVehicleLocation(id);
     }
 }
