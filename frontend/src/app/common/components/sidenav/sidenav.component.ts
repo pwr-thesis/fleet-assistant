@@ -74,4 +74,8 @@ export class SidenavComponent {
     isLoggedIn(): boolean {
         return this.authService.isLoggedIn();
     }
+
+    isManager(): boolean {
+        return this.authService.isManager();
+    }
 }

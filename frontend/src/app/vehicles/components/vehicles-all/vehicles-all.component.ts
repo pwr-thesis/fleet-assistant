@@ -7,6 +7,7 @@ import { Vehicle } from '../../types/vehicles';
 import { VehicleAddCardComponent } from '../vehicle-card/vehicle-add-card/vehicle-add-card.component';
 import { RouterLink } from '@angular/router';
 import { VehiclesService } from '../../service/vehicles.service';
+import { AuthService } from '../../../auth/service/auth.service';
 
 @Component({
     selector: 'app-vehicles-all',
@@ -26,11 +27,18 @@ import { VehiclesService } from '../../service/vehicles.service';
 export class VehiclesAllComponent implements OnInit {
     vehicles: Vehicle[] | undefined;
 
-    constructor(private vehiclesService: VehiclesService) {}
+    constructor(
+        private vehiclesService: VehiclesService,
+        private authService: AuthService
+    ) {}
 
     ngOnInit(): void {
         this.vehiclesService.getAllVehicles().subscribe((page) => {
             this.vehicles = page.content;
         });
+    }
+
+    isDriver(): boolean {
+        return !this.authService.isManager();
     }
 }

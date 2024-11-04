@@ -28,12 +28,14 @@
                 [isTextVisible]="isMenuOpen"
             />
             <app-nav-button
+                *ngIf="isManager()"
                 link="/locations"
                 iconName="location_on"
                 text="Locations"
                 [isTextVisible]="isMenuOpen"
             />
             <app-nav-button
+                *ngIf="isManager()"
                 link="/drivers"
                 iconName="group"
                 text="Drivers"

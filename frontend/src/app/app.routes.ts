@@ -13,6 +13,7 @@ import { VehicleCreateComponent } from './vehicles/components/vehicle-create/veh
 import { VehicleDetailsComponent } from './vehicles/components/vehicle-details/vehicle-details.component';
 import { vehicleDetailsResolver } from '../utilities/resolvers/vehicle-details.resolver';
 import { AllLocationsComponent } from './locations/components/all-locations/all-locations.component';
+import { managerRoleGuard } from '../utilities/guards/manager-role.guard';
 
 export const routes: Routes = [
     { path: 'management-info', component: WelcomeManagementComponent },
@@ -41,17 +42,17 @@ export const routes: Routes = [
     {
         path: 'new-vehicle',
         component: VehicleCreateComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, managerRoleGuard],
     },
     {
         path: 'locations',
         component: AllLocationsComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, managerRoleGuard],
     },
     {
         path: 'vehicles/details/:id',
         component: VehicleDetailsComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, managerRoleGuard],
         resolve: { vehicle: vehicleDetailsResolver },
     },
     { path: '', component: WelcomePageComponent },

@@ -1,7 +1,7 @@
 <mat-card
     class="vehicle-card cursor-pointer w-[300px] h-[300px] hover:shadow-xl active:shadow-md transition-all duration-300 ease-in-out"
     appearance="outlined"
-    [routerLink]="'/vehicles/details/' + vehicle.id"
+    [routerLink]="!isDriver ? ['/vehicles/details/' + vehicle.id] : null"
 >
     <mat-card-header>
         <mat-card-title>
@@ -9,7 +9,7 @@
                 {{ vehicle.name }}
             </span>
         </mat-card-title>
-        <mat-card-subtitle>
+        <mat-card-subtitle *ngIf="!isDriver">
             <app-vehicle-card-field
                 [fieldValue]="getDriverName()"
                 fieldName="Driver"
@@ -18,6 +18,11 @@
     </mat-card-header>
     <hr class="mt-2 mb-2" />
     <mat-card-content>
+        <app-vehicle-card-field
+            *ngIf="isDriver"
+            [fieldValue]="vehicle.vin"
+            fieldName="VIN"
+        />
         <app-vehicle-card-field
             [fieldValue]="vehicle.plateNumber"
             fieldName="Plate Number"
@@ -29,6 +34,11 @@
         <app-vehicle-card-field
             [fieldValue]="toDisplayDate(vehicle.insuranceDate)"
             fieldName="Insurance date"
+        />
+        <app-vehicle-card-field
+            *ngIf="isDriver"
+            [fieldValue]="toDisplayDate(vehicle.lastInspectionDate)"
+            fieldName="Last inspection date"
         />
         <app-vehicle-card-field
             [fieldValue]="toDisplayDate(vehicle.nextInspectionDate)"
