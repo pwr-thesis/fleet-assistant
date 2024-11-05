@@ -7,6 +7,7 @@ import { MatIconButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../auth/service/auth.service';
 import { NgIf } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-header',
@@ -21,6 +22,7 @@ import { NgIf } from '@angular/common';
         MatMenuItem,
         RouterLink,
         NgIf,
+        MatTooltip,
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
