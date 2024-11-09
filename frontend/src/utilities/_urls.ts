@@ -12,3 +12,5 @@ export const GET_VEHICLE_BY_ID_URL = (id: string): string =>
     VEHICLES_URL + `/${id}`;
 export const GET_VEHICLE_LIVE_LOCATION_BY_ID_URL = (id: string): string =>
     VEHICLES_URL + `/${id}/location-stream`;
+//TODO: CHECK URL
+export const DRIVERS_URL = environment.apiUrl + '/driver';

@@ -4,10 +4,7 @@
             {{ isDriver() ? 'Assigned vehicles:' : 'Your fleet:' }}
         </h3>
         <div class="flex flex-wrap gap-10 justify-center">
-            <app-vehicle-add-card
-                *ngIf="!isDriver()"
-                routerLink="/new-vehicle"
-            />
+            <app-add-card *ngIf="!isDriver()" routerLink="/new-vehicle" />
             <app-vehicle-card
                 *ngFor="let vehicle of vehicles"
                 [vehicle]="vehicle"
@@ -37,6 +34,6 @@
                     : "You don't have any vehicle in your fleet!"
             }}
         </h3>
-        <app-vehicle-add-card *ngIf="!isDriver()" routerLink="/new-vehicle" />
+        <app-add-card *ngIf="!isDriver()" routerLink="/new-vehicle" />
     </div>
 </div>

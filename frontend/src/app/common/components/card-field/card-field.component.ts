@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'app-vehicle-card-field',
+    selector: 'app-card-field',
     standalone: true,
     imports: [],
-    templateUrl: './vehicle-card-field.component.html',
+    templateUrl: './card-field.component.html',
 })
-export class VehicleCardFieldComponent {
+export class CardFieldComponent {
     @Input() fieldName!: string;
     @Input() fieldValue!: string;
 }
