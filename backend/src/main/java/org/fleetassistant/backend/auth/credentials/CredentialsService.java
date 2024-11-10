@@ -3,6 +3,8 @@ package org.fleetassistant.backend.auth.credentials;
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.auth.credentials.model.Role;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,12 @@ public class CredentialsService implements UserDetailsService {
 
     public boolean ifCredentialsExist(String email) {
         return credentialsRepository.findByEmail(email).isPresent();
+    }
+
+    public static Credentials getCredentials() {
+        SecurityContext securityContextHolder = SecurityContextHolder.getContext();
+        Credentials credentials = (Credentials) securityContextHolder.getAuthentication().getPrincipal();
+        return credentials;
     }
 
     private Credentials.CredentialsBuilder createCredentials(String email, Role role) {

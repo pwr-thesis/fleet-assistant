@@ -2,8 +2,10 @@ package org.fleetassistant.backend.utils.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.CredentialsService;
+import org.fleetassistant.backend.auth.credentials.model.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -44,7 +46,8 @@ public class SecurityConfig {
                 .addFilterAt(customFilter, BearerTokenAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/user/**").authenticated()
-                        .requestMatchers("/api/v1/vehicle/**").hasAuthority("MANAGER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/vehicle/**").hasAuthority(Role.MANAGER.name())
+                        .requestMatchers("/api/v1/vehicle/**").authenticated()
                         .anyRequest().permitAll());
 
         return http.build();

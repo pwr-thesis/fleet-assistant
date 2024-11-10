@@ -2,12 +2,15 @@ package org.fleetassistant.backend.vehicle;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.fleetassistant.backend.auth.credentials.CredentialsService;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
-import org.fleetassistant.backend.dto.User;
+import org.fleetassistant.backend.auth.credentials.model.Role;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
 import org.fleetassistant.backend.location.LocationService;
 import org.fleetassistant.backend.location.model.Location;
+import org.fleetassistant.backend.user.model.Manager;
+import org.fleetassistant.backend.user.service.ManagerService;
 import org.fleetassistant.backend.user.service.UserService;
 import org.fleetassistant.backend.utils.EntityToDtoMapper;
 import org.fleetassistant.backend.vehicle.model.Vehicle;
@@ -15,8 +18,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,21 +33,30 @@ public class VehicleService {
     private final EntityToDtoMapper entityToDtoMapper;
     private final LocationService locationService;
     private final UserService userService;
+    private final ManagerService managerService;
 
+    @Transactional
     public org.fleetassistant.backend.dto.Vehicle create(org.fleetassistant.backend.dto.Vehicle carDTO) {
         Vehicle car = entityToDtoMapper.vehicleDtoToVehicle(carDTO);
         if (isVehicleExists(car))
             throw new ObjectAlreadyExistsException(String.format(CAR_WITH_VIN_ALREADY_EXISTS, car.getVin()));
+        Credentials credentials = CredentialsService.getCredentials();
+        Manager manager = managerService.getManagerByEmail(credentials.getEmail());
+        car.setManager(manager);
         car.setNextInspectionDate(calculateNextInspectionDate(car.getProductionDate(), car.getLastInspectionDate()));
         return entityToDtoMapper.vehicleToVehicleDto(vehicleRepository.save(car));
     }
 
     public Page<org.fleetassistant.backend.dto.Vehicle> readAll(Pageable pageable) {
-        SecurityContext securityContextHolder = SecurityContextHolder.getContext();
-        Credentials credentials = (Credentials) securityContextHolder.getAuthentication().getPrincipal();
+        Credentials credentials = CredentialsService.getCredentials();
         Long id = userService.getUserIdByEmail(credentials.getEmail());
-        return vehicleRepository.findAllByManagerId(id, pageable).map(entityToDtoMapper::vehicleToVehicleDto);
+        if (credentials.getRole().equals(Role.MANAGER)) {
+            return vehicleRepository.findAllByManagerId(id, pageable).map(entityToDtoMapper::vehicleToVehicleDto);
+        } else {
+            return vehicleRepository.findAllByDriverId(id, pageable).map(entityToDtoMapper::vehicleToVehicleDto);
+        }
     }
+
 
     public org.fleetassistant.backend.dto.Vehicle readById(Long id) {
         return entityToDtoMapper.vehicleToVehicleDto(readVehicleById(id));
