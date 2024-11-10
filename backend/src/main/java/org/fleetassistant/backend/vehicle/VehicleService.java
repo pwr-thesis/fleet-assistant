@@ -2,16 +2,21 @@ package org.fleetassistant.backend.vehicle;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.fleetassistant.backend.auth.credentials.model.Credentials;
+import org.fleetassistant.backend.dto.User;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
 import org.fleetassistant.backend.location.LocationService;
 import org.fleetassistant.backend.location.model.Location;
+import org.fleetassistant.backend.user.service.UserService;
 import org.fleetassistant.backend.utils.EntityToDtoMapper;
 import org.fleetassistant.backend.vehicle.model.Vehicle;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +31,7 @@ public class VehicleService {
     private final VehicleRepository vehicleRepository;
     private final EntityToDtoMapper entityToDtoMapper;
     private final LocationService locationService;
+    private final UserService userService;
 
     public org.fleetassistant.backend.dto.Vehicle create(org.fleetassistant.backend.dto.Vehicle carDTO) {
         Vehicle car = entityToDtoMapper.vehicleDtoToVehicle(carDTO);
@@ -36,7 +42,10 @@ public class VehicleService {
     }
 
     public Page<org.fleetassistant.backend.dto.Vehicle> readAll(Pageable pageable) {
-        return vehicleRepository.findAll(pageable).map(entityToDtoMapper::vehicleToVehicleDto);
+        SecurityContext securityContextHolder = SecurityContextHolder.getContext();
+        Credentials credentials = (Credentials) securityContextHolder.getAuthentication().getPrincipal();
+        Long id = userService.getUserIdByEmail(credentials.getEmail());
+        return vehicleRepository.findAllByManagerId(id, pageable).map(entityToDtoMapper::vehicleToVehicleDto);
     }
 
     public org.fleetassistant.backend.dto.Vehicle readById(Long id) {

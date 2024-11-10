@@ -16,7 +16,15 @@ public class UserService {
     private final EntityToDtoMapper entityToDtoMapper;
 
     public User getUserByEmail(String email) {
-        return entityToDtoMapper.userToUserDto(userRepository.findByCredentials_Email(email)
-                .orElseThrow(() -> new NoSuchObjectException(Constants.USER_DOESNT_EXIST)));
+        return entityToDtoMapper.userToUserDto(getUserEntityByEmail(email));
+    }
+
+    public Long getUserIdByEmail(String email) {
+        return getUserEntityByEmail(email).getId();
+    }
+
+    private org.fleetassistant.backend.user.model.User getUserEntityByEmail(String email) {
+        return userRepository.findByCredentials_Email(email)
+                .orElseThrow(() -> new NoSuchObjectException(Constants.USER_DOESNT_EXIST));
     }
 }
