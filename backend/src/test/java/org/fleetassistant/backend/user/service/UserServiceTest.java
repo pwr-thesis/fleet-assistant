@@ -75,4 +75,28 @@ class UserServiceTest {
         assertEquals(Constants.USER_DOESNT_EXIST, exception.getMessage());
         verify(userRepository).findByCredentials_Email(email);
     }
+
+    @Test
+    void getUserIdByEmail_userNotFound_throwsException() {
+        // Given
+        String email = "johndoe@example.com";
+        when(userRepository.findByCredentials_Email(email)).thenReturn(Optional.empty());
+        // When
+        NoSuchObjectException exception = assertThrows(NoSuchObjectException.class, () -> userService.getUserIdByEmail(email));
+        // Then
+        assertEquals(Constants.USER_DOESNT_EXIST, exception.getMessage());
+        verify(userRepository).findByCredentials_Email(email);
+    }
+
+    @Test
+    void getUserIdByEmail_success() {
+        // Given
+        String email = "johndoe@example.com";
+        when(userRepository.findByCredentials_Email(email)).thenReturn(Optional.of(manager));
+        // When
+        Long id = userService.getUserIdByEmail(email);
+        // Then
+        assertEquals(manager.getId(), id);
+        verify(userRepository).findByCredentials_Email(email);
+    }
 }

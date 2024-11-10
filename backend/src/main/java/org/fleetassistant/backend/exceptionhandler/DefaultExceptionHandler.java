@@ -1,7 +1,5 @@
 package org.fleetassistant.backend.exceptionhandler;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
 import org.fleetassistant.backend.exceptionhandler.nonrest.IncorrectTokenTypeException;
 import org.fleetassistant.backend.exceptionhandler.rest.*;
 import org.hibernate.ObjectNotFoundException;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-
-import java.security.SignatureException;
 
 import static org.fleetassistant.backend.utils.Constants.*;
 
@@ -56,14 +52,6 @@ public class DefaultExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
     }
 
-
-    @ExceptionHandler({ExpiredJwtException.class, SignatureException.class,
-            MalformedJwtException.class})
-    public ResponseEntity<Problem> handleJwtExceptions(RuntimeException e) {
-        Problem problem = buildProblem(Status.UNAUTHORIZED, AUTHENTICATION_EXCEPTION, e.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(problem);
-    }
-
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Problem> handleBadCredentials() {
         Problem problem = buildProblem(Status.UNAUTHORIZED, AUTHENTICATION_EXCEPTION, WRONG_EMAIL_OR_PASSWORD);
@@ -83,7 +71,7 @@ public class DefaultExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
     }
 
-    private Problem buildProblem(Status status, String title, String detail) {
+    public static Problem buildProblem(Status status, String title, String detail) {
         return Problem.builder()
                 .withStatus(status)
                 .withTitle(title)
