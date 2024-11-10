@@ -1,10 +1,12 @@
 package org.fleetassistant.backend.vehicle;
 
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
+import org.fleetassistant.backend.auth.credentials.model.Role;
 import org.fleetassistant.backend.location.LocationService;
 import org.fleetassistant.backend.location.model.Location;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
+import org.fleetassistant.backend.user.service.ManagerService;
 import org.fleetassistant.backend.user.service.UserService;
 import org.fleetassistant.backend.utils.EntityToDtoMapper;
 import org.fleetassistant.backend.vehicle.model.Vehicle;
@@ -44,6 +46,8 @@ class VehicleServiceTest {
     private LocationService locationService;
     @Mock
     private UserService userService;
+    @Mock
+    private ManagerService managerService;
 
     @InjectMocks
     private VehicleService vehicleService;
@@ -122,7 +126,7 @@ class VehicleServiceTest {
 
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-        when(authentication.getPrincipal()).thenReturn(Credentials.builder().email("").build());
+        when(authentication.getPrincipal()).thenReturn(Credentials.builder().email("").role(Role.MANAGER).build());
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
 
