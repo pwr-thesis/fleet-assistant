@@ -13,9 +13,11 @@ public class ManagerService {
     private final UserRepository userRepository;
 
     public Manager createManager(Jwt jwt) {
+        String givenName = jwt.getClaim("given_name");
+        String familyName = jwt.getClaim("family_name");
         Manager manager = Manager.builder()
-                .name(jwt.getClaim("given_name"))
-                .surname(jwt.getClaim("family_name"))
+                .name(givenName == null ? "" : givenName)
+                .surname(familyName == null ? "" : familyName)
                 .build();
         return userRepository.save(manager);
     }

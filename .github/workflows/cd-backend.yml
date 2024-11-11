@@ -1,0 +1,64 @@
+name: CD for Backend
+
+on:
+  pull_request:
+    branches:
+      - test-pipeline
+    paths:
+      - 'backend/**'
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: 'adopt'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Fetch security group ID
+        run: SECURITY_GROUP_ID=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=${RDS_CONN_SECURITY_GROUP_NAME}" --query "SecurityGroups[0].GroupId" --output text)
+        with:
+          RDS_CONN_SECURITY_GROUP_NAME: ${{ secrets.RDS_CONN_SECURITY_GROUP_NAME }}
+
+      - name: Run Gradle build
+        run: ./gradlew build
+
+      - name: Zip Gradle build
+        uses: vimtor/action-zip@v1.2
+        with:
+          files: ./build/libs/backend-0.1.jar
+          dest: ./build/libs/backend-0.1.zip
+
+      - name: Terraform deployment
+        with:
+          RDS_INSTANCE_USERNAME: ${{ secrets.RDS_INSTANCE_USERNAME }}
+          RDS_INSTANCE_PASSWORD: ${{ secrets.RDS_INSTANCE_PASSWORD }}
+          RDS_INSTANCE_ENDPOINT: ${{ secrets.RDS_INSTANCE_ENDPOINT }}
+        run: |
+          cd ../deployment/cd_backend
+          TF_VAR_rds_connection_sg_id=$SECURITY_GROUP_ID TF_VAR_rds_instance_username=$RDS_INSTANCE_USERNAME TF_VAR_rds_instance_password=$RDS_INSTANCE_PASSWORD TF_VAR_rds_instance_endpoint=$RDS_INSTANCE_ENDPOINT terraform apply -var-file="../variables.tfvars" -replace="aws_instance.ec2_backend" -auto-approve
