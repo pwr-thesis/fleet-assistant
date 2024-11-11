@@ -11,3 +11,4 @@
 **/dist
 environment.ts
 **/.venv
+**/coverage
