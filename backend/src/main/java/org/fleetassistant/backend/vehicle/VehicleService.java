@@ -10,6 +10,7 @@ import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsExcep
 import org.fleetassistant.backend.location.LocationService;
 import org.fleetassistant.backend.location.model.Location;
 import org.fleetassistant.backend.user.model.Manager;
+import org.fleetassistant.backend.user.service.DriverService;
 import org.fleetassistant.backend.user.service.ManagerService;
 import org.fleetassistant.backend.user.service.UserService;
 import org.fleetassistant.backend.utils.EntityToDtoMapper;
@@ -34,17 +35,24 @@ public class VehicleService {
     private final LocationService locationService;
     private final UserService userService;
     private final ManagerService managerService;
+    private final DriverService driverService;
 
     @Transactional
-    public org.fleetassistant.backend.dto.Vehicle create(org.fleetassistant.backend.dto.Vehicle carDTO) {
-        Vehicle car = entityToDtoMapper.vehicleDtoToVehicle(carDTO);
-        if (isVehicleExists(car))
-            throw new ObjectAlreadyExistsException(String.format(CAR_WITH_VIN_ALREADY_EXISTS, car.getVin()));
+    public org.fleetassistant.backend.dto.Vehicle create(org.fleetassistant.backend.dto.Vehicle vehicleDTO) {
+        Vehicle vehicle = entityToDtoMapper.vehicleDtoToVehicle(vehicleDTO);
+        if (isVehicleExists(vehicle))
+            throw new ObjectAlreadyExistsException(String.format(CAR_WITH_VIN_ALREADY_EXISTS, vehicle.getVin()));
+
         Credentials credentials = CredentialsService.getCredentials();
         Manager manager = managerService.getManagerByEmail(credentials.getEmail());
-        car.setManager(manager);
-        car.setNextInspectionDate(calculateNextInspectionDate(car.getProductionDate(), car.getLastInspectionDate()));
-        return entityToDtoMapper.vehicleToVehicleDto(vehicleRepository.save(car));
+        vehicle.setManager(manager);
+
+        var driver = driverService.getDriverById(vehicleDTO.driverId());
+        if(driver != null) {
+            vehicle.setDriver(driver);
+        }
+        vehicle.setNextInspectionDate(calculateNextInspectionDate(vehicle.getProductionDate(), vehicle.getLastInspectionDate()));
+        return entityToDtoMapper.vehicleToVehicleDto(vehicleRepository.save(vehicle));
     }
 
     public Page<org.fleetassistant.backend.dto.Vehicle> readAll(Pageable pageable) {
@@ -89,6 +97,11 @@ public class VehicleService {
     private Vehicle readVehicleById(Long id) {
         return vehicleRepository.findById(id)
                 .orElseThrow(() -> new NoSuchObjectException(String.format(VEHICLE_WITH_ID_NOT_FOUND, id)));
+    }
+    public org.fleetassistant.backend.dto.Vehicle assignDriver(Long id, Long driverId) {
+        Vehicle vehicle = readVehicleById(id);
+        vehicle.setDriver(driverService.getDriverById(driverId));
+        return entityToDtoMapper.vehicleToVehicleDto(vehicleRepository.save(vehicle));
     }
 
     static LocalDate calculateNextInspectionDate(LocalDate productionDate, LocalDate lastInspectionDate) {

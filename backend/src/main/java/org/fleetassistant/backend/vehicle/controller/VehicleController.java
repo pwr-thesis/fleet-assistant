@@ -8,7 +8,6 @@ import org.fleetassistant.backend.location.LocationService;
 import org.fleetassistant.backend.vehicle.VehicleService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +23,7 @@ import java.time.Duration;
 public class VehicleController {
     private final VehicleService vehicleService;
     private final LocationService locationService;
+
     @PostMapping
     public ResponseEntity<Vehicle> create(@RequestBody @Valid Vehicle vehicle) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -42,9 +42,10 @@ public class VehicleController {
 
     @PostMapping("/{id}/location")
     public ResponseEntity<Location> updateLocation(@RequestBody @Valid Location locationDTO,
-                                                      @PathVariable Long id) {
+                                                   @PathVariable Long id) {
         return ResponseEntity.ok(vehicleService.updateLocation(locationDTO, id));
     }
+
     @DeleteMapping("/{id}/location")
     public ResponseEntity<Void> deleteLocations(@PathVariable Long id) {
         vehicleService.deleteLocations(id);
@@ -69,5 +70,10 @@ public class VehicleController {
                 });
 
         return Flux.concat(initialData, periodicUpdates);
+    }
+
+    @PostMapping("/{id}/assign-driver/{driverId}")
+    public ResponseEntity<Vehicle> assignDriver(@PathVariable Long id, @PathVariable Long driverId) {
+        return ResponseEntity.ok(vehicleService.assignDriver(id, driverId));
     }
 }
