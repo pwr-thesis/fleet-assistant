@@ -23,7 +23,7 @@ export class DriversAllComponent implements OnInit {
 
     ngOnInit(): void {
         this.driversService
-            .getAllDrivers()
+            .getAllDrivers(false)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((result) => {
                 this.drivers = result.content;

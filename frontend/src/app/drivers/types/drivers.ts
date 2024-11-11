@@ -1,12 +1,11 @@
 import { UserInfo } from '../../auth/types/auth';
 
-//TODO: CHECK ENTITY FROM BACKEND
 export interface Driver extends UserInfo {
     id: string;
     drivingLicenseNumber: string;
     drivingLicenseCountryCode: string;
     birthDate: string[];
-    isInRegisterProcess: boolean;
+    isEnabled: boolean;
 }
 
 export interface DriverCreateRequest {
@@ -14,7 +13,7 @@ export interface DriverCreateRequest {
     surname: string;
     email: string;
     drivingLicenseNumber: string;
-    drivingLicenseCountryCode: string;
+    driverLicenseCountryCode: string;
     birthDate: string;
 }
 

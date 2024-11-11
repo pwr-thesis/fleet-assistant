@@ -12,7 +12,7 @@
             <app-card-field [fieldValue]="driver.email" fieldName="E-mail" />
             <span
                 class="font-bold text-red-700"
-                *ngIf="driver.isInRegisterProcess"
+                *ngIf="!driver.isEnabled"
             >
                 In registration process
             </span>

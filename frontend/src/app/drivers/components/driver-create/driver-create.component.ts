@@ -75,7 +75,7 @@ export class DriverCreateComponent {
                 name: driverFormValue.name,
                 surname: driverFormValue.surname,
                 email: driverFormValue.email,
-                drivingLicenseCountryCode:
+                driverLicenseCountryCode:
                     driverFormValue.driverLicenseCountryCode,
                 drivingLicenseNumber: driverFormValue.driverLicenseNumber,
                 birthDate: moment(driverFormValue.birthDate).format(
