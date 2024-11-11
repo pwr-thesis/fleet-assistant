@@ -40,7 +40,7 @@ export class AllLocationsComponent implements OnInit {
 
     ngOnInit(): void {
         this.vehicleService
-            .getAllVehicles()
+            .getAllVehicles({ pageSize: 100, pageNumber: 0 })
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((response) => {
                 this.vehicles = response.content;

@@ -17,6 +17,12 @@ export interface Vehicle {
 
 export interface VehiclesPage {
     content: Vehicle[];
+    totalElements: number;
+}
+
+export interface Pageable {
+    pageSize: number;
+    pageNumber: number;
 }
 
 export interface Driver {
