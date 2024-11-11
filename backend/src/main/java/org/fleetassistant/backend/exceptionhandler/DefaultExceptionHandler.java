@@ -65,7 +65,7 @@ public class DefaultExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(problem);
     }
 
-    @ExceptionHandler({InvalidTokenException.class, TokenRequiredException.class})
+    @ExceptionHandler({InvalidTokenException.class, TokenRequiredException.class, AccountIsActiveException.class})
     public ResponseEntity<Problem> handleTokenExceptions(RuntimeException ex) {
         Problem problem = buildProblem(Status.BAD_REQUEST, TOKEN_ERROR, ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
