@@ -5,7 +5,7 @@
             Proceed to Vehicle Details page to see live location.
         </p>
     </div>
-    <div class="flex justify-center w-full">
+    <div class="flex flex-wrap justify-center items-center w-full">
         <div class="map-container">
             <google-map
                 [zoom]="mapInitialZoom"
@@ -27,11 +27,11 @@
                 />
             </google-map>
         </div>
+        <app-vehicle-card
+            class="mt-6 ml-10"
+            *ngIf="selectedVehicle"
+            [vehicle]="selectedVehicle"
+            [isDriver]="false"
+        />
     </div>
-    <app-vehicle-card
-        class="mt-6"
-        *ngIf="selectedVehicle"
-        [vehicle]="selectedVehicle"
-        [isDriver]="false"
-    />
 </div>
