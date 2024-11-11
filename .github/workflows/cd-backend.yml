@@ -42,7 +42,7 @@ jobs:
 
       - name: Fetch security group ID
         run: SECURITY_GROUP_ID=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=${RDS_CONN_SECURITY_GROUP_NAME}" --query "SecurityGroups[0].GroupId" --output text)
-        with:
+        env:
           RDS_CONN_SECURITY_GROUP_NAME: ${{ secrets.RDS_CONN_SECURITY_GROUP_NAME }}
 
       - name: Run Gradle build
@@ -58,7 +58,7 @@ jobs:
         run: |
           cd ../deployment/cd_backend
           TF_VAR_rds_connection_sg_id=$SECURITY_GROUP_ID TF_VAR_rds_instance_username=$RDS_INSTANCE_USERNAME TF_VAR_rds_instance_password=$RDS_INSTANCE_PASSWORD TF_VAR_rds_instance_endpoint=$RDS_INSTANCE_ENDPOINT terraform apply -var-file="../variables.tfvars" -replace="aws_instance.ec2_backend" -auto-approve
-        with:
+        env:
           RDS_INSTANCE_USERNAME: ${{ secrets.RDS_INSTANCE_USERNAME }}
           RDS_INSTANCE_PASSWORD: ${{ secrets.RDS_INSTANCE_PASSWORD }}
           RDS_INSTANCE_ENDPOINT: ${{ secrets.RDS_INSTANCE_ENDPOINT }}
