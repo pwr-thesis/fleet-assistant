@@ -3,10 +3,16 @@ import { GoogleMap, MapAdvancedMarker } from '@angular/google-maps';
 import { Vehicle } from '../../../vehicles/types/vehicles';
 import { VehiclesService } from '../../../vehicles/service/vehicles.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CustomMarker, Location } from '../../types/locations';
+import { Location } from '../../types/locations';
 import { mapOptions } from '../../_helpers';
 import { NgForOf, NgIf } from '@angular/common';
 import { VehicleCardComponent } from '../../../vehicles/components/vehicle-card/vehicle-card.component';
+
+export interface CustomMarker {
+    position: google.maps.LatLngLiteral;
+    vehicle: Vehicle;
+    content: HTMLImageElement;
+}
 
 @Component({
     selector: 'app-all-locations',
