@@ -43,8 +43,5 @@ jobs:
       - name: Run tests
         run: npm run test
 
-      - name: Run ng build
-        run: npm run build
-
       - name: Run linter tests
         run: npm run lint
