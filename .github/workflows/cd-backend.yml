@@ -46,7 +46,9 @@ jobs:
           RDS_CONN_SECURITY_GROUP_NAME: ${{ secrets.RDS_CONN_SECURITY_GROUP_NAME }}
 
       - name: Run Gradle build
-        run: ./gradlew build
+        run: |
+          ./gradlew build
+          tree ./
 
       - name: Zip Gradle build
         uses: vimtor/action-zip@v1.2
