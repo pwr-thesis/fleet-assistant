@@ -57,6 +57,11 @@ jobs:
       - name: Terraform deployment
         run: |
           cd ../deployment/cd_backend
+          terraform init -migrate-state
+
+      - name: Terraform deployment
+        run: |
+          cd ../deployment/cd_backend
           TF_VAR_rds_connection_sg_id=$SECURITY_GROUP_ID TF_VAR_rds_instance_username=$RDS_INSTANCE_USERNAME TF_VAR_rds_instance_password=$RDS_INSTANCE_PASSWORD TF_VAR_rds_instance_endpoint=$RDS_INSTANCE_ENDPOINT terraform apply -var-file="../variables.tfvars" -replace="aws_instance.ec2_backend" -auto-approve
         env:
           RDS_INSTANCE_USERNAME: ${{ secrets.RDS_INSTANCE_USERNAME }}
