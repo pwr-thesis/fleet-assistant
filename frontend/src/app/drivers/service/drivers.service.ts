@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DriversHttpService } from './drivers-http.service';
-import { Observable } from 'rxjs';
-import { Driver, DriverCreateRequest, DriversPage } from '../types/drivers';
+import {Observable} from 'rxjs';
+import { DriverCreateRequest, DriversPage } from '../types/drivers';
 
 @Injectable({
     providedIn: 'root',
@@ -13,7 +13,7 @@ export class DriversService {
         return this.driversHttpService.getAllDrivers(registered);
     }
 
-    createDriver(driverCreateRequest: DriverCreateRequest): Observable<Driver> {
+    createDriver(driverCreateRequest: DriverCreateRequest): Observable<string> {
         return this.driversHttpService.createDriver(driverCreateRequest);
     }
 }
