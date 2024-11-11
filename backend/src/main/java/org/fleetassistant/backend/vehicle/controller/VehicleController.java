@@ -8,6 +8,7 @@ import org.fleetassistant.backend.location.LocationService;
 import org.fleetassistant.backend.vehicle.VehicleService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class VehicleController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Vehicle>> readAll(Pageable pageable) {
+    public ResponseEntity<Page<Vehicle>> readAll(@PageableDefault Pageable pageable) {
         return ResponseEntity.ok(vehicleService.readAll(pageable));
     }
 

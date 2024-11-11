@@ -10,8 +10,14 @@ import org.fleetassistant.backend.jwt.service.TokenGenerator;
 import org.fleetassistant.backend.user.model.Driver;
 import org.fleetassistant.backend.user.model.Manager;
 import org.fleetassistant.backend.user.repository.DriverRepository;
+import org.fleetassistant.backend.utils.EntityToDtoMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -22,6 +28,7 @@ public class DriverService {
     private final ManagerService managerService;
     @Value("${spring.verification.server}")
     private String verificationServer;
+    private final EntityToDtoMapper entityToDtoMapper;
 
 
     public Driver getDriverById(Long id) {
@@ -49,5 +56,14 @@ public class DriverService {
         //TODO put message to AWS SQS
 
         return token;
+    }
+
+    public Page<org.fleetassistant.backend.dto.Driver> getDrivers(Long managerId, Pageable pageable) {
+        return driverRepository.findAllByManagerId(managerId, pageable).map(entityToDtoMapper::driverToDriverDto);
+    }
+
+    public List<org.fleetassistant.backend.dto.Driver> getRegisteredDrivers(Long id, Pageable pageable) {
+        return driverRepository.findAllByManagerIdAndCredentialsIsEnabled(id, pageable, true).stream()
+                .map(entityToDtoMapper::driverToDriverDto).collect(Collectors.toList());
     }
 }

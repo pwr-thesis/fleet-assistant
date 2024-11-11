@@ -12,7 +12,7 @@ public record Driver(Long id,
                      String surname,
                      Role role,
                      String email,
-                     String isEnabled,
+                     Boolean isEnabled,
                      String drivingLicenseNumber,
                      String driverLicenseCountryCode,
                      LocalDate birthDate) {
