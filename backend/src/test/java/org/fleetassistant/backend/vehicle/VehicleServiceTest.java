@@ -1,9 +1,15 @@
 package org.fleetassistant.backend.vehicle;
 
-import org.fleetassistant.backend.location.LocationService;
-import org.fleetassistant.backend.location.model.Location;
+import org.fleetassistant.backend.auth.credentials.model.Credentials;
+import org.fleetassistant.backend.auth.credentials.model.Role;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
+import org.fleetassistant.backend.location.LocationService;
+import org.fleetassistant.backend.location.model.Location;
+import org.fleetassistant.backend.user.model.Driver;
+import org.fleetassistant.backend.user.service.DriverService;
+import org.fleetassistant.backend.user.service.ManagerService;
+import org.fleetassistant.backend.user.service.UserService;
 import org.fleetassistant.backend.utils.EntityToDtoMapper;
 import org.fleetassistant.backend.vehicle.model.Vehicle;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +17,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,7 +45,12 @@ class VehicleServiceTest {
     private EntityToDtoMapper entityToDtoMapper;
     @Mock
     private LocationService locationService;
-
+    @Mock
+    private UserService userService;
+    @Mock
+    private ManagerService managerService;
+    @Mock
+    private DriverService driverService;
     @InjectMocks
     private VehicleService vehicleService;
 
@@ -74,6 +90,7 @@ class VehicleServiceTest {
                 .productionDate(LocalDate.of(2023, 5, 20))
                 .lastInspectionDate(LocalDate.of(2023, 12, 10))
                 .insuranceDate(LocalDate.of(2023, 12, 10))
+                .driverId(1L)
                 .build();
 
     }
@@ -104,16 +121,41 @@ class VehicleServiceTest {
     }
 
     @Test
-    void readAll_shouldReturnVehicles() {
-        Pageable pageable = Pageable.unpaged();
-        Page<Vehicle> vehiclePage = mock(Page.class);
-        when(vehicleRepository.findAll(pageable)).thenReturn(vehiclePage);
-        when(vehiclePage.map(any())).thenReturn(mock(Page.class));
+    void readAll_shouldReturnVehicles_MANAGER() {
+        Pageable pageable = Pageable.ofSize(1);
+        Page<Vehicle> vehiclePage = new PageImpl<>(List.of(vehicle));
+        when(entityToDtoMapper.vehicleToVehicleDto(vehicle)).thenReturn(vehicleDto);
+        when(vehicleRepository.findAllByManagerId(0L, pageable)).thenReturn(vehiclePage);
+
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        when(authentication.getPrincipal()).thenReturn(Credentials.builder().email("").role(Role.MANAGER).build());
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
 
         Page<org.fleetassistant.backend.dto.Vehicle> result = vehicleService.readAll(pageable);
 
         assertNotNull(result);
-        verify(vehicleRepository, times(1)).findAll(pageable);
+        verify(vehicleRepository, times(1)).findAllByManagerId(any(), any());
+    }
+
+    @Test
+    void readAll_shouldReturnVehicles_DRIVER() {
+        Pageable pageable = Pageable.ofSize(1);
+        Page<Vehicle> vehiclePage = new PageImpl<>(List.of(vehicle));
+        when(entityToDtoMapper.vehicleToVehicleDto(vehicle)).thenReturn(vehicleDto);
+        when(vehicleRepository.findAllByDriverId(0L, pageable)).thenReturn(vehiclePage);
+
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        when(authentication.getPrincipal()).thenReturn(Credentials.builder().email("").role(Role.DRIVER).build());
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        Page<org.fleetassistant.backend.dto.Vehicle> result = vehicleService.readAll(pageable);
+
+        assertNotNull(result);
+        verify(vehicleRepository, times(1)).findAllByDriverId(any(), any());
     }
 
     @Test
@@ -236,10 +278,30 @@ class VehicleServiceTest {
 
         assertEquals(String.format(VehicleService.VEHICLE_WITH_ID_NOT_FOUND, 1L), exception.getMessage());
     }
+
     @Test
     void deleteLocations_success() {
         when(vehicleRepository.findById(anyLong())).thenReturn(Optional.of(vehicle));
         vehicleService.deleteLocations(1L);
         verify(locationService).deleteAllByVehicleId(1L);
+    }
+
+    @Test
+    void assignDriver_NoSuchObjectException() {
+        when(vehicleRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(NoSuchObjectException.class, () -> vehicleService.assignDriver(1L, 1L));
+
+        assertEquals(String.format(VehicleService.VEHICLE_WITH_ID_NOT_FOUND, 1L), exception.getMessage());
+    }
+
+    @Test
+    void assignDriver_success() {
+        when(vehicleRepository.findById(anyLong())).thenReturn(Optional.of(vehicle));
+        when(driverService.getDriverById(anyLong())).thenReturn(Driver.builder().id(1L).build());
+        when(vehicleRepository.save(any())).thenReturn(vehicle);
+        when(entityToDtoMapper.vehicleToVehicleDto(vehicle)).thenReturn(vehicleDto);
+        org.fleetassistant.backend.dto.Vehicle result = vehicleService.assignDriver(1L, 1L);
+        assertEquals( 1L, result.driverId());
     }
 }

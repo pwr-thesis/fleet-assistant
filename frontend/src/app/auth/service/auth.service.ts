@@ -76,6 +76,13 @@ export class AuthService {
         return !!localStorage.getItem('accessToken');
     }
 
+    isManager(): boolean {
+        const userInfo = localStorage.getItem('userInfo');
+        if (!userInfo) return false;
+        const user: UserInfo = JSON.parse(userInfo);
+        return user.role === 'MANAGER';
+    }
+
     getUserInfo(): UserInfo | null {
         const userInfo = localStorage.getItem('userInfo');
         if (!userInfo) return null;

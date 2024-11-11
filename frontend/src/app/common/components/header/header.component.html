@@ -28,7 +28,13 @@
             </ng-template>
         </div>
         <div class="flex md:hidden items-center gap-3">
-            <mat-icon *ngIf="isLoggedIn()" class="white-icon cursor-pointer"
+            <mat-icon
+                *ngIf="isLoggedIn()"
+                class="white-icon cursor-pointer"
+                matTooltip="{{ getUserRole() + ', ' + getUsername() }}"
+                #tooltip="matTooltip"
+                (click)="tooltip.show()"
+                matTooltipClass="custom-tooltip"
                 >account_circle</mat-icon
             >
             <button mat-icon-button [matMenuTriggerFor]="menu">

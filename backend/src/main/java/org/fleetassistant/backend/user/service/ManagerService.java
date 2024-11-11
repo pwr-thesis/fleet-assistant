@@ -2,7 +2,9 @@ package org.fleetassistant.backend.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.models.RegisterRequest;
+import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.user.model.Manager;
+import org.fleetassistant.backend.user.repository.ManagerRepository;
 import org.fleetassistant.backend.user.repository.UserRepository;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ManagerService {
     private final UserRepository userRepository;
+    private final ManagerRepository managerRepository;
 
     public Manager createManager(Jwt jwt) {
         String givenName = jwt.getClaim("given_name");
@@ -29,5 +32,9 @@ public class ManagerService {
                 .phone(request.getNumber())
                 .build();
         return userRepository.save(manager);
+    }
+
+    public Manager getManagerByEmail(String email) {
+        return managerRepository.findByCredentials_Email(email).orElseThrow(() -> new NoSuchObjectException("Manager with email: " + email + " not found"));
     }
 }

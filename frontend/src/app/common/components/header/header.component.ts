@@ -4,9 +4,10 @@ import { MatIcon } from '@angular/material/icon';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatIconButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../auth/service/auth.service';
 import { NgIf } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-header',
@@ -21,16 +22,20 @@ import { NgIf } from '@angular/common';
         MatMenuItem,
         RouterLink,
         NgIf,
+        MatTooltip,
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-    constructor(private authService: AuthService) {}
+    constructor(
+        private authService: AuthService,
+        private router: Router
+    ) {}
 
     onLogOut(): void {
-        window.location.reload();
         this.authService.logout();
+        this.router.navigate(['']);
     }
 
     isLoggedIn(): boolean {
