@@ -30,7 +30,6 @@ public class CustomAuthFilter extends OncePerRequestFilter {
                 if (usernamePasswordAuthenticationToken != null) {
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 }
-                filterChain.doFilter(request, response);
             }
             filterChain.doFilter(request, response);
         } catch (Exception e) {
