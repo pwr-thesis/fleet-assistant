@@ -41,22 +41,22 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
 
       - name: Run Gradle build
-        run: |
-          ./gradlew build
-          tree ./
+        run: ./gradlew build
 
       - name: Zip Gradle build
-        run: zip ./build/libs/backend.zip ./build/libs/backend-0.1.jar
+        working-directory: ./backend/build/libs
+        run: zip backend.zip backend-0.1.jar
 
       - name: Terraform init
         run: terraform init -migrate-state
         working-directory: ./deployment/cd_backend
 
       - name: Terraform deployment
+        working-directory: ./deployment/cd_backend
         run: |
           SECURITY_GROUP_ID=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=${RDS_CONN_SECURITY_GROUP_NAME}" --query "SecurityGroups[0].GroupId" --output text)
           TF_VAR_rds_connection_sg_id=$SECURITY_GROUP_ID TF_VAR_rds_instance_username=$RDS_INSTANCE_USERNAME TF_VAR_rds_instance_password=$RDS_INSTANCE_PASSWORD TF_VAR_rds_instance_endpoint=$RDS_INSTANCE_ENDPOINT terraform apply -var-file="../variables.tfvars" -replace="aws_instance.ec2_backend" -auto-approve
-        working-directory: ./deployment/cd_backend
+
         env:
           RDS_CONN_SECURITY_GROUP_NAME: ${{ secrets.RDS_CONN_SECURITY_GROUP_NAME }}
           RDS_INSTANCE_USERNAME: ${{ secrets.RDS_INSTANCE_USERNAME }}
