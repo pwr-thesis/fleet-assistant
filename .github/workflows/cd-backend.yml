@@ -52,7 +52,7 @@ jobs:
         uses: vimtor/action-zip@v1.2
         with:
           files: ./build/libs/backend-0.1.jar
-          dest: ./build/libs/backend-0.1.zip
+          dest: ./build/libs/backend.zip
 
       - name: Terraform init
         run: terraform init -migrate-state
