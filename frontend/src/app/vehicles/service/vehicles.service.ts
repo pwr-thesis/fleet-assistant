@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { VehiclesHttpService } from './vehicles-http.service';
-import { Vehicle, VehicleCreateRequest, VehiclesPage } from '../types/vehicles';
+import {
+    Pageable,
+    Vehicle,
+    VehicleCreateRequest,
+    VehiclesPage,
+} from '../types/vehicles';
 import { Observable } from 'rxjs';
 import { Location } from '../../locations/types/locations';
 
@@ -10,8 +15,8 @@ import { Location } from '../../locations/types/locations';
 export class VehiclesService {
     constructor(private vehiclesHttpService: VehiclesHttpService) {}
 
-    getAllVehicles(): Observable<VehiclesPage> {
-        return this.vehiclesHttpService.getAllVehicles();
+    getAllVehicles(pageable: Pageable): Observable<VehiclesPage> {
+        return this.vehiclesHttpService.getAllVehicles(pageable);
     }
 
     createVehicle(

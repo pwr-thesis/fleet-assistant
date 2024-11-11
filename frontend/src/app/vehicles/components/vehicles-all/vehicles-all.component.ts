@@ -8,11 +8,13 @@ import { VehicleAddCardComponent } from '../vehicle-card/vehicle-add-card/vehicl
 import { RouterLink } from '@angular/router';
 import { VehiclesService } from '../../service/vehicles.service';
 import { AuthService } from '../../../auth/service/auth.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
     selector: 'app-vehicles-all',
     standalone: true,
     templateUrl: './vehicles-all.component.html',
+    styleUrl: './vehicles-all.component.scss',
     imports: [
         VehicleCardComponent,
         NgForOf,
@@ -22,10 +24,15 @@ import { AuthService } from '../../../auth/service/auth.service';
         MatIcon,
         VehicleAddCardComponent,
         RouterLink,
+        MatPaginator,
     ],
 })
 export class VehiclesAllComponent implements OnInit {
     vehicles: Vehicle[] | undefined;
+    totalElements = 0;
+    pageIndex = 0;
+    pageSize = 4;
+    pageSizeOptions = [2, 4, 9, 14];
 
     constructor(
         private vehiclesService: VehiclesService,
@@ -33,9 +40,30 @@ export class VehiclesAllComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.vehiclesService.getAllVehicles().subscribe((page) => {
-            this.vehicles = page.content;
-        });
+        this.vehiclesService
+            .getAllVehicles({
+                pageNumber: this.pageIndex,
+                pageSize: this.pageSize,
+            })
+            .subscribe((page) => {
+                this.vehicles = page.content;
+                this.totalElements = page.totalElements;
+            });
+    }
+
+    handlePageEvent(e: PageEvent): void {
+        this.pageSize = e.pageSize;
+        this.pageIndex = e.pageIndex;
+
+        this.vehiclesService
+            .getAllVehicles({
+                pageNumber: this.pageIndex,
+                pageSize: this.pageSize,
+            })
+            .subscribe((page) => {
+                this.vehicles = page.content;
+                this.totalElements = page.totalElements;
+            });
     }
 
     isDriver(): boolean {

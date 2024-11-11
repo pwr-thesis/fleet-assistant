@@ -1,8 +1,14 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Vehicle, VehicleCreateRequest, VehiclesPage } from '../types/vehicles';
+import {
+    Pageable,
+    Vehicle,
+    VehicleCreateRequest,
+    VehiclesPage,
+} from '../types/vehicles';
 import { HttpClient } from '@angular/common/http';
 import {
+    GET_ALL_VEHICLES_URL,
     GET_VEHICLE_BY_ID_URL,
     GET_VEHICLE_LIVE_LOCATION_BY_ID_URL,
     VEHICLES_URL,
@@ -18,8 +24,10 @@ export class VehiclesHttpService {
         private ngZone: NgZone
     ) {}
 
-    getAllVehicles(): Observable<VehiclesPage> {
-        return this.http.get(VEHICLES_URL) as Observable<VehiclesPage>;
+    getAllVehicles(pageable: Pageable): Observable<VehiclesPage> {
+        return this.http.get(
+            GET_ALL_VEHICLES_URL(pageable)
+        ) as Observable<VehiclesPage>;
     }
 
     createVehicle(
