@@ -40,6 +40,9 @@ jobs:
           chmod +x ./generate-environment.sh
           ./generate-environment.sh
 
+      - name: Run tests
+        run: npm run test
+
       - name: Run ng build
         run: npm run build
 
