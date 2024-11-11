@@ -6,6 +6,7 @@ import org.fleetassistant.backend.location.LocationService;
 import org.fleetassistant.backend.location.model.Location;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
+import org.fleetassistant.backend.user.service.DriverService;
 import org.fleetassistant.backend.user.service.ManagerService;
 import org.fleetassistant.backend.user.service.UserService;
 import org.fleetassistant.backend.utils.EntityToDtoMapper;
@@ -48,7 +49,8 @@ class VehicleServiceTest {
     private UserService userService;
     @Mock
     private ManagerService managerService;
-
+    @Mock
+    private DriverService driverService;
     @InjectMocks
     private VehicleService vehicleService;
 
