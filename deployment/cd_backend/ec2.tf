@@ -30,9 +30,9 @@ resource "aws_instance" "ec2_backend" {
 resource "aws_s3_object" "backend_source_code" {
   bucket = var.private_s3_name
   key    = "/backend/source_code.zip"
-  source = "${path.module}/../../backend/build/libs/backend.zip"
+  source = "../../backend/build/libs/backend.zip"
 
-  source_hash = filemd5("${path.module}/../../backend/build/libs/backend.zip")
+  source_hash = filemd5("../../backend/build/libs/backend.zip")
 }
 
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
