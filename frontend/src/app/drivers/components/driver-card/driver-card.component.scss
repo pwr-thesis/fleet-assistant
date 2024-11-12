@@ -1,0 +1,13 @@
+.driver-card {
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.driver-card:hover {
+    background-color: #ededed !important;
+}
+
+.driver-card:active {
+    background-color: #d3d3d3 !important;
+}

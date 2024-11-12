@@ -1,5 +1,5 @@
-import { UserInfo } from '../../auth/types/auth';
 import { Location } from '../../locations/types/locations';
+import { Driver } from '../../drivers/types/drivers';
 
 export interface Vehicle {
     id: number;
@@ -23,14 +23,6 @@ export interface VehiclesPage {
 export interface Pageable {
     pageSize: number;
     pageNumber: number;
-}
-
-export interface Driver {
-    id: number;
-    drivingLicenseNumber: string;
-    drivingLicenseCountryCode: string;
-    dateOfBirth: string;
-    user: UserInfo;
 }
 
 export interface VehicleCreateRequest {

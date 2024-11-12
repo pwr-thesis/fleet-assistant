@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
-    selector: 'app-vehicle-add-card',
+    selector: 'app-add-card',
     standalone: true,
     imports: [MatCard, MatCardContent],
-    templateUrl: './vehicle-add-card.component.html',
-    styleUrl: './vehicle-add-card.component.scss',
+    templateUrl: './add-card.component.html',
+    styleUrl: './add-card.component.scss',
 })
-export class VehicleAddCardComponent {}
+export class AddCardComponent {}

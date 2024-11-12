@@ -14,6 +14,8 @@ import { VehicleDetailsComponent } from './vehicles/components/vehicle-details/v
 import { vehicleDetailsResolver } from '../utilities/resolvers/vehicle-details.resolver';
 import { AllLocationsComponent } from './locations/components/all-locations/all-locations.component';
 import { managerRoleGuard } from '../utilities/guards/manager-role.guard';
+import { DriversAllComponent } from './drivers/components/drivers-all/drivers-all.component';
+import { DriverCreateComponent } from './drivers/components/driver-create/driver-create.component';
 
 export const routes: Routes = [
     { path: 'management-info', component: WelcomeManagementComponent },
@@ -54,6 +56,16 @@ export const routes: Routes = [
         component: VehicleDetailsComponent,
         canActivate: [authGuard, managerRoleGuard],
         resolve: { vehicle: vehicleDetailsResolver },
+    },
+    {
+        path: 'drivers',
+        component: DriversAllComponent,
+        canActivate: [authGuard, managerRoleGuard],
+    },
+    {
+        path: 'create-driver',
+        component: DriverCreateComponent,
+        canActivate: [authGuard, managerRoleGuard],
     },
     { path: '', component: WelcomePageComponent },
     { path: '**', redirectTo: '' },

@@ -1,15 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import {
     MatCard,
-    MatCardActions,
     MatCardContent,
     MatCardHeader,
     MatCardSubtitle,
     MatCardTitle,
 } from '@angular/material/card';
 import { Vehicle } from '../../types/vehicles';
-import { VehicleCardFieldComponent } from './vehicle-card-field/vehicle-card-field.component';
+import { CardFieldComponent } from '../../../common/components/card-field/card-field.component';
 import { toDisplayDate } from '../../../../utilities/date-utils';
 import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
@@ -18,14 +16,12 @@ import { NgIf } from '@angular/common';
     selector: 'app-vehicle-card',
     standalone: true,
     imports: [
-        MatButton,
         MatCard,
-        MatCardActions,
         MatCardContent,
         MatCardHeader,
         MatCardSubtitle,
         MatCardTitle,
-        VehicleCardFieldComponent,
+        CardFieldComponent,
         RouterLink,
         NgIf,
     ],
@@ -40,9 +36,9 @@ export class VehicleCardComponent {
         if (this.vehicle.driver) {
             return (
                 ' ' +
-                this.vehicle.driver.user.name +
+                this.vehicle.driver.name +
                 ' ' +
-                this.vehicle.driver.user.surname
+                this.vehicle.driver.surname
             );
         }
         return ' N/A';

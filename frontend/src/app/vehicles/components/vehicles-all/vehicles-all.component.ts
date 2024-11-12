@@ -4,7 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { Vehicle } from '../../types/vehicles';
-import { VehicleAddCardComponent } from '../vehicle-card/vehicle-add-card/vehicle-add-card.component';
+import { AddCardComponent } from '../../../common/components/add-card/add-card.component';
 import { RouterLink } from '@angular/router';
 import { VehiclesService } from '../../service/vehicles.service';
 import { AuthService } from '../../../auth/service/auth.service';
@@ -22,7 +22,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
         MatCard,
         MatCardContent,
         MatIcon,
-        VehicleAddCardComponent,
+        AddCardComponent,
         RouterLink,
         MatPaginator,
     ],

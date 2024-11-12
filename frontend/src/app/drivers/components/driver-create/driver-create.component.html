@@ -1,0 +1,86 @@
+<div class="min-h-screen p-10">
+    <h3 class="text-center">Provide driver details:</h3>
+    <form
+        class="flex justify-center"
+        [formGroup]="createDriverForm"
+        (ngSubmit)="onCreateDriver()"
+    >
+        <div
+            class="flex max-w-[500px] w-full flex-col mb-2 max-sm:w-5/6 transition-all duration-500 ease-in-out gap-3 items-center"
+        >
+            <mat-form-field class="w-full">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" required formControlName="name" />
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Surname</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    required
+                    formControlName="surname"
+                />
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" required formControlName="email" />
+                <mat-error
+                    *ngIf="createDriverForm.get('email')?.hasError('email')"
+                >
+                    Please enter a valid email address
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Date of Birth</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="dateOfBirthPicker"
+                    (focus)="dateOfBirthPicker.open()"
+                    formControlName="dateOfBirth"
+                />
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker #dateOfBirthPicker></mat-datepicker>
+                <mat-error
+                    *ngIf="
+                        createDriverForm
+                            .get('dateOfBirth')
+                            ?.hasError('minSixteenYears')
+                    "
+                >
+                    Driver age must be 16 or higher
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Driver license country code</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    required
+                    formControlName="driverLicenseCountryCode"
+                />
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Driver license number</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    required
+                    formControlName="driverLicenseNumber"
+                />
+            </mat-form-field>
+            <div class="flex w-full justify-center gap-5">
+                <button
+                    routerLink="/drivers"
+                    mat-raised-button
+                    class="w-full"
+                    type="button"
+                >
+                    Cancel
+                </button>
+                <button mat-raised-button class="w-full accent" type="submit">
+                    Create
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

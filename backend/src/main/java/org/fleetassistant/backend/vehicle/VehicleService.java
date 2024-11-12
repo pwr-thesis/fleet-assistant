@@ -47,10 +47,11 @@ public class VehicleService {
         Manager manager = managerService.getManagerByEmail(credentials.getEmail());
         vehicle.setManager(manager);
 
-        var driver = driverService.getDriverById(vehicleDTO.driverId());
-        if(driver != null) {
+        if (vehicleDTO.driverId() != null) {
+            var driver = driverService.getDriverById(vehicleDTO.driverId());
             vehicle.setDriver(driver);
         }
+
         vehicle.setNextInspectionDate(calculateNextInspectionDate(vehicle.getProductionDate(), vehicle.getLastInspectionDate()));
         return entityToDtoMapper.vehicleToVehicleDto(vehicleRepository.save(vehicle));
     }
