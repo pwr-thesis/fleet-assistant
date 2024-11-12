@@ -32,4 +32,8 @@ export class VehiclesService {
     getVehicleLocation(id: number): Observable<Location> {
         return this.vehiclesHttpService.getVehicleLocation(id);
     }
+
+    assignDriver(vehicleId: string, driverId: string): Observable<Vehicle> {
+        return this.vehiclesHttpService.assignDriver(vehicleId, driverId);
+    }
 }

@@ -10,7 +10,7 @@ import { Vehicle } from '../../types/vehicles';
 import { CardFieldComponent } from '../../../common/components/card-field/card-field.component';
 import { toDisplayDate } from '../../../../utilities/date-utils';
 import { RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-vehicle-card',
@@ -24,6 +24,7 @@ import { NgIf } from '@angular/common';
         CardFieldComponent,
         RouterLink,
         NgIf,
+        NgClass,
     ],
     templateUrl: './vehicle-card.component.html',
     styleUrl: './vehicle-card.component.scss',
@@ -41,7 +42,11 @@ export class VehicleCardComponent {
                 this.vehicle.driver.surname
             );
         }
-        return ' N/A';
+        return ' Not assigned';
+    }
+
+    isDriverAssigned(): boolean {
+        return !!this.vehicle.driver;
     }
 
     protected readonly toDisplayDate = toDisplayDate;

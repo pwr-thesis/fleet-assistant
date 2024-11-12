@@ -19,4 +19,5 @@ export interface DriverCreateRequest {
 
 export interface DriversPage {
     content: Driver[];
+    totalElements: number;
 }

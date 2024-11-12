@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DRIVERS_URL, GET_DRIVERS_URL } from '../../../utilities/_urls';
-import { DriverCreateRequest, DriversPage } from '../types/drivers';
+import {
+    DRIVERS_URL,
+    GET_DRIVERS_URL,
+    GET_REGISTERED_DRIVERS_URL,
+} from '../../../utilities/_urls';
+import { Driver, DriverCreateRequest, DriversPage } from '../types/drivers';
+import { Pageable } from '../../vehicles/types/vehicles';
 
 @Injectable({
     providedIn: 'root',
@@ -10,10 +15,16 @@ import { DriverCreateRequest, DriversPage } from '../types/drivers';
 export class DriversHttpService {
     constructor(private http: HttpClient) {}
 
-    getAllDrivers(registered: boolean): Observable<DriversPage> {
+    getAllDrivers(pageable: Pageable): Observable<DriversPage> {
         return this.http.get(
-            GET_DRIVERS_URL(registered)
+            GET_DRIVERS_URL(pageable)
         ) as Observable<DriversPage>;
+    }
+
+    getRegisteredDrivers(): Observable<Driver[]> {
+        return this.http.get(GET_REGISTERED_DRIVERS_URL) as Observable<
+            Driver[]
+        >;
     }
 
     createDriver(driverCreateRequest: DriverCreateRequest): Observable<string> {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -9,6 +9,7 @@ import { RouterLink } from '@angular/router';
 import { VehiclesService } from '../../service/vehicles.service';
 import { AuthService } from '../../../auth/service/auth.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-vehicles-all',
@@ -36,7 +37,8 @@ export class VehiclesAllComponent implements OnInit {
 
     constructor(
         private vehiclesService: VehiclesService,
-        private authService: AuthService
+        private authService: AuthService,
+        private destroyRef: DestroyRef
     ) {}
 
     ngOnInit(): void {
@@ -45,6 +47,7 @@ export class VehiclesAllComponent implements OnInit {
                 pageNumber: this.pageIndex,
                 pageSize: this.pageSize,
             })
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((page) => {
                 this.vehicles = page.content;
                 this.totalElements = page.totalElements;
@@ -60,6 +63,7 @@ export class VehiclesAllComponent implements OnInit {
                 pageNumber: this.pageIndex,
                 pageSize: this.pageSize,
             })
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((page) => {
                 this.vehicles = page.content;
                 this.totalElements = page.totalElements;
