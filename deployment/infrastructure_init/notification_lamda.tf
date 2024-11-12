@@ -64,6 +64,27 @@ resource "aws_iam_policy" "notification_lambda_sqs_policy" {
   })
 }
 
+resource "aws_iam_policy" "ses_send_email_policy" {
+  name        = "LambdaSESPolicy"
+  description = "Policy to allow Lambda to send emails via SES"
+  
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = "ses:SendEmail",
+        Resource = "arn:aws:ses:::identity/*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_ses_policy_to_lambda" {
+  role       = aws_iam_role.notification_lambda_role.name
+  policy_arn = aws_iam_policy.ses_send_email_policy.arn
+}
+
 resource "aws_iam_role_policy_attachment" "notification_lambda_sqs_attachment" {
   role       = aws_iam_role.notification_lambda_role.name
   policy_arn = aws_iam_policy.notification_lambda_sqs_policy.arn
