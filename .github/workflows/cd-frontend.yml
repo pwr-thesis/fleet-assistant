@@ -3,7 +3,7 @@ name: CD for frontend
 on:
   pull_request:
     branches:
-      - test-pipeline
+      - release-*
     paths:
       - 'frontend/**'
 

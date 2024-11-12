@@ -3,7 +3,7 @@ name: CD for Backend
 on:
   pull_request:
     branches:
-      - test-*
+      - release-*
     paths:
       - 'backend/**'
 
