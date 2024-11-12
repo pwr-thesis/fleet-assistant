@@ -15,9 +15,10 @@ export class DriversHttpService {
     }
 
     createDriver(driverCreateRequest: DriverCreateRequest): Observable<string> {
-        return this.http.post(
+        return this.http.post<string>(
             DRIVERS_URL,
-            driverCreateRequest
+            driverCreateRequest,
+            {responseType: 'text' as 'json'}
         ) as Observable<string>;
     }
 }
