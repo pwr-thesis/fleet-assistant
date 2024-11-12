@@ -10,5 +10,6 @@
 **/package-lock.json
 **/dist
 environment.ts
+**terraform**
 **/.venv
 **/coverage
