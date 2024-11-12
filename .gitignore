@@ -7,3 +7,9 @@
 **/.angular
 *.css
 *.css.map
+**/package-lock.json
+**/dist
+environment.ts
+**terraform**
+**/.venv
+**/coverage

@@ -1,0 +1,13 @@
+<div *ngIf="isLoggedIn()" class="md:hidden flex h-[64px]"></div>
+<footer
+    [ngStyle]="!isLoggedIn() ? { display: 'flex' } : {}"
+    class="hidden md:flex"
+>
+    <mat-toolbar
+        class="flex-row flex-wrap items-center justify-center shadow-lg"
+    >
+        <a href="#" class="link">Privacy Policy</a>
+        <a href="#" class="link">Terms of Service</a>
+        <a href="#" class="link">Contact Us</a>
+    </mat-toolbar>
+</footer>

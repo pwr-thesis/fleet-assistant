@@ -1,0 +1,36 @@
+@import 'variables';
+
+mat-toolbar {
+    background-color: $basic_color;
+    min-height: 10vh;
+
+    span {
+        color: $hover-color;
+    }
+
+    mat-menu {
+        color: $basic_color;
+    }
+}
+
+.user-info {
+    font-size: $font-size;
+}
+
+.white-icon {
+    color: white;
+    cursor: pointer;
+    transition:
+        color 0.3s ease-out,
+        transform 0.3s ease-out;
+}
+
+.white-icon:hover {
+    color: #b8b8b8;
+    transform: scale(1.1);
+}
+
+.white-icon:active {
+    color: #8c8c8c;
+    transform: scale(0.9);
+}

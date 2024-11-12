@@ -1,0 +1,37 @@
+<div class="flex flex-col items-center min-h-screen p-10 px-0 md:px-10">
+    <h3 class="text-center">Browse your fleet on map:</h3>
+    <div class="border-l-4 border-[#3498db] mx-3 pt-4 pl-4 mb-8" role="alert">
+        <p class="font-medium">
+            Proceed to Vehicle Details page to see live location.
+        </p>
+    </div>
+    <div class="flex flex-wrap justify-center items-center w-full">
+        <div class="map-container">
+            <google-map
+                [zoom]="mapInitialZoom"
+                [options]="mapOptions"
+                [center]="mapInitialCenter"
+                height="100%"
+                width="100%"
+            >
+                <map-advanced-marker
+                    *ngFor="let marker of getMarkers()"
+                    [position]="marker.position"
+                    [title]="'Vehicle #' + marker.vehicle.id.toString()"
+                    [content]="
+                        selectedVehicle?.id === marker.vehicle.id
+                            ? selectedMarkerContent
+                            : marker.content
+                    "
+                    (mapClick)="onMarkerClick(marker)"
+                />
+            </google-map>
+        </div>
+        <app-vehicle-card
+            class="mt-6 ml-10"
+            *ngIf="selectedVehicle"
+            [vehicle]="selectedVehicle"
+            [isDriver]="false"
+        />
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<mat-card
+    class="vehicle-card cursor-pointer w-[300px] h-[300px] hover:shadow-xl active:shadow-md transition-all duration-300 ease-in-out"
+    appearance="outlined"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <span class="font-bold">
+                {{ driver.name + ' ' + driver.surname }}
+            </span>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <app-card-field [fieldValue]="driver.email" fieldName="E-mail" />
+            <span
+                class="font-bold text-red-700"
+                *ngIf="!driver.isEnabled"
+            >
+                In registration process
+            </span>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <hr class="mt-2 mb-2" />
+    <mat-card-content>
+        <app-card-field
+            [fieldValue]="driver.drivingLicenseNumber"
+            fieldName="License number"
+        />
+        <app-card-field
+            [fieldValue]="driver.drivingLicenseCountryCode"
+            fieldName="License country code"
+        />
+        <app-card-field
+            [fieldValue]="toDisplayDate(driver.birthDate)"
+            fieldName="Birth Date"
+        />
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 12
+      author: "269545"
+      changes:
+        - insert:
+            tableName: location
+            columns:
+              - column:
+                  name: longitude
+                  value: 17.085214
+              - column:
+                  name: latitude
+                  value: 51.104287
+              - column:
+                  name: vehicle_id
+                  value: 1
+        - insert:
+            tableName: location
+            columns:
+              - column:
+                  name: longitude
+                  value: 17.070022
+              - column:
+                  name: latitude
+                  value: 51.112532
+              - column:
+                  name: vehicle_id
+                  value: 2
+        - insert:
+            tableName: location
+            columns:
+              - column:
+                  name: longitude
+                  value: 17.087017
+              - column:
+                  name: latitude
+                  value: 51.117273
+              - column:
+                  name: vehicle_id
+                  value: 3
+        - insert:
+            tableName: location
+            columns:
+              - column:
+                  name: longitude
+                  value: 17.085214
+              - column:
+                  name: latitude
+                  value: 51.104287
+              - column:
+                  name: vehicle_id
+                  value: 4

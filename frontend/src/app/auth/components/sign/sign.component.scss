@@ -1,0 +1,26 @@
+@import 'variables';
+
+:host {
+    .accent {
+        background-color: $basic_color;
+        color: $hover-color;
+    }
+
+    * {
+        color: $basic-color;
+    }
+
+    svg {
+        width: 20px;
+    }
+
+    form {
+        @apply w-3/4;
+    }
+}
+
+.floating-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}

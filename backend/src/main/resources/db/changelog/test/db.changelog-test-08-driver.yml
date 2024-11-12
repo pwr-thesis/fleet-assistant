@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: "269545"
+      changes:
+        - insert:
+            tableName: driver
+            columns:
+              - column:
+                  name: id
+                  value: 3
+              - column:
+                  name: driving_license_number
+                  value: "D123456789"
+              - column:
+                  name: driving_license_country_code
+                  value: "US"
+              - column:
+                  name: birth_date
+                  value: "1985-05-15"
+              - column:
+                  name: created_on
+                  value: "2024-10-05"
+              - column:
+                  name: manager_id
+                  value: 1
+        - insert:
+            tableName: driver
+            columns:
+              - column:
+                  name: id
+                  value: 4
+              - column:
+                  name: driving_license_number
+                  value: "B123456789"
+              - column:
+                  name: driving_license_country_code
+                  value: "PL"
+              - column:
+                  name: birth_date
+                  value: "1985-05-15"
+              - column:
+                  name: created_on
+                  value: "2024-10-05"
+              - column:
+                  name: manager_id
+                  value: 1

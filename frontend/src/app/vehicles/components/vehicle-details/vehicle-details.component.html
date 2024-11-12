@@ -1,0 +1,72 @@
+<div class="min-h-screen p-10">
+    <h3 class="text-center">{{ vehicle.name + ' details' }}</h3>
+    <div class="p-4 bg-white rounded-lg md:p-8 dark:bg-[#e0e2ec]">
+        <dl
+            class="flex flex-wrap gap-14 p-4 mx-auto dark:text-[#0a3d62] sm:p-8 justify-center"
+        >
+            <div class="flex flex-col items-center justify-center">
+                <dt class="mb-2 text-xl font-extrabold">{{ vehicle.vin }}</dt>
+                <dd class="dark:text-black font-extrabold">VIN</dd>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+                <dt class="mb-2 text-xl font-extrabold">
+                    {{ vehicle.countryCode }}
+                </dt>
+                <dd class="dark:text-black font-extrabold">Country code</dd>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+                <dt class="mb-2 text-xl font-extrabold">
+                    {{ vehicle.plateNumber }}
+                </dt>
+                <dd class="dark:text-black font-extrabold">Plate number</dd>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+                <dt class="mb-2 text-xl font-extrabold">
+                    {{ toDisplayDate(vehicle.productionDate) }}
+                </dt>
+                <dd class="dark:text-black font-extrabold">Production date</dd>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+                <dt class="mb-2 text-xl font-extrabold">
+                    {{ toDisplayDate(vehicle.insuranceDate) }}
+                </dt>
+                <dd class="dark:text-black font-extrabold">Insurance date</dd>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+                <dt class="mb-2 text-xl font-extrabold">
+                    {{ toDisplayDate(vehicle.lastInspectionDate) }}
+                </dt>
+                <dd class="dark:text-black font-extrabold">
+                    Last inspection date
+                </dd>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+                <dt class="mb-2 text-xl font-extrabold">
+                    {{ toDisplayDate(vehicle.nextInspectionDate) }}
+                </dt>
+                <dd class="dark:text-black font-extrabold">
+                    Next inspection date:
+                </dd>
+            </div>
+        </dl>
+    </div>
+    <div class="flex justify-center w-full my-8">
+        <div
+            class="w-full sm:w-full md:max-w-[80%] lg:max-w-[70%] h-[50vh] sm:h-screen md:h-[70vh] lg:h-[70vh]"
+        >
+            <google-map
+                [zoom]="mapInitialZoom"
+                [options]="mapOptions"
+                [center]="mapInitialCenter"
+                height="100%"
+                width="100%"
+            >
+                <map-advanced-marker
+                    [position]="getVehicleLastLocation()"
+                    [title]="'Vehicle #' + vehicle.id.toString()"
+                    [content]="icon"
+                />
+            </google-map>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+.image-item {
+    @apply relative overflow-hidden h-screen sm:w-full md:w-1/3;
+    img {
+        @apply w-full h-full object-cover;
+        filter: brightness(0.5);
+        transition: transform 0.3s ease;
+    }
+
+    span {
+        @apply absolute inset-0 flex items-center justify-center text-white text-2xl font-bold;
+        text-shadow: 1px 1px 2px black;
+    }
+    a {
+        @apply absolute inset-0 flex items-center justify-center text-white text-2xl font-bold;
+        text-shadow: 1px 1px 2px black;
+    }
+    &:hover img {
+        transform: scale(1.1);
+    }
+}

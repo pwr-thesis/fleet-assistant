@@ -1,0 +1,8 @@
+#https://docs.liquibase.com/home.html
+databaseChangeLog:
+  - includeAll:
+      path: db/changelog/initial/
+  - includeAll:
+      path: db/changelog/test/
+#  - includeAll:
+#      path: db/changelog/update/

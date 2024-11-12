@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'variables';
+
+html,
+body {
+    height: 100%;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.link {
+    color: $hover-color;
+    font-size: $font-size;
+    text-decoration: none;
+    padding: $padding;
+    border-radius: 4px;
+    display: inline-block;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+
+    &:hover {
+        color: $basic_color;
+        background-color: $hover-color;
+    }
+
+    &:active {
+        color: $basic_color;
+    }
+
+    &:focus {
+        outline: 2px solid $primary-color;
+        outline-offset: 2px;
+    }
+}

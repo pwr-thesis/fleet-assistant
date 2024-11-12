@@ -1,0 +1,488 @@
+{
+	"info": {
+		"_postman_id": "8ae78e15-7d8f-4f2e-a2ab-f7125f68d544",
+		"name": "ZPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25250646",
+		"_collection_link": "https://vburmusteam.postman.co/workspace/My-Workspace~8df07bf3-ba52-4105-881b-c919d1c7ec59/collection/25250646-8ae78e15-7d8f-4f2e-a2ab-f7125f68d544?action=share&source=collection_link&creator=25250646"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Joh43n\",\r\n    \"surname\":\"Doe\",\r\n    \"number\": \"8888hjhj88888\",\r\n    \"email\":\"admi3huhbjkjn2@admin.com\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6Miwic3ViIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJyb2xlIjoiTUFOQUdFUiIsImVtYWlsIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzMxMjgyNjI0LCJleHAiOjE3MzEyODYyMjR9.S_0QSpwhnfkzPB5M6iZldLMpLXl9P19BZIF3rDgoWfBGrcgSrW9DMNw-h_LYqWe2fDt0xzg_LVeUExMu5NCp_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/data",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate MANAGER",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"manager2@manager.com\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate DRIVER",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"driver@driver.com\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"item": [
+				{
+					"name": "All Vehicles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6Mywic3ViIjoiZHJpdmVyQGRyaXZlci5jb20iLCJyb2xlIjoiRFJJVkVSIiwiZW1haWwiOiJkcml2ZXJAZHJpdmVyLmNvbSIsInR5cGUiOiJBQ0NFU1NfVE9LRU4iLCJpYXQiOjE3MzEyODA2MzMsImV4cCI6MTczMTI4NDIzM30.1Yuznz9CO8-IXgXL37XbsFFyg-o_LoIaj09MYfOsBvT2r_MHLHBTkZTcTPv1YrabkgIZzLgKolXMt8uPHt2iIA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6Miwic3ViIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJyb2xlIjoiTUFOQUdFUiIsImVtYWlsIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzMxMjgyNjI0LCJleHAiOjE3MzEyODYyMjR9.S_0QSpwhnfkzPB5M6iZldLMpLXl9P19BZIF3rDgoWfBGrcgSrW9DMNw-h_LYqWe2fDt0xzg_LVeUExMu5NCp_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Fords Exp4lorer\",\r\n  \"vin\": \"1FMYU021X7KB1979\",\r\n  \"plateNumber\": \"XYZ1234\",\r\n  \"countryCode\": \"US\",\r\n  \"insuranceDate\": \"2024-01-15\",\r\n  \"lastInspectionDate\": \"2023-12-10\",\r\n  \"productionDate\": \"2023-05-20\",\r\n  \"driverId\":\"4\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VehicleById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6Miwic3ViIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJyb2xlIjoiTUFOQUdFUiIsImVtYWlsIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzMxMjgyNjI0LCJleHAiOjE3MzEyODYyMjR9.S_0QSpwhnfkzPB5M6iZldLMpLXl9P19BZIF3rDgoWfBGrcgSrW9DMNw-h_LYqWe2fDt0xzg_LVeUExMu5NCp_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6Miwic3ViIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJyb2xlIjoiTUFOQUdFUiIsImVtYWlsIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzMxMjgyNjI0LCJleHAiOjE3MzEyODYyMjR9.S_0QSpwhnfkzPB5M6iZldLMpLXl9P19BZIF3rDgoWfBGrcgSrW9DMNw-h_LYqWe2fDt0xzg_LVeUExMu5NCp_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/1/assign-driver/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"1",
+								"assign-driver",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "Stream",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6Miwic3ViIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJyb2xlIjoiTUFOQUdFUiIsImVtYWlsIjoibWFuYWdlcjJAbWFuYWdlci5jb20iLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzMxMjgyNjI0LCJleHAiOjE3MzEyODYyMjR9.S_0QSpwhnfkzPB5M6iZldLMpLXl9P19BZIF3rDgoWfBGrcgSrW9DMNw-h_LYqWe2fDt0xzg_LVeUExMu5NCp_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/1/location-stream",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"1",
+								"location-stream"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Location",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"longitude\":33333,\r\n    \"latitude\": 33333\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/1/location",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"1",
+								"location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Locations",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"longitude\":33333,\r\n    \"latitude\": 33333\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/1/location",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"1",
+								"location"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6MSwic3ViIjoibWFuYWdlckBtYW5hZ2VyLmNvbSIsInJvbGUiOiJNQU5BR0VSIiwiZW1haWwiOiJtYW5hZ2VyQG1hbmFnZXIuY29tIiwidHlwZSI6IkFDQ0VTU19UT0tFTiIsImlhdCI6MTczMDQ1Mjg3NywiZXhwIjoxNzMwNDU2NDc3fQ.Ku416hzYclacQwOx49o8wmFQ5PAT3rEwlSXNR4-seXzbEeshliT6TBb1vuDTeN3h3X6WFPj0U96mcfSE8a9mdA",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 11
+      author: "269545"
+      changes:
+        - createTable:
+            tableName: location
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: longitude
+                  type: float
+                  constraints:
+                    nullable: false
+              - column:
+                  name: latitude
+                  type: float
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: date
+              - column:
+                    name: vehicle_id
+                    type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: location
+            baseColumnNames: vehicle_id
+            referencedTableName: vehicle
+            referencedColumnNames: id
+            constraintName: fk_vehicle_location
