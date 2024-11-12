@@ -29,3 +29,7 @@ variable "rds_connection_secutiry_group_name" {
 variable "ec2_backend_role_name" {
   type = string
 }
+
+variable "email_identity" {
+  type = string
+}
