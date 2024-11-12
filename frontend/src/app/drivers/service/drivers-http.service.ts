@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {DRIVERS_URL, GET_DRIVERS_URL} from '../../../utilities/_urls';
 import { DriverCreateRequest, DriversPage } from '../types/drivers';
 
