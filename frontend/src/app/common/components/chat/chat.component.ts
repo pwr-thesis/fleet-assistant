@@ -103,17 +103,11 @@ export class ChatComponent implements OnInit {
     loadChatState(): void {
         const chatKey = this.getChatKey();
         const savedMessages = localStorage.getItem(chatKey);
-        const savedIsChatboxOpen = localStorage.getItem(
-            `${chatKey}_isChatboxOpen`
-        );
 
         if (savedMessages) {
             this.messages = JSON.parse(savedMessages);
         }
 
-        if (savedIsChatboxOpen) {
-            this.isChatboxOpen = JSON.parse(savedIsChatboxOpen);
-        }
     }
 
     clearChatHistory(): void {
