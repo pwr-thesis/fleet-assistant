@@ -61,7 +61,7 @@ class CredentialsServiceTest {
         // Given
         when(credentialsRepository.save(any(Credentials.class))).thenReturn(credentials);
         // When
-        Credentials result = credentialsService.create("newuser@example.com", Role.MANAGER);
+        Credentials result = credentialsService.create("newuser@example.com", Role.MANAGER, true);
         // Then
         assertNotNull(result);
         assertEquals("test@example.com", result.getEmail());

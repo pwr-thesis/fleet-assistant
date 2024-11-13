@@ -90,7 +90,7 @@ class VehicleServiceTest {
                 .productionDate(LocalDate.of(2023, 5, 20))
                 .lastInspectionDate(LocalDate.of(2023, 12, 10))
                 .insuranceDate(LocalDate.of(2023, 12, 10))
-                .driverId(1L)
+                .driver(org.fleetassistant.backend.dto.Driver.builder().id(1L).build())
                 .build();
 
     }
@@ -302,6 +302,6 @@ class VehicleServiceTest {
         when(vehicleRepository.save(any())).thenReturn(vehicle);
         when(entityToDtoMapper.vehicleToVehicleDto(vehicle)).thenReturn(vehicleDto);
         org.fleetassistant.backend.dto.Vehicle result = vehicleService.assignDriver(1L, 1L);
-        assertEquals( 1L, result.driverId());
+        assertEquals( 1L, result.driver().id());
     }
 }
