@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
     Pageable,
@@ -20,10 +20,7 @@ import { Location } from '../../locations/types/locations';
     providedIn: 'root',
 })
 export class VehiclesHttpService {
-    constructor(
-        private http: HttpClient,
-        private ngZone: NgZone
-    ) {}
+    constructor(private http: HttpClient) {}
 
     getAllVehicles(pageable: Pageable): Observable<VehiclesPage> {
         return this.http.get(
