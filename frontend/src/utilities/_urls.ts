@@ -13,5 +13,5 @@ export const GET_VEHICLE_BY_ID_URL = (id: string): string =>
 export const GET_VEHICLE_LIVE_LOCATION_BY_ID_URL = (id: string): string =>
     VEHICLES_URL + `/${id}/location-stream`;
 export const DRIVERS_URL = environment.apiUrl + '/driver';
-export const GET_DRIVERS_URL = (registered: boolean): string => environment.apiUrl + `/driver?registered=${registered}`;
-
+export const GET_DRIVERS_URL = (registered: boolean): string =>
+    environment.apiUrl + `/driver?registered=${registered}`;

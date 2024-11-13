@@ -12,7 +12,12 @@ describe('SignComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [],
-            imports: [SignComponent, MatButtonModule, MatIconModule, RouterTestingModule],
+            imports: [
+                SignComponent,
+                MatButtonModule,
+                MatIconModule,
+                RouterTestingModule,
+            ],
         }).compileComponents();
     });
 
@@ -27,7 +32,9 @@ describe('SignComponent', () => {
     });
 
     it('should display the image on large screens', () => {
-        const image = fixture.debugElement.query(By.css('div.hidden.lg\\:block img'));
+        const image = fixture.debugElement.query(
+            By.css('div.hidden.lg\\:block img')
+        );
         expect(image).toBeTruthy();
         expect(image.nativeElement.src).toContain('management.jpg');
     });

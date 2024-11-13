@@ -1,8 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+    HttpClientTestingModule,
+    HttpTestingController,
+} from '@angular/common/http/testing';
 import { AuthHttpService } from './auth-http.service';
 import { AuthResponse, LoginForm, RegisterForm, UserInfo } from '../types/auth';
-import { LOGIN_URL, REGISTER_URL, USER_INFO_URL } from '../../../utilities/_urls';
+import {
+    LOGIN_URL,
+    REGISTER_URL,
+    USER_INFO_URL,
+} from '../../../utilities/_urls';
 
 describe('AuthHttpService', () => {
     let service: AuthHttpService;
@@ -11,7 +18,7 @@ describe('AuthHttpService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [AuthHttpService]
+            providers: [AuthHttpService],
         });
         service = TestBed.inject(AuthHttpService);
         httpMock = TestBed.inject(HttpTestingController);
@@ -22,13 +29,24 @@ describe('AuthHttpService', () => {
     });
 
     it('should call login API with correct URL and data', () => {
-        const loginForm: LoginForm = { email: 'test@example.com', password: 'password' };
+        const loginForm: LoginForm = {
+            email: 'test@example.com',
+            password: 'password',
+        };
         const mockResponse: AuthResponse = {
-            user: { role: 'USER', name: 'Test User', surname: 'surname', email: 'test@example.com' },
-            token: { accessToken: 'mockAccessToken', refreshToken: 'mockRefreshToken' }
+            user: {
+                role: 'USER',
+                name: 'Test User',
+                surname: 'surname',
+                email: 'test@example.com',
+            },
+            token: {
+                accessToken: 'mockAccessToken',
+                refreshToken: 'mockRefreshToken',
+            },
         };
 
-        service.login(loginForm).subscribe(response => {
+        service.login(loginForm).subscribe((response) => {
             expect(response).toEqual(mockResponse);
         });
 
@@ -40,13 +58,26 @@ describe('AuthHttpService', () => {
     });
 
     it('should call register API with correct URL and data', () => {
-        const registerForm: RegisterForm = { email: 'new@example.com', password: 'newpassword', name: 'New', surname: 'User' };
+        const registerForm: RegisterForm = {
+            email: 'new@example.com',
+            password: 'newpassword',
+            name: 'New',
+            surname: 'User',
+        };
         const mockResponse: AuthResponse = {
-            user: { role: 'USER', name: 'New', surname: 'User', email: 'new@example.com' },
-            token: { accessToken: 'newAccessToken', refreshToken: 'newRefreshToken' }
+            user: {
+                role: 'USER',
+                name: 'New',
+                surname: 'User',
+                email: 'new@example.com',
+            },
+            token: {
+                accessToken: 'newAccessToken',
+                refreshToken: 'newRefreshToken',
+            },
         };
 
-        service.register(registerForm).subscribe(response => {
+        service.register(registerForm).subscribe((response) => {
             expect(response).toEqual(mockResponse);
         });
 
@@ -58,9 +89,14 @@ describe('AuthHttpService', () => {
     });
 
     it('should call getUserData API with correct URL', () => {
-        const mockUserInfo: UserInfo = { role: 'USER', name: 'User Data', surname: 'surname', email: 'email@example.com' };
+        const mockUserInfo: UserInfo = {
+            role: 'USER',
+            name: 'User Data',
+            surname: 'surname',
+            email: 'email@example.com',
+        };
 
-        service.getUserData().subscribe(response => {
+        service.getUserData().subscribe((response) => {
             expect(response).toEqual(mockUserInfo);
         });
 
