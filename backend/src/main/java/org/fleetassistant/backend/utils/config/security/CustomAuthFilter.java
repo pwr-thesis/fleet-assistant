@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.fleetassistant.backend.exceptionhandler.rest.AuthException;
 import org.fleetassistant.backend.utils.config.security.decoders.CustomJwtDecoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,10 +38,10 @@ public class CustomAuthFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        } catch (JwtException | ExpiredJwtException e) {
+        } catch (AuthException e) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } catch (ServletException | IOException e) {
-            throw new RuntimeException(e);
+           response.setStatus(HttpStatus.SERVICE_UNAVAILABLE.value());
         }
     }
 }

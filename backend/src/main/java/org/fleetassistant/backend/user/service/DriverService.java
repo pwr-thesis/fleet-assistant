@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.CredentialsService;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.auth.credentials.model.Role;
+import org.fleetassistant.backend.dto.Notification;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.jwt.service.TokenGenerator;
+import org.fleetassistant.backend.notification.aws.SqsProducer;
 import org.fleetassistant.backend.user.model.Driver;
 import org.fleetassistant.backend.user.model.Manager;
 import org.fleetassistant.backend.user.repository.DriverRepository;
@@ -26,6 +28,7 @@ public class DriverService {
     private final CredentialsService credentialsService;
     private final TokenGenerator tokenGenerator;
     private final ManagerService managerService;
+    private final SqsProducer sqsProducer;
     @Value("${spring.verification.server}")
     private String verificationServer;
     private final EntityToDtoMapper entityToDtoMapper;
@@ -52,8 +55,14 @@ public class DriverService {
 
         driverRepository.save(driver);
         String token = tokenGenerator.createValidationToken(driverCredentials);
+
         String verificationLink = verificationServer + "?token=" + token;
-        //TODO put message to AWS SQS
+        String message = "Please click the link to verify your account: " + verificationLink;
+        Notification notification = Notification.builder()
+                .email(credentials.getEmail())
+                .message(message)
+                .build();
+        sqsProducer.send(notification);
 
         return token;
     }

@@ -52,13 +52,13 @@ public class DefaultExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
+    @ExceptionHandler({BadCredentialsException.class,AuthException.class})
     public ResponseEntity<Problem> handleBadCredentials() {
         Problem problem = buildProblem(Status.UNAUTHORIZED, AUTHENTICATION_EXCEPTION, WRONG_EMAIL_OR_PASSWORD);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(problem);
     }
 
-    @ExceptionHandler({CacheException.class, IncorrectTokenTypeException.class})
+    @ExceptionHandler({CacheException.class, IncorrectTokenTypeException.class, NotificationSendException.class})
     public ResponseEntity<Problem> handleCacheError() {
         Problem problem = buildProblem(Status.SERVICE_UNAVAILABLE, Status.SERVICE_UNAVAILABLE.toString(),
                 "Service unavailable");
