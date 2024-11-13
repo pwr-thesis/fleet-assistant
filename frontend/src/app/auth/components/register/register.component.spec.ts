@@ -2,13 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import {MatError, MatFormFieldModule} from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../service/auth.service';
 import { SnackbarService } from '../../../../utilities/services/snackbar.service';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent;
@@ -17,8 +17,13 @@ describe('RegisterComponent', () => {
     let snackBarService: jasmine.SpyObj<SnackbarService>;
 
     beforeEach(async () => {
-        authService = jasmine.createSpyObj('AuthService', ['register', 'loginViaGoogle']);
-        snackBarService = jasmine.createSpyObj('SnackbarService', ['openSnackBar']);
+        authService = jasmine.createSpyObj('AuthService', [
+            'register',
+            'loginViaGoogle',
+        ]);
+        snackBarService = jasmine.createSpyObj('SnackbarService', [
+            'openSnackBar',
+        ]);
 
         await TestBed.configureTestingModule({
             declarations: [],
@@ -31,7 +36,7 @@ describe('RegisterComponent', () => {
                 MatError,
                 MatCheckboxModule,
                 RouterTestingModule,
-                BrowserAnimationsModule
+                BrowserAnimationsModule,
             ],
             providers: [
                 { provide: AuthService, useValue: authService },
@@ -55,7 +60,9 @@ describe('RegisterComponent', () => {
         component.registerForm.controls['surname'].setValue('Doe');
         component.registerForm.controls['email'].setValue('test@example.com');
         component.registerForm.controls['password'].setValue('Password1!');
-        component.registerForm.controls['repeatPassword'].setValue('Password1!');
+        component.registerForm.controls['repeatPassword'].setValue(
+            'Password1!'
+        );
         component.registerForm.controls['phone'].setValue('1234567890');
 
         component.onSubmit();
@@ -79,7 +86,9 @@ describe('RegisterComponent', () => {
 
         component.onSubmit();
 
-        expect(snackBarService.openSnackBar).toHaveBeenCalledWith('Please fill in the form correctly');
+        expect(snackBarService.openSnackBar).toHaveBeenCalledWith(
+            'Please fill in the form correctly'
+        );
         expect(authService.register).not.toHaveBeenCalled();
     });
 });

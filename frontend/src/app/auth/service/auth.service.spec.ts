@@ -21,20 +21,27 @@ describe('AuthService', () => {
             'logout',
             'isLoggedIn',
             'getToken',
-            'accessToken$'
+            'accessToken$',
         ]);
         httpAuthServiceSpy = jasmine.createSpyObj('AuthHttpService', [
             'login',
             'register',
-            'getUserData'
+            'getUserData',
         ]);
         snackbarServiceSpy = jasmine.createSpyObj('SnackbarService', [
-            'openSnackBar'
+            'openSnackBar',
         ]);
         routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
         authGoogleServiceSpy.accessToken$ = of('mockToken');
-        httpAuthServiceSpy.getUserData.and.returnValue(of({ role: 'MANAGER', name: 'New User', surname: 'surname', email: 'new@example.com' }));
+        httpAuthServiceSpy.getUserData.and.returnValue(
+            of({
+                role: 'MANAGER',
+                name: 'New User',
+                surname: 'surname',
+                email: 'new@example.com',
+            })
+        );
 
         TestBed.configureTestingModule({
             providers: [
@@ -42,8 +49,8 @@ describe('AuthService', () => {
                 { provide: AuthGoogleService, useValue: authGoogleServiceSpy },
                 { provide: AuthHttpService, useValue: httpAuthServiceSpy },
                 { provide: SnackbarService, useValue: snackbarServiceSpy },
-                { provide: Router, useValue: routerSpy }
-            ]
+                { provide: Router, useValue: routerSpy },
+            ],
         });
 
         service = TestBed.inject(AuthService);
@@ -54,53 +61,97 @@ describe('AuthService', () => {
     });
 
     it('should log in and navigate to home on successful login', () => {
-        const loginForm: LoginForm = { email: 'test@example.com', password: 'password' };
+        const loginForm: LoginForm = {
+            email: 'test@example.com',
+            password: 'password',
+        };
         const mockResponse = {
-            user: { role: 'MANAGER', name: 'New User', surname: 'surname', email: 'new@example.com' },
-            token: { accessToken: 'newAccessToken', refreshToken: 'refreshToken' }
+            user: {
+                role: 'MANAGER',
+                name: 'New User',
+                surname: 'surname',
+                email: 'new@example.com',
+            },
+            token: {
+                accessToken: 'newAccessToken',
+                refreshToken: 'refreshToken',
+            },
         };
         httpAuthServiceSpy.login.and.returnValue(of(mockResponse));
 
         service.login(loginForm);
 
         expect(httpAuthServiceSpy.login).toHaveBeenCalledWith(loginForm);
-        expect(localStorage.getItem('userInfo')).toEqual(JSON.stringify(mockResponse.user));
-        expect(localStorage.getItem('accessToken')).toBe(mockResponse.token.accessToken);
+        expect(localStorage.getItem('userInfo')).toEqual(
+            JSON.stringify(mockResponse.user)
+        );
+        expect(localStorage.getItem('accessToken')).toBe(
+            mockResponse.token.accessToken
+        );
         expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
     });
 
     it('should show error message on failed login', () => {
         httpAuthServiceSpy.login.and.returnValue(throwError('error'));
-        const loginForm: LoginForm = { email: 'test@example.com', password: 'wrongpassword' };
+        const loginForm: LoginForm = {
+            email: 'test@example.com',
+            password: 'wrongpassword',
+        };
 
         service.login(loginForm);
 
-        expect(snackbarServiceSpy.openSnackBar).toHaveBeenCalledWith('Check your Email and Password and try again');
+        expect(snackbarServiceSpy.openSnackBar).toHaveBeenCalledWith(
+            'Check your Email and Password and try again'
+        );
     });
 
     it('should register and navigate to home on successful registration', () => {
-        const registerForm: RegisterForm = { email: 'new@example.com', password: 'newpassword', name: 'New User', surname: 'surname' };
+        const registerForm: RegisterForm = {
+            email: 'new@example.com',
+            password: 'newpassword',
+            name: 'New User',
+            surname: 'surname',
+        };
         const mockResponse = {
-            user: { role: 'MANAGER', name: 'New User', surname: 'surname', email: 'new@example.com' },
-            token: { accessToken: 'newAccessToken', refreshToken: 'refreshToken' }
+            user: {
+                role: 'MANAGER',
+                name: 'New User',
+                surname: 'surname',
+                email: 'new@example.com',
+            },
+            token: {
+                accessToken: 'newAccessToken',
+                refreshToken: 'refreshToken',
+            },
         };
         httpAuthServiceSpy.register.and.returnValue(of(mockResponse));
 
         service.register(registerForm);
 
         expect(httpAuthServiceSpy.register).toHaveBeenCalledWith(registerForm);
-        expect(localStorage.getItem('userInfo')).toEqual(JSON.stringify(mockResponse.user));
-        expect(localStorage.getItem('accessToken')).toBe(mockResponse.token.accessToken);
+        expect(localStorage.getItem('userInfo')).toEqual(
+            JSON.stringify(mockResponse.user)
+        );
+        expect(localStorage.getItem('accessToken')).toBe(
+            mockResponse.token.accessToken
+        );
         expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
     });
 
     it('should show error message on failed registration', () => {
         httpAuthServiceSpy.register.and.returnValue(throwError('error'));
-        const registerForm: RegisterForm = { email: 'new@example.com', password: 'newpassword', name: 'New User', surname: 'surname' };
+        const registerForm: RegisterForm = {
+            email: 'new@example.com',
+            password: 'newpassword',
+            name: 'New User',
+            surname: 'surname',
+        };
 
         service.register(registerForm);
 
-        expect(snackbarServiceSpy.openSnackBar).toHaveBeenCalledWith(INVALID_FORM_MESSAGE);
+        expect(snackbarServiceSpy.openSnackBar).toHaveBeenCalledWith(
+            INVALID_FORM_MESSAGE
+        );
     });
 
     it('should log out and remove user data from localStorage', () => {
@@ -130,21 +181,36 @@ describe('AuthService', () => {
     });
 
     it('should return true if user role is MANAGER', () => {
-        const mockUser: UserInfo = { role: 'MANAGER', name: 'Manager', surname: 'surname', email: 'email' };
+        const mockUser: UserInfo = {
+            role: 'MANAGER',
+            name: 'Manager',
+            surname: 'surname',
+            email: 'email',
+        };
         localStorage.setItem('userInfo', JSON.stringify(mockUser));
 
         expect(service.isManager()).toBeTrue();
     });
 
     it('should return false if user role is not MANAGER', () => {
-        const mockUser: UserInfo = { role: 'USER', name: 'User', surname: 'surname', email: 'email' };
+        const mockUser: UserInfo = {
+            role: 'USER',
+            name: 'User',
+            surname: 'surname',
+            email: 'email',
+        };
         localStorage.setItem('userInfo', JSON.stringify(mockUser));
 
         expect(service.isManager()).toBeFalse();
     });
 
     it('should return parsed userInfo if present in localStorage', () => {
-        const mockUser: UserInfo = { role: 'USER', name: 'Test User', surname: 'surname', email: 'email' };
+        const mockUser: UserInfo = {
+            role: 'USER',
+            name: 'Test User',
+            surname: 'surname',
+            email: 'email',
+        };
         localStorage.setItem('userInfo', JSON.stringify(mockUser));
 
         expect(service.getUserInfo()).toEqual(mockUser);
@@ -156,12 +222,19 @@ describe('AuthService', () => {
     });
 
     it('should update localStorage with user data when getUserData is called', () => {
-        const mockUserData: UserInfo = { role: 'USER', name: 'User Data', surname: 'surname', email: 'email' };
+        const mockUserData: UserInfo = {
+            role: 'USER',
+            name: 'User Data',
+            surname: 'surname',
+            email: 'email',
+        };
         httpAuthServiceSpy.getUserData.and.returnValue(of(mockUserData));
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (service as any).getUserData();
 
-        expect(localStorage.getItem('userInfo')).toEqual(JSON.stringify(mockUserData));
+        expect(localStorage.getItem('userInfo')).toEqual(
+            JSON.stringify(mockUserData)
+        );
     });
 });

@@ -9,7 +9,6 @@ import { SidenavComponent } from './common/components/sidenav/sidenav.component'
 import { BottomNavComponent } from './common/components/bottom-nav/bottom-nav.component';
 import { environment } from '../environments/environment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ChatComponent } from './common/components/chat/chat.component';
 
 @Component({
     selector: 'app-root',
@@ -22,7 +21,6 @@ import { ChatComponent } from './common/components/chat/chat.component';
         NgIf,
         SidenavComponent,
         BottomNavComponent,
-        ChatComponent
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',

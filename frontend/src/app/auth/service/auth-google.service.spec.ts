@@ -1,6 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthGoogleService } from './auth-google.service';
-import { OAuthService, AuthConfig, OAuthSuccessEvent } from 'angular-oauth2-oidc';
+import {
+    OAuthService,
+    AuthConfig,
+    OAuthSuccessEvent,
+} from 'angular-oauth2-oidc';
 
 describe('AuthGoogleService', () => {
     let service: AuthGoogleService;
@@ -16,17 +20,21 @@ describe('AuthGoogleService', () => {
             'initLoginFlow',
             'revokeTokenAndLogout',
             'logOut',
-            'getIdToken'
+            'getIdToken',
         ]);
 
-        oauthServiceSpy.loadDiscoveryDocument.and.returnValue(Promise.resolve() as unknown as Promise<OAuthSuccessEvent>);
-        oauthServiceSpy.tryLoginImplicitFlow.and.returnValue(Promise.resolve(true));
+        oauthServiceSpy.loadDiscoveryDocument.and.returnValue(
+            Promise.resolve() as unknown as Promise<OAuthSuccessEvent>
+        );
+        oauthServiceSpy.tryLoginImplicitFlow.and.returnValue(
+            Promise.resolve(true)
+        );
 
         TestBed.configureTestingModule({
             providers: [
                 AuthGoogleService,
-                { provide: OAuthService, useValue: oauthServiceSpy }
-            ]
+                { provide: OAuthService, useValue: oauthServiceSpy },
+            ],
         });
 
         service = TestBed.inject(AuthGoogleService);
@@ -38,12 +46,14 @@ describe('AuthGoogleService', () => {
 
     it('should configure OAuthService on initialization', () => {
         service.initConfiguration();
-        expect(oauthServiceSpy.configure).toHaveBeenCalledWith(jasmine.objectContaining<AuthConfig>({
-            issuer: 'https://accounts.google.com',
-            clientId: jasmine.any(String),
-            redirectUri: window.location.origin,
-            scope: jasmine.any(String),
-        }));
+        expect(oauthServiceSpy.configure).toHaveBeenCalledWith(
+            jasmine.objectContaining<AuthConfig>({
+                issuer: 'https://accounts.google.com',
+                clientId: jasmine.any(String),
+                redirectUri: window.location.origin,
+                scope: jasmine.any(String),
+            })
+        );
         expect(oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalled();
         expect(oauthServiceSpy.loadDiscoveryDocument).toHaveBeenCalled();
     });
@@ -58,7 +68,7 @@ describe('AuthGoogleService', () => {
         service.logout();
         expect(oauthServiceSpy.revokeTokenAndLogout).toHaveBeenCalled();
         expect(oauthServiceSpy.logOut).toHaveBeenCalled();
-        service.accessToken$.subscribe(token => {
+        service.accessToken$.subscribe((token) => {
             expect(token).toBe('');
         });
     });

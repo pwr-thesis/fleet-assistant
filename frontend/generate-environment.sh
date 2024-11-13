@@ -4,6 +4,8 @@ cat <<EOF > src/environments/environment.ts
 export const environment = {
   oidcClientId: '$OIDC_CLIENT_ID',
   apiUrl: '$API_URL',
-  googleApiKey: '$GOOGLE_API_KEY'
+  googleApiKey: '$GOOGLE_API_KEY',
+  azureEndpoint: '$AZURE_ENDPOINT',
+  azureApiKey: '$AZURE_API_KEY',
 };
 EOF

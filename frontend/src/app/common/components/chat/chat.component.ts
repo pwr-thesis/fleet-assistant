@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChatService } from './chat.service';
+import { ChatService } from './service/chat.service';
 import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../../auth/service/auth.service';
+
+export interface History {
+    role: string;
+    content: string;
+}
 
 @Component({
     selector: 'app-chat',
@@ -49,8 +53,7 @@ export class ChatComponent implements OnInit {
                 .toPromise();
             const botMessage = response.choices[0].message.content;
             this.messages.push(`Bot: ${botMessage}`);
-        } catch (error) {
-            console.error('Error in chat service:', error);
+        } catch {
             this.messages.push(
                 'Bot: Sorry, there was an error processing your request. Try again!'
             );
@@ -63,15 +66,15 @@ export class ChatComponent implements OnInit {
         this.isButtonDisabled = true;
         setTimeout(() => {
             this.isButtonDisabled = false;
-        }, 30000);
+        }, 60000);
     }
 
-    buildChatHistory(): any[] {
+    buildChatHistory(): History[] {
         const history = [
             {
                 role: 'system',
                 content:
-                    'You are an AI assistant that helps people find information.',
+                    'You are an AI assistant BOT, experienced in vehicle mechanics. You work as an assistant in a car repair shop. Answer max. 100 words in each message.',
             },
         ];
 
@@ -92,31 +95,19 @@ export class ChatComponent implements OnInit {
     }
 
     saveChatState(): void {
-        const chatKey = this.getChatKey();
-        localStorage.setItem(chatKey, JSON.stringify(this.messages));
-        localStorage.setItem(
-            `${chatKey}_isChatboxOpen`,
-            JSON.stringify(this.isChatboxOpen)
-        );
+        localStorage.setItem('chatHistory', JSON.stringify(this.messages));
     }
 
     loadChatState(): void {
-        const chatKey = this.getChatKey();
-        const savedMessages = localStorage.getItem(chatKey);
+        const savedMessages = localStorage.getItem('chatHistory');
 
         if (savedMessages) {
             this.messages = JSON.parse(savedMessages);
         }
-
     }
 
     clearChatHistory(): void {
-        const chatKey = this.getChatKey();
-        localStorage.removeItem(chatKey);
+        localStorage.removeItem('chatHistory');
         this.messages = [];
-    }
-
-    private getChatKey(): string {
-        return `chat_${this.userLogin}`;
     }
 }
