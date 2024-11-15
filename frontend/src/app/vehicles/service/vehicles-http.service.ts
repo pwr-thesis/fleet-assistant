@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
     Pageable,
@@ -8,6 +8,7 @@ import {
 } from '../types/vehicles';
 import { HttpClient } from '@angular/common/http';
 import {
+    ASSIGN_DRIVER,
     GET_ALL_VEHICLES_URL,
     GET_VEHICLE_BY_ID_URL,
     GET_VEHICLE_LIVE_LOCATION_BY_ID_URL,
@@ -19,10 +20,7 @@ import { Location } from '../../locations/types/locations';
     providedIn: 'root',
 })
 export class VehiclesHttpService {
-    constructor(
-        private http: HttpClient,
-        private ngZone: NgZone
-    ) {}
+    constructor(private http: HttpClient) {}
 
     getAllVehicles(pageable: Pageable): Observable<VehiclesPage> {
         return this.http.get(
@@ -46,24 +44,61 @@ export class VehiclesHttpService {
     getVehicleLocation(id: number): Observable<Location> {
         return new Observable((observer) => {
             const url = GET_VEHICLE_LIVE_LOCATION_BY_ID_URL(id.toString());
-            const eventSource = new EventSource(url);
+            const token = localStorage.getItem('accessToken');
 
-            eventSource.onmessage = (event): void => {
-                this.ngZone.run(() => {
-                    const location = JSON.parse(event.data);
-                    observer.next(location);
-                });
-            };
+            fetch(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'text/event-stream',
+                },
+            })
+                .then((response) => {
+                    const reader = response.body?.getReader();
 
-            eventSource.onerror = (error): void => {
-                this.ngZone.run(() => {
-                    observer.error(error);
-                });
-            };
+                    if (!reader) {
+                        observer.error('Failed to read the stream');
+                        return;
+                    }
 
-            return () => {
-                eventSource.close();
-            };
+                    function processStream(): void {
+                        reader!
+                            .read()
+                            .then(({ done, value }) => {
+                                if (done) {
+                                    observer.complete();
+                                    return;
+                                }
+
+                                const chunk = new TextDecoder().decode(value);
+                                const events = chunk.split('\n\n'); // SSE events are separated by double newlines
+
+                                events.forEach((event) => {
+                                    if (event.startsWith('data:')) {
+                                        const data = event
+                                            .replace('data:', '')
+                                            .trim();
+                                        const location = JSON.parse(data);
+                                        observer.next(location);
+                                    }
+                                });
+
+                                processStream();
+                            })
+                            .catch((error) => {
+                                observer.error(error);
+                            });
+                    }
+
+                    processStream();
+                })
+                .catch((error) => observer.error(error));
         });
+    }
+
+    assignDriver(vehicleId: string, driverId: string): Observable<Vehicle> {
+        return this.http.post(
+            ASSIGN_DRIVER(vehicleId, driverId),
+            undefined
+        ) as Observable<Vehicle>;
     }
 }

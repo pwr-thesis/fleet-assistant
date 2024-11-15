@@ -102,13 +102,26 @@
             </mat-form-field>
             <mat-form-field class="w-full" *ngIf="drivers.length > 0">
                 <mat-label>Assign driver</mat-label>
-                <select matNativeControl formControlName="driver">
-                    @for (driver of drivers; track driver) {
-                        <option [value]="driver.id">
-                            {{ getDriverText() }}
-                        </option>
+                <input
+                    #driverInput
+                    type="text"
+                    matInput
+                    formControlName="driver"
+                    [matAutocomplete]="auto"
+                    (input)="filter()"
+                    (focus)="filter()"
+                />
+                <mat-autocomplete
+                    #auto="matAutocomplete"
+                    requireSelection
+                    [displayWith]="displayFn"
+                >
+                    @for (driver of filteredDrivers; track driver) {
+                        <mat-option [value]="driver">{{
+                            getDriverText(driver)
+                        }}</mat-option>
                     }
-                </select>
+                </mat-autocomplete>
             </mat-form-field>
             <div class="flex w-full justify-center gap-5">
                 <button

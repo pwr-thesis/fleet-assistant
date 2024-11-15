@@ -49,7 +49,10 @@ export class AllLocationsComponent implements OnInit {
             .getAllVehicles({ pageSize: 100, pageNumber: 0 })
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((response) => {
-                this.vehicles = response.content;
+                this.vehicles = response.content.filter(
+                    (vehicle) =>
+                        vehicle.locations.length && vehicle.locations.length > 0
+                );
                 this.mapInitialCenter = {
                     lat: this.vehicles[0].locations[
                         this.vehicles[0].locations.length - 1
@@ -61,26 +64,31 @@ export class AllLocationsComponent implements OnInit {
             });
     }
 
-    getMarkers(): CustomMarker[] {
-        return this.vehicles!.map((vehicle) => {
-            const lastLocation: Location =
-                vehicle.locations[vehicle.locations.length - 1];
-            const imgTag = document.createElement('img');
-            imgTag.src = 'car-icon.png';
+    getMarkers(): CustomMarker[] | null {
+        if (this.vehicles) {
+            return this.vehicles
+                .map((vehicle) => {
+                    const lastLocation: Location =
+                        vehicle.locations[vehicle.locations.length - 1];
+                    const imgTag = document.createElement('img');
+                    imgTag.src = 'car-icon.png';
 
-            if (!lastLocation) {
-                return null;
-            }
+                    if (!lastLocation) {
+                        return null;
+                    }
 
-            return {
-                position: {
-                    lat: lastLocation.latitude,
-                    lng: lastLocation.longitude,
-                },
-                vehicle: vehicle,
-                content: imgTag,
-            };
-        }).filter((marker): marker is CustomMarker => marker !== null);
+                    return {
+                        position: {
+                            lat: lastLocation.latitude,
+                            lng: lastLocation.longitude,
+                        },
+                        vehicle: vehicle,
+                        content: imgTag,
+                    };
+                })
+                .filter((marker): marker is CustomMarker => marker !== null);
+        }
+        return null;
     }
 
     onMarkerClick(marker: CustomMarker): void {

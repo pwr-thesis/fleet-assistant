@@ -10,7 +10,11 @@
             </span>
         </mat-card-title>
         <mat-card-subtitle *ngIf="!isDriver">
-            <app-card-field [fieldValue]="getDriverName()" fieldName="Driver" />
+            <app-card-field
+                [ngClass]="{ 'text-red-700': !isDriverAssigned() }"
+                [fieldValue]="getDriverName()"
+                fieldName="Driver"
+            />
         </mat-card-subtitle>
     </mat-card-header>
     <hr class="mt-2 mb-2" />

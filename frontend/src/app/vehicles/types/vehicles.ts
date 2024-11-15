@@ -33,5 +33,5 @@ export interface VehicleCreateRequest {
     insuranceDate: string;
     lastInspectionDate: string;
     productionDate: string;
-    driver?: Driver;
+    driver?: { id: number };
 }
