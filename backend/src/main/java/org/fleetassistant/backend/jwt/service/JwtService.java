@@ -37,6 +37,10 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    public TokenType extractType(String token) {
+        return TokenType.valueOf(extractClaim(token, claims -> claims.get(TYPE, String.class)));
+    }
+
     public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(keyService.getSignKey())
                 .build().parseClaimsJws(token).getBody();

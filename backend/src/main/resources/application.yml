@@ -30,6 +30,14 @@ spring:
           jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
   jwt:
     secret:   ${JWT_SECRET:MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMGBoG93o/faIHuvPr0eryGKSX3FsQUkdeWJo62tTU8xD8hFqDlj7iMrZFz/I7e01bpqx8sGr4sVM8gmoIUj1zUCAwEAAQ==}
+  verification:
+    server: ${VERIFICATION_SERVER:http://localhost:8080/auth/activation}
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:us-west-1}
+      sqs:
+        endpoint: ${AWS_SQS_ENDPOINT:https://sqs.eu-west-1.amazonaws.com/664418998564/test-queue-fleet-assistant}
 logging:
   level:
     org.springframework.security: DEBUG

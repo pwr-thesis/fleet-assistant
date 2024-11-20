@@ -17,5 +17,5 @@ public record Vehicle(
         LocalDate nextInspectionDate,
         LocalDate productionDate,
         List<Location> locations,
-        Long driverId) {
+        Driver driver) {
 }

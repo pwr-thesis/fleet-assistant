@@ -47,8 +47,8 @@ public class VehicleService {
         Manager manager = managerService.getManagerByEmail(credentials.getEmail());
         vehicle.setManager(manager);
 
-        if (vehicleDTO.driverId() != null) {
-            var driver = driverService.getDriverById(vehicleDTO.driverId());
+        if (vehicleDTO.driver() != null) {
+            var driver = driverService.getDriverById(vehicleDTO.driver().id());
             vehicle.setDriver(driver);
         }
 
