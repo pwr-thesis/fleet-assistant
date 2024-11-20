@@ -2,6 +2,11 @@ package org.fleetassistant.backend.auth.credentials;
 
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.auth.credentials.model.Role;
+import org.fleetassistant.backend.exceptionhandler.rest.AccountIsActiveException;
+import org.fleetassistant.backend.exceptionhandler.rest.EmailNotFoundException;
+import org.fleetassistant.backend.exceptionhandler.rest.InvalidTokenException;
+import org.fleetassistant.backend.jwt.model.TokenType;
+import org.fleetassistant.backend.jwt.service.JwtService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +25,8 @@ import static org.mockito.Mockito.when;
 class CredentialsServiceTest {
     @Mock
     private CredentialsRepository credentialsRepository;
+    @Mock
+    private JwtService jwtService;
 
     @InjectMocks
     private CredentialsService credentialsService;
@@ -97,4 +104,90 @@ class CredentialsServiceTest {
         // Then
         assertFalse(result);
     }
+
+    @Test
+    void activateAccount_validToken_activatesAccount() {
+        // Given
+        String token = "validToken";
+        String email = "test@example.com";
+
+        when(jwtService.extractUsername(token)).thenReturn(email);
+        when(jwtService.extractType(token)).thenReturn(TokenType.EMAIL_VALIDATION);
+        when(credentialsRepository.findByEmail(email)).thenReturn(Optional.of(credentials));
+
+        credentials.setIsEnabled(false); // Initially disabled
+
+        // When
+        credentialsService.activateAccount(token);
+
+        // Then
+        assertTrue(credentials.isEnabled());
+    }
+
+    @Test
+    void activateAccount_invalidTokenType_throwsInvalidTokenException() {
+        // Given
+        String token = "invalidToken";
+
+        when(jwtService.extractType(token)).thenReturn(TokenType.ACCESS_TOKEN); // Not EMAIL_VALIDATION
+        when(jwtService.extractUsername(token)).thenReturn("test@example.com");
+
+        // When / Then
+        InvalidTokenException exception = assertThrows(InvalidTokenException.class, () -> {
+            credentialsService.activateAccount(token);
+        });
+        assertEquals("Invalid token", exception.getMessage());
+    }
+
+    @Test
+    void activateAccount_emptyEmail_throwsInvalidTokenException() {
+        // Given
+        String token = "emptyEmailToken";
+
+        when(jwtService.extractType(token)).thenReturn(TokenType.EMAIL_VALIDATION);
+        when(jwtService.extractUsername(token)).thenReturn(""); // Empty email
+
+        // When / Then
+        InvalidTokenException exception = assertThrows(InvalidTokenException.class, () -> {
+            credentialsService.activateAccount(token);
+        });
+        assertEquals("Invalid token", exception.getMessage());
+    }
+
+    @Test
+    void activateAccount_emailNotFound_throwsEmailNotFoundException() {
+        // Given
+        String token = "unknownEmailToken";
+        String email = "unknown@example.com";
+
+        when(jwtService.extractType(token)).thenReturn(TokenType.EMAIL_VALIDATION);
+        when(jwtService.extractUsername(token)).thenReturn(email);
+        when(credentialsRepository.findByEmail(email)).thenReturn(Optional.empty()); // Email not found
+
+        // When / Then
+        EmailNotFoundException exception = assertThrows(EmailNotFoundException.class, () -> {
+            credentialsService.activateAccount(token);
+        });
+        assertEquals("Email not found", exception.getMessage());
+    }
+
+    @Test
+    void activateAccount_alreadyActive_throwsAccountIsActiveException() {
+        // Given
+        String token = "alreadyActiveToken";
+        String email = "test@example.com";
+
+        when(jwtService.extractType(token)).thenReturn(TokenType.EMAIL_VALIDATION);
+        when(jwtService.extractUsername(token)).thenReturn(email);
+        when(credentialsRepository.findByEmail(email)).thenReturn(Optional.of(credentials));
+
+        credentials.setIsEnabled(true); // Already active
+
+        // When / Then
+        AccountIsActiveException exception = assertThrows(AccountIsActiveException.class, () -> {
+            credentialsService.activateAccount(token);
+        });
+        assertEquals("Account is already active", exception.getMessage());
+    }
+
 }
