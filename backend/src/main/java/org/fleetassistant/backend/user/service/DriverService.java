@@ -6,6 +6,7 @@ import org.fleetassistant.backend.auth.credentials.CredentialsService;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.auth.credentials.model.Role;
 import org.fleetassistant.backend.dto.Notification;
+import org.fleetassistant.backend.dto.DriverSearchRequest;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.jwt.service.TokenGenerator;
 import org.fleetassistant.backend.notification.aws.SqsProducer;
@@ -67,12 +68,12 @@ public class DriverService {
         return token;
     }
 
-    public Page<org.fleetassistant.backend.dto.Driver> getDrivers(Long managerId, Pageable pageable) {
-        return driverRepository.findAllByManagerId(managerId, pageable).map(entityToDtoMapper::driverToDriverDto);
+    public Page<org.fleetassistant.backend.dto.Driver> getDrivers(Long managerId, Pageable pageable, DriverSearchRequest driverSearchRequest) {
+        return driverRepository.findAllByManagerId(managerId, driverSearchRequest.name(), driverSearchRequest.surname(), driverSearchRequest.email(), pageable).map(entityToDtoMapper::driverToDriverDto);
     }
 
-    public List<org.fleetassistant.backend.dto.Driver> getRegisteredDrivers(Long id, Pageable pageable) {
-        return driverRepository.findAllByManagerIdAndCredentialsIsEnabled(id, pageable, true).stream()
+    public List<org.fleetassistant.backend.dto.Driver> getRegisteredDrivers(Long id) {
+        return driverRepository.findAllByManagerIdAndCredentialsIsEnabled(id, true).stream()
                 .map(entityToDtoMapper::driverToDriverDto).collect(Collectors.toList());
     }
 }

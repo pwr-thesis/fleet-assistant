@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.dto.Location;
 import org.fleetassistant.backend.dto.Vehicle;
+import org.fleetassistant.backend.dto.VehicleSearchRequest;
 import org.fleetassistant.backend.location.LocationService;
 import org.fleetassistant.backend.vehicle.VehicleService;
 import org.springframework.data.domain.Page;
@@ -31,9 +32,9 @@ public class VehicleController {
                 .body(vehicleService.create(vehicle));
     }
 
-    @GetMapping
-    public ResponseEntity<Page<Vehicle>> readAll(@PageableDefault Pageable pageable) {
-        return ResponseEntity.ok(vehicleService.readAll(pageable));
+    @PostMapping("/search")
+    public ResponseEntity<Page<Vehicle>> readAll(@PageableDefault Pageable pageable, @RequestBody VehicleSearchRequest vehicleSearchRequest) {
+        return ResponseEntity.ok(vehicleService.readAll(pageable, vehicleSearchRequest));
     }
 
     @GetMapping("/{id}")
