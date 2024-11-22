@@ -25,6 +25,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             if (error.status === 401) {
                 localStorage.removeItem('userInfo');
                 localStorage.removeItem('accessToken');
+                localStorage.removeItem('chatHistory');
                 router.navigate(['']);
                 snackbarService.openSnackBar('Your session was expired!');
             }

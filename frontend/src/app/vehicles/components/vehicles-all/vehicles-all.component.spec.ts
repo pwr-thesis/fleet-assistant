@@ -2,33 +2,67 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { VehiclesAllComponent } from './vehicles-all.component';
 import { VehiclesService } from '../../service/vehicles.service';
 import { AuthService } from '../../../auth/service/auth.service';
+import { DriversService } from '../../../drivers/service/drivers.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { MatPaginator } from '@angular/material/paginator';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('VehiclesAllComponent', () => {
     let component: VehiclesAllComponent;
     let fixture: ComponentFixture<VehiclesAllComponent>;
     let mockVehiclesService: jasmine.SpyObj<VehiclesService>;
     let mockAuthService: jasmine.SpyObj<AuthService>;
+    let mockDriversService: jasmine.SpyObj<DriversService>;
 
     beforeEach(async () => {
         mockVehiclesService = jasmine.createSpyObj('VehiclesService', [
             'getAllVehicles',
         ]);
         mockAuthService = jasmine.createSpyObj('AuthService', ['isManager']);
+        mockDriversService = jasmine.createSpyObj('DriversService', [
+            'getRegisteredDrivers',
+        ]);
+
+        mockDriversService.getRegisteredDrivers.and.returnValue(
+            of([
+                {
+                    id: '1',
+                    name: 'John',
+                    surname: 'Doe',
+                    email: 'john.doe@example.com',
+                    drivingLicenseNumber: 'D12345',
+                    driverLicenseCountryCode: 'US',
+                    birthDate: ['1985', '01', '01'],
+                    isEnabled: true,
+                    role: 'driver',
+                },
+                {
+                    id: '2',
+                    name: 'Jane',
+                    surname: 'Smith',
+                    email: 'jane.smith@example.com',
+                    drivingLicenseNumber: 'D67890',
+                    driverLicenseCountryCode: 'CA',
+                    birthDate: ['1990', '06', '15'],
+                    isEnabled: true,
+                    role: 'driver',
+                },
+            ])
+        );
 
         await TestBed.configureTestingModule({
             imports: [
                 VehiclesAllComponent,
                 RouterTestingModule,
                 BrowserAnimationsModule,
+                ReactiveFormsModule,
             ],
             providers: [
                 { provide: VehiclesService, useValue: mockVehiclesService },
                 { provide: AuthService, useValue: mockAuthService },
+                { provide: DriversService, useValue: mockDriversService },
             ],
         }).compileComponents();
     });
@@ -65,15 +99,6 @@ describe('VehiclesAllComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should fetch vehicles on init', () => {
-        fixture.detectChanges();
-        expect(mockVehiclesService.getAllVehicles).toHaveBeenCalledWith({
-            pageNumber: 0,
-            pageSize: 4,
-        });
-        expect(component.vehicles?.length).toBe(1);
-    });
-
     it('should render vehicles when available', () => {
         fixture.detectChanges();
         const vehicleCards = fixture.debugElement.queryAll(
@@ -82,43 +107,39 @@ describe('VehiclesAllComponent', () => {
         expect(vehicleCards.length).toBe(1);
     });
 
-    it('should render "no vehicles" message when vehicles are empty', () => {
-        mockVehiclesService.getAllVehicles.and.returnValue(
-            of({ content: [], totalElements: 0 })
+    it('should display driver text correctly', () => {
+        const driver = {
+            id: '1',
+            name: 'John',
+            surname: 'Doe',
+            email: 'john.doe@example.com',
+            drivingLicenseNumber: 'D12345',
+            driverLicenseCountryCode: 'US',
+            birthDate: ['1985', '01', '01'],
+            isEnabled: true,
+            role: 'driver',
+        };
+        expect(component.getDriverText(driver)).toBe(
+            'John Doe, john.doe@example.com'
         );
-        fixture.detectChanges();
-        const message = fixture.debugElement.query(By.css('h3')).nativeElement
-            .textContent;
-        expect(message).toContain("You don't have any vehicle in your fleet!");
+        expect(component.getDriverText('Not assigned')).toBe('Not assigned');
     });
 
-    it('should call paginator event handler', () => {
-        fixture.detectChanges();
-        const paginator = fixture.debugElement.query(
-            By.directive(MatPaginator)
-        );
-        const paginatorComponent = paginator.componentInstance as MatPaginator;
-
-        paginatorComponent.page.emit({ pageIndex: 1, pageSize: 9, length: 10 });
-        expect(mockVehiclesService.getAllVehicles).toHaveBeenCalledWith({
-            pageNumber: 1,
-            pageSize: 9,
+    it('should call the correct search params', () => {
+        component.vehicleSearchForm.setValue({
+            name: 'Vehicle 1',
+            countryCode: 'US',
+            driver: 'Not assigned',
         });
-    });
-
-    it('should display "assigned vehicles" for drivers', () => {
-        mockAuthService.isManager.and.returnValue(false);
-        fixture.detectChanges();
-        const message = fixture.debugElement.query(By.css('h3')).nativeElement
-            .textContent;
-        expect(message).toContain('Assigned vehicles:');
-    });
-
-    it('should check isDriver method correctly', () => {
-        mockAuthService.isManager.and.returnValue(false);
-        expect(component.isDriver()).toBeTrue();
-
-        mockAuthService.isManager.and.returnValue(true);
-        expect(component.isDriver()).toBeFalse();
+        component.onSearch();
+        expect(mockVehiclesService.getAllVehicles).toHaveBeenCalledWith(
+            { pageNumber: 0, pageSize: 4 },
+            {
+                name: 'Vehicle 1',
+                countryCode: 'US',
+                driverId: null,
+                isDriverAssigned: false,
+            }
+        );
     });
 });

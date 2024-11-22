@@ -34,7 +34,10 @@
             </button>
         </div>
     </div>
-    <mat-icon class="text-white chat-button" (click)="toggleChatbox()"
+    <mat-icon
+        class="text-white chat-button"
+        (click)="toggleChatbox()"
+        *ngIf="!isChatboxOpen"
         >support_agent</mat-icon
     >
 </div>

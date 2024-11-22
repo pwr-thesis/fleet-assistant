@@ -17,7 +17,7 @@ $border-radius: 20px;
         border-radius: $border-radius;
         background-color: $border-color;
         position: relative;
-        bottom: 60px;
+        bottom: 10px;
 
         .chat-header {
             background-color: $basic_color;
@@ -122,16 +122,16 @@ $border-radius: 20px;
             }
 
             .disabled-button {
-                background-color: #d3d3d3; /* Серый цвет */
-                color: #a9a9a9; /* Серый цвет для текста */
-                cursor: not-allowed; /* Изменение курсора на неактивный */
+                background-color: #d3d3d3;
+                color: #a9a9a9;
+                cursor: not-allowed;
             }
         }
     }
 
     .chat-button {
-        height: 50px;
-        width: 50px;
+        height: 65px;
+        width: 65px;
         background-color: $basic_color;
         border-radius: 50%;
         color: white;
@@ -149,7 +149,7 @@ $border-radius: 20px;
 @media (max-width: 768px) {
     .chat {
         .chat-container {
-            bottom: 120px;
+            bottom: 70px;
         }
         .chat-button {
             bottom: 70px;

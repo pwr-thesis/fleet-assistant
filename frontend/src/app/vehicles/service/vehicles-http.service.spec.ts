@@ -61,15 +61,22 @@ describe('VehiclesHttpService', () => {
                 totalElements: 1,
             };
 
-            service.getAllVehicles(pageable).subscribe((response) => {
-                expect(response).toEqual(mockResponse);
-                done();
-            });
+            service
+                .getAllVehicles(pageable, {
+                    name: undefined,
+                    countryCode: undefined,
+                    driverId: null,
+                    isDriverAssigned: undefined,
+                })
+                .subscribe((response) => {
+                    expect(response).toEqual(mockResponse);
+                    done();
+                });
 
             const req = httpTestingController.expectOne(
                 GET_ALL_VEHICLES_URL(pageable)
             );
-            expect(req.request.method).toBe('GET');
+            expect(req.request.method).toBe('POST');
             req.flush(mockResponse);
         });
     });
@@ -163,7 +170,7 @@ describe('VehiclesHttpService', () => {
                     email: 'john.doe@example.com',
                     role: 'Driver',
                     drivingLicenseNumber: '123',
-                    drivingLicenseCountryCode: 'US',
+                    driverLicenseCountryCode: 'US',
                     birthDate: ['1990', '01', '01'],
                     isEnabled: true,
                 },

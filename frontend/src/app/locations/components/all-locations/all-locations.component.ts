@@ -46,7 +46,15 @@ export class AllLocationsComponent implements OnInit {
 
     ngOnInit(): void {
         this.vehicleService
-            .getAllVehicles({ pageSize: 100, pageNumber: 0 })
+            .getAllVehicles(
+                { pageSize: 100, pageNumber: 0 },
+                {
+                    name: undefined,
+                    countryCode: undefined,
+                    driverId: null,
+                    isDriverAssigned: undefined,
+                }
+            )
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((response) => {
                 this.vehicles = response.content.filter(

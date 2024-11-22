@@ -7,16 +7,15 @@ export const USER_INFO_URL = environment.apiUrl + '/user/data';
 export const VEHICLES_URL = environment.apiUrl + '/vehicle';
 export const GET_ALL_VEHICLES_URL = (pageable: Pageable): string =>
     environment.apiUrl +
-    `/vehicle?page=${pageable.pageNumber}&size=${pageable.pageSize}`;
+    `/vehicle/search?page=${pageable.pageNumber}&size=${pageable.pageSize}`;
 export const GET_VEHICLE_BY_ID_URL = (id: string): string =>
     VEHICLES_URL + `/${id}`;
 export const GET_VEHICLE_LIVE_LOCATION_BY_ID_URL = (id: string): string =>
     VEHICLES_URL + `/${id}/location-stream`;
 export const DRIVERS_URL = environment.apiUrl + '/driver';
-export const GET_REGISTERED_DRIVERS_URL =
-    environment.apiUrl + `/driver?registered=true`;
+export const GET_REGISTERED_DRIVERS_URL = environment.apiUrl + `/driver`;
 export const GET_DRIVERS_URL = (pageable: Pageable): string =>
     environment.apiUrl +
-    `/driver?registered=false&page=${pageable.pageNumber}&size=${pageable.pageSize}`;
+    `/driver/search?page=${pageable.pageNumber}&size=${pageable.pageSize}`;
 export const ASSIGN_DRIVER = (vehicleId: string, driverId: string): string =>
     VEHICLES_URL + `/${vehicleId}/assign-driver/${driverId}`;

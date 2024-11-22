@@ -61,13 +61,26 @@ describe('VehiclesService', () => {
 
             mockHttpService.getAllVehicles.and.returnValue(of(mockResponse));
 
-            service.getAllVehicles(pageable).subscribe((response) => {
-                expect(response).toEqual(mockResponse);
-                expect(mockHttpService.getAllVehicles).toHaveBeenCalledWith(
-                    pageable
-                );
-                done();
-            });
+            service
+                .getAllVehicles(pageable, {
+                    name: undefined,
+                    countryCode: undefined,
+                    driverId: null,
+                    isDriverAssigned: undefined,
+                })
+                .subscribe((response) => {
+                    expect(response).toEqual(mockResponse);
+                    expect(mockHttpService.getAllVehicles).toHaveBeenCalledWith(
+                        pageable,
+                        {
+                            name: undefined,
+                            countryCode: undefined,
+                            driverId: null,
+                            isDriverAssigned: undefined,
+                        }
+                    );
+                    done();
+                });
         });
     });
 
@@ -180,7 +193,7 @@ describe('VehiclesService', () => {
                     surname: 'Doe',
                     email: 'john.doe@example.com',
                     drivingLicenseNumber: '123',
-                    drivingLicenseCountryCode: 'US',
+                    driverLicenseCountryCode: 'US',
                     birthDate: ['1990', '01', '10'],
                     isEnabled: true,
                     role: 'DRIVER',
