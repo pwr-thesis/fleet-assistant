@@ -3,7 +3,7 @@ import { UserInfo } from '../../auth/types/auth';
 export interface Driver extends UserInfo {
     id: string;
     drivingLicenseNumber: string;
-    drivingLicenseCountryCode: string;
+    driverLicenseCountryCode: string;
     birthDate: string[];
     isEnabled: boolean;
 }
@@ -20,4 +20,10 @@ export interface DriverCreateRequest {
 export interface DriversPage {
     content: Driver[];
     totalElements: number;
+}
+
+export interface DriverSearch {
+    name?: string;
+    surname?: string;
+    email?: string;
 }

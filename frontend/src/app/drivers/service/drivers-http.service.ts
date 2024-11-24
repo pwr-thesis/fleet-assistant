@@ -6,7 +6,12 @@ import {
     GET_DRIVERS_URL,
     GET_REGISTERED_DRIVERS_URL,
 } from '../../../utilities/_urls';
-import { Driver, DriverCreateRequest, DriversPage } from '../types/drivers';
+import {
+    Driver,
+    DriverCreateRequest,
+    DriverSearch,
+    DriversPage,
+} from '../types/drivers';
 import { Pageable } from '../../vehicles/types/vehicles';
 
 @Injectable({
@@ -15,9 +20,13 @@ import { Pageable } from '../../vehicles/types/vehicles';
 export class DriversHttpService {
     constructor(private http: HttpClient) {}
 
-    getAllDrivers(pageable: Pageable): Observable<DriversPage> {
-        return this.http.get(
-            GET_DRIVERS_URL(pageable)
+    getAllDrivers(
+        pageable: Pageable,
+        driverSearch: DriverSearch
+    ): Observable<DriversPage> {
+        return this.http.post(
+            GET_DRIVERS_URL(pageable),
+            driverSearch
         ) as Observable<DriversPage>;
     }
 

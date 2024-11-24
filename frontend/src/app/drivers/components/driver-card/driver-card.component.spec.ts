@@ -28,7 +28,7 @@ describe('DriverCardComponent', () => {
             email: 'john.doe@example.com',
             isEnabled: true,
             drivingLicenseNumber: 'DL12345',
-            drivingLicenseCountryCode: 'US',
+            driverLicenseCountryCode: 'US',
             birthDate: ['1990', '1', '1'],
         };
         fixture.detectChanges();
@@ -48,7 +48,7 @@ describe('DriverCardComponent', () => {
             email: 'john.doe@example.com',
             isEnabled: true,
             drivingLicenseNumber: 'DL12345',
-            drivingLicenseCountryCode: 'US',
+            driverLicenseCountryCode: 'US',
             birthDate: ['1990', '1', '1'],
         };
         fixture.detectChanges();
@@ -70,7 +70,7 @@ describe('DriverCardComponent', () => {
             email: 'john.doe@example.com',
             isEnabled: false,
             drivingLicenseNumber: 'DL12345',
-            drivingLicenseCountryCode: 'US',
+            driverLicenseCountryCode: 'US',
             birthDate: ['1990', '1', '1'],
         };
         fixture.detectChanges();

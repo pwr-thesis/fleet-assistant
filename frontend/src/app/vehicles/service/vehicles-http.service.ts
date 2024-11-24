@@ -4,6 +4,7 @@ import {
     Pageable,
     Vehicle,
     VehicleCreateRequest,
+    VehicleSearch,
     VehiclesPage,
 } from '../types/vehicles';
 import { HttpClient } from '@angular/common/http';
@@ -22,9 +23,13 @@ import { Location } from '../../locations/types/locations';
 export class VehiclesHttpService {
     constructor(private http: HttpClient) {}
 
-    getAllVehicles(pageable: Pageable): Observable<VehiclesPage> {
-        return this.http.get(
-            GET_ALL_VEHICLES_URL(pageable)
+    getAllVehicles(
+        pageable: Pageable,
+        vehicleSearch: VehicleSearch
+    ): Observable<VehiclesPage> {
+        return this.http.post(
+            GET_ALL_VEHICLES_URL(pageable),
+            vehicleSearch
         ) as Observable<VehiclesPage>;
     }
 

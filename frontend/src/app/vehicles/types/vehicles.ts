@@ -35,3 +35,10 @@ export interface VehicleCreateRequest {
     productionDate: string;
     driver?: { id: number };
 }
+
+export interface VehicleSearch {
+    name?: string;
+    countryCode?: string;
+    driverId: number | null;
+    isDriverAssigned: boolean | undefined;
+}
