@@ -41,7 +41,7 @@ public class VehicleService {
     @Transactional
     public org.fleetassistant.backend.dto.Vehicle create(org.fleetassistant.backend.dto.Vehicle vehicleDTO) {
         Vehicle vehicle = entityToDtoMapper.vehicleDtoToVehicle(vehicleDTO);
-        if (isVehicleExists(vehicle))
+        if (isVehicleExist(vehicle))
             throw new ObjectAlreadyExistsException(String.format(CAR_WITH_VIN_ALREADY_EXISTS, vehicle.getVin()));
 
         Credentials credentials = CredentialsService.getCredentials();
@@ -82,7 +82,7 @@ public class VehicleService {
         return entityToDtoMapper.vehicleToVehicleDto(readVehicleById(id));
     }
 
-    public boolean isVehicleExists(Vehicle car) {
+    public boolean isVehicleExist(Vehicle car) {
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withIgnorePaths("id")
                 .withIgnorePaths("driver")
