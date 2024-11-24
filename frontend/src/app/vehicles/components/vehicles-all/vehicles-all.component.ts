@@ -26,6 +26,7 @@ import {
 import { Driver } from '../../../drivers/types/drivers';
 import { DriversService } from '../../../drivers/service/drivers.service';
 import { MatButton } from '@angular/material/button';
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-vehicles-all',
@@ -67,7 +68,8 @@ export class VehiclesAllComponent implements OnInit {
         private vehiclesService: VehiclesService,
         private authService: AuthService,
         private destroyRef: DestroyRef,
-        private driverService: DriversService
+        private driverService: DriversService,
+        private titleService: Title
     ) {
         this.vehicleSearchForm = new FormGroup({
             name: new FormControl(''),
@@ -88,6 +90,9 @@ export class VehiclesAllComponent implements OnInit {
             });
 
         this.filteredDrivers = this.drivers.slice();
+
+        this.titleService.setTitle('FA - Vehciles');
+
     }
 
     handlePageEvent(e: PageEvent): void {

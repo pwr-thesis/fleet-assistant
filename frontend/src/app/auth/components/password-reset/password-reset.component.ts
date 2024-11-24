@@ -12,6 +12,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { SnackbarService } from '../../../../utilities/services/snackbar.service';
 import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-password-reset',
@@ -31,7 +32,11 @@ import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
 export class PasswordResetComponent {
     passwordResetForm: FormGroup;
 
-    constructor(public snackbarService: SnackbarService) {
+    ngOnInit(): void {
+        this.titleService.setTitle('FA - Password');
+    }
+    constructor(public snackbarService: SnackbarService,
+                private titleService: Title) {
         this.passwordResetForm = new FormGroup({
             email: new FormControl('', [Validators.required, Validators.email]),
         });

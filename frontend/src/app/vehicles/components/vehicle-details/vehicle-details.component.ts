@@ -26,6 +26,7 @@ import { DriversService } from '../../../drivers/service/drivers.service';
 import { MatButton } from '@angular/material/button';
 import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
 import { SnackbarService } from '../../../../utilities/services/snackbar.service';
+import {Title} from "@angular/platform-browser";
 @Component({
     selector: 'app-vehicle-details',
     standalone: true,
@@ -61,7 +62,8 @@ export class VehicleDetailsComponent implements OnInit {
         private vehiclesService: VehiclesService,
         private destroyRef: DestroyRef,
         private driverService: DriversService,
-        private snackbarService: SnackbarService
+        private snackbarService: SnackbarService,
+        private titleService: Title
     ) {
         const imgTag = document.createElement('img');
         imgTag.src = 'car-icon.png';
@@ -113,6 +115,7 @@ export class VehicleDetailsComponent implements OnInit {
                     : this.drivers.slice();
             })
         );
+        this.titleService.setTitle('FA - ' + this.vehicle.name);
     }
 
     getVehicleLastLocation(location: Location): google.maps.LatLngLiteral {
