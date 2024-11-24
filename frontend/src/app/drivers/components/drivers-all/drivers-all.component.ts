@@ -20,6 +20,7 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-drivers-all',
@@ -54,7 +55,8 @@ export class DriversAllComponent implements OnInit {
 
     constructor(
         private driversService: DriversService,
-        private destroyRef: DestroyRef
+        private destroyRef: DestroyRef,
+        private titleService: Title
     ) {
         this.driverSearchForm = new FormGroup({
             name: new FormControl(''),
@@ -65,6 +67,7 @@ export class DriversAllComponent implements OnInit {
 
     ngOnInit(): void {
         this.getDrivers();
+        this.titleService.setTitle('FA - Drivers');
     }
 
     handlePageEvent(e: PageEvent): void {

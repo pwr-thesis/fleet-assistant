@@ -7,6 +7,7 @@ import { Location } from '../../types/locations';
 import { mapOptions } from '../../_helpers';
 import { NgForOf, NgIf } from '@angular/common';
 import { VehicleCardComponent } from '../../../vehicles/components/vehicle-card/vehicle-card.component';
+import {Title} from "@angular/platform-browser";
 
 export interface CustomMarker {
     position: google.maps.LatLngLiteral;
@@ -37,7 +38,8 @@ export class AllLocationsComponent implements OnInit {
 
     constructor(
         private vehicleService: VehiclesService,
-        private destroyRef: DestroyRef
+        private destroyRef: DestroyRef,
+        private titleService: Title
     ) {
         const imgTag = document.createElement('img');
         imgTag.src = 'car-icon-clicked.png';
@@ -70,6 +72,8 @@ export class AllLocationsComponent implements OnInit {
                     ]?.longitude,
                 };
             });
+
+        this.titleService.setTitle('FA - Locations');
     }
 
     getMarkers(): CustomMarker[] | null {
