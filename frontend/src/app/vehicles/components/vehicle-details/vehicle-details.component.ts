@@ -1,5 +1,5 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { Vehicle } from '../../types/vehicles';
 import { toDisplayDate } from '../../../../utilities/date-utils';
 import { mapOptions } from '../../../locations/_helpers';
@@ -23,10 +23,11 @@ import {
 import { Driver } from '../../../drivers/types/drivers';
 import { map, Observable, startWith } from 'rxjs';
 import { DriversService } from '../../../drivers/service/drivers.service';
-import { MatButton } from '@angular/material/button';
+import {MatButton, MatFabAnchor} from '@angular/material/button';
 import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
 import { SnackbarService } from '../../../../utilities/services/snackbar.service';
 import {Title} from "@angular/platform-browser";
+import {MatIcon} from "@angular/material/icon";
 @Component({
     selector: 'app-vehicle-details',
     standalone: true,
@@ -44,6 +45,9 @@ import {Title} from "@angular/platform-browser";
         NgIf,
         MatFormField,
         MatLabel,
+        MatFabAnchor,
+        MatIcon,
+        RouterLink,
     ],
     templateUrl: './vehicle-details.component.html',
 })

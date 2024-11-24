@@ -1,4 +1,8 @@
 <div class="min-h-screen p-10">
+    <a mat-fab extended routerLink="/vehicles" class="floating-button">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        Go Back</a>
+
     <h3 class="text-center">{{ vehicle.name + ' details' }}</h3>
     <div class="flex justify-center" *ngIf="!(location && mapInitialCenter)">
         <div class="border-l-4 border-red-700 mx-3 pt-4 pl-4 mb-8" role="alert">
