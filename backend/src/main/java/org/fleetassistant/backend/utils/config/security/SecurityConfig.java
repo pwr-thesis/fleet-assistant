@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .addFilterAt(customFilter, BearerTokenAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/user/**").authenticated()
+                        .requestMatchers("/api/v1/vehicle/search").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/vehicle/**").hasAuthority(Role.MANAGER.name())
                         .requestMatchers("/api/v1/vehicle/{id}").authenticated()
                         .requestMatchers("/api/v1/vehicle/**").authenticated()
