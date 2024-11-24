@@ -1,11 +1,14 @@
 import time
-
 import requests
 
+BEARER_TOKEN = "your_bearer_token_here"
 
 def delete_vehicle_locations(vehicle_id):
     url = 'http://localhost:8080/api/v1/vehicle/{}/location'.format(vehicle_id)
-    headers = {'Content-Type': 'application/json'}
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {BEARER_TOKEN}'
+    }
 
     response = requests.delete(url, headers=headers)
     if response.status_code == 204:
@@ -17,7 +20,10 @@ def delete_vehicle_locations(vehicle_id):
 
 def send_vehicle_location(vehicle_id, latitude, longitude):
     url = 'http://localhost:8080/api/v1/vehicle/{}/location'.format(vehicle_id)
-    headers = {'Content-Type': 'application/json'}
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {BEARER_TOKEN}'  # Add Bearer Token for authentication
+    }
 
     location_data = {
         'latitude': latitude,
