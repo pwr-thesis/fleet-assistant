@@ -1,3 +1,5 @@
+aws_region="eu-west-1"
+
 public_s3_name="fleet-assistant-hosting-bucket"
 private_s3_name="fleet-assistant-backend-bucket"
 
