@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 15
+      author: "267193"
+      changes:
+        - createTable:
+            tableName: notification
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: message
+                  type: varchar(255)
+              - column:
+                  name: created_on
+                  type: datetime
+              - column:
+                  name: user_id
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: notification
+            baseColumnNames: user_id
+            referencedTableName: fauser
+            referencedColumnNames: id
+            constraintName: fk_user_notification
