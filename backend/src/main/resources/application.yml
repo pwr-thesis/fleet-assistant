@@ -35,9 +35,9 @@ spring:
   cloud:
     aws:
       region:
-        static: ${AWS_REGION:us-west-1}
+        static: ${AWS_REGION:eu-west-1}
       sqs:
-        endpoint: ${AWS_SQS_ENDPOINT:https://sqs.eu-west-1.amazonaws.com/664418998564/test-queue-fleet-assistant}
+        endpoint: ${AWS_SQS_ENDPOINT}
 logging:
   level:
     org.springframework.security: DEBUG
