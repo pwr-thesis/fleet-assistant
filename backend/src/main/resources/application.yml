@@ -11,6 +11,8 @@ spring:
     username: ${SQL_USERNAME:admin}
     url: ${SQL_URI:jdbc:postgresql://localhost:5432/fleet_assistant}
     password: ${SQL_PASSWORD:admin}
+    hikari:
+      connection-timeout: 1000
   jpa:
     hibernate:
       ddl-auto: none
