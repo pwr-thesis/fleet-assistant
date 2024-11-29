@@ -1,10 +1,10 @@
 package org.fleetassistant.backend.utils.config.security.decoders;
 
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.exceptionhandler.rest.AuthException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,7 +21,7 @@ public class CustomJwtDecoder implements JwtDecoder {
             } catch (Exception e) {
                 return customLocalJwtDecoder.decode(token);
             }
-        }catch (JwtException e){
+        } catch (JwtException e) {
             throw new AuthException("Invalid token");
         }
     }

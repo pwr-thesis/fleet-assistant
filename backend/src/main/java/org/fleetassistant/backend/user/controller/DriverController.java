@@ -1,5 +1,6 @@
 package org.fleetassistant.backend.user.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.CredentialsService;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
@@ -28,7 +29,7 @@ public class DriverController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<String> createDriver(@RequestBody Driver driverDto) {
+    public ResponseEntity<String> createDriver(@RequestBody @Valid Driver driverDto) {
         return ResponseEntity.ok(driverService.create(driverDto));
     }
 

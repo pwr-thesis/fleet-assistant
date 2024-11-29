@@ -11,17 +11,15 @@
             <mat-form-field class="w-full">
                 <mat-label>Name</mat-label>
                 <input matInput type="text" required formControlName="name" />
+                <mat-error>
+                    Name length must be between 3 and 255 characters
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
                 <mat-label>VIN</mat-label>
                 <input matInput type="text" required formControlName="vin" />
-                <mat-error
-                    *ngIf="
-                        createVehicleForm.get('vin')?.hasError('minlength') ||
-                        createVehicleForm.get('vin')?.hasError('maxLength')
-                    "
-                >
-                    Please provide valid VIN number
+                <mat-error>
+                    Please provide valid VIN number (17 chars)
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
@@ -32,6 +30,9 @@
                     required
                     formControlName="plateNumber"
                 />
+                <mat-error>
+                    Plate number must be between 1 and 15 characters
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
                 <mat-label>Country code</mat-label>
@@ -41,6 +42,9 @@
                     required
                     formControlName="countryCode"
                 />
+                <mat-error>
+                    Country code must be between 1 and 3 characters
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
                 <mat-label>Insurance date</mat-label>
