@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 16
+      author: "267193"
+      changes:
+        - insert:
+            tableName: notification
+            columns:
+              - column:
+                  name: title
+                  value: "Welcome"
+              - column:
+                  name: message
+                  value: "Welcome to the platform, John!"
+              - column:
+                  name: created_on
+                  value: "2024-11-01 10:00:00"
+              - column:
+                  name: user_id
+                  value: 1
+        - insert:
+            tableName: notification
+            columns:
+              - column:
+                  name: title
+                  value: "Przeglad samochodu"
+              - column:
+                  name: message
+                  value: "Nie zapomnij o przegldzie Jane!"
+              - column:
+                  name: created_on
+                  value: "2024-11-02 15:30:00"
+              - column:
+                  name: user_id
+                  value: 2
+        - insert:
+            tableName: notification
+            columns:
+              - column:
+                  name: title
+                  value: "Wiadomosc od menadzera"
+              - column:
+                  name: message
+                  value: "Sprawdz czy samochod jest przygotowany do jazdy"
+              - column:
+                  name: created_on
+                  value: "2024-11-03 12:00:00"
+              - column:
+                  name: user_id
+                  value: 3
+        - insert:
+            tableName: notification
+            columns:
+              - column:
+                  name: title
+                  value: "Przypisanie samochodu"
+              - column:
+                  name: message
+                  value: "Przypisalem ci nowy samochod. Twoj menadzer"
+              - column:
+                  name: created_on
+                  value: "2024-11-04 18:45:00"
+              - column:
+                  name: user_id
+                  value: 4
