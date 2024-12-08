@@ -45,7 +45,7 @@ describe('DriversService', () => {
                         email: 'john.doe@example.com',
                         role: 'driver',
                         drivingLicenseNumber: '12345',
-                        drivingLicenseCountryCode: 'US',
+                        driverLicenseCountryCode: 'US',
                         birthDate: ['1990-01-01'],
                         isEnabled: true,
                     },
@@ -55,12 +55,13 @@ describe('DriversService', () => {
 
             httpServiceMock.getAllDrivers.and.returnValue(of(mockDriversPage));
 
-            service.getAllDrivers(pageable).subscribe((driversPage) => {
+            service.getAllDrivers(pageable, {}).subscribe((driversPage) => {
                 expect(driversPage).toEqual(mockDriversPage);
             });
 
             expect(httpServiceMock.getAllDrivers).toHaveBeenCalledWith(
-                pageable
+                pageable,
+                {}
             );
         });
     });
@@ -75,7 +76,7 @@ describe('DriversService', () => {
                     email: 'john.doe@example.com',
                     role: 'driver',
                     drivingLicenseNumber: '12345',
-                    drivingLicenseCountryCode: 'US',
+                    driverLicenseCountryCode: 'US',
                     birthDate: ['1990-01-01'],
                     isEnabled: true,
                 },

@@ -29,7 +29,7 @@ describe('VehicleCardComponent', () => {
             email: 'john.doe@example.com',
             role: 'driver',
             drivingLicenseNumber: 'D12345',
-            drivingLicenseCountryCode: 'US',
+            driverLicenseCountryCode: 'US',
             birthDate: ['1985', '01', '01'],
             isEnabled: true,
         },

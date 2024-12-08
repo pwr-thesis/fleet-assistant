@@ -56,15 +56,33 @@ export class DriverCreateComponent {
         private driverService: DriversService
     ) {
         this.createDriverForm = new FormGroup({
-            name: new FormControl('', Validators.required),
-            surname: new FormControl('', Validators.required),
-            email: new FormControl('', [Validators.required, Validators.email]),
+            name: new FormControl('', [
+                Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(50),
+            ]),
+            surname: new FormControl('', [
+                Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(50),
+            ]),
+            email: new FormControl('', [
+                Validators.required,
+                Validators.email,
+                Validators.maxLength(50),
+            ]),
             dateOfBirth: new FormControl('', [
                 Validators.required,
                 dateOfBirthValidator(),
             ]),
-            driverLicenseCountryCode: new FormControl('', Validators.required),
-            driverLicenseNumber: new FormControl('', Validators.required),
+            driverLicenseCountryCode: new FormControl('', [
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(3),]),
+            driverLicenseNumber: new FormControl('', [
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(20)])
         });
     }
 

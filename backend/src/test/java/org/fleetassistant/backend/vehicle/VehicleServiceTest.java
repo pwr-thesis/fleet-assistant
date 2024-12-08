@@ -2,6 +2,7 @@ package org.fleetassistant.backend.vehicle;
 
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.auth.credentials.model.Role;
+import org.fleetassistant.backend.dto.VehicleSearchRequest;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
 import org.fleetassistant.backend.location.LocationService;
@@ -58,6 +59,7 @@ class VehicleServiceTest {
     private org.fleetassistant.backend.dto.Vehicle vehicleDto;
     private org.fleetassistant.backend.dto.Location locationDto;
     private Location location;
+    private VehicleSearchRequest vehicleSearchRequest;
 
     @BeforeEach
     void setUp() {
@@ -92,7 +94,7 @@ class VehicleServiceTest {
                 .insuranceDate(LocalDate.of(2023, 12, 10))
                 .driver(org.fleetassistant.backend.dto.Driver.builder().id(1L).build())
                 .build();
-
+        vehicleSearchRequest = new VehicleSearchRequest(null, null, null, null);
     }
 
     @Test
@@ -125,7 +127,7 @@ class VehicleServiceTest {
         Pageable pageable = Pageable.ofSize(1);
         Page<Vehicle> vehiclePage = new PageImpl<>(List.of(vehicle));
         when(entityToDtoMapper.vehicleToVehicleDto(vehicle)).thenReturn(vehicleDto);
-        when(vehicleRepository.findAllByManagerId(0L, pageable)).thenReturn(vehiclePage);
+        when(vehicleRepository.findAllByManagerId(0L, null, null, null, null, pageable)).thenReturn(vehiclePage);
 
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
@@ -133,10 +135,10 @@ class VehicleServiceTest {
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
 
-        Page<org.fleetassistant.backend.dto.Vehicle> result = vehicleService.readAll(pageable);
+        Page<org.fleetassistant.backend.dto.Vehicle> result = vehicleService.readAll(pageable, vehicleSearchRequest);
 
         assertNotNull(result);
-        verify(vehicleRepository, times(1)).findAllByManagerId(any(), any());
+        verify(vehicleRepository, times(1)).findAllByManagerId(any(), any(), any(), any(), any(), any());
     }
 
     @Test
@@ -144,7 +146,7 @@ class VehicleServiceTest {
         Pageable pageable = Pageable.ofSize(1);
         Page<Vehicle> vehiclePage = new PageImpl<>(List.of(vehicle));
         when(entityToDtoMapper.vehicleToVehicleDto(vehicle)).thenReturn(vehicleDto);
-        when(vehicleRepository.findAllByDriverId(0L, pageable)).thenReturn(vehiclePage);
+        when(vehicleRepository.findAllByDriverId(0L, null, null, pageable)).thenReturn(vehiclePage);
 
         Authentication authentication = Mockito.mock(Authentication.class);
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
@@ -152,10 +154,10 @@ class VehicleServiceTest {
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
 
-        Page<org.fleetassistant.backend.dto.Vehicle> result = vehicleService.readAll(pageable);
+        Page<org.fleetassistant.backend.dto.Vehicle> result = vehicleService.readAll(pageable, vehicleSearchRequest);
 
         assertNotNull(result);
-        verify(vehicleRepository, times(1)).findAllByDriverId(any(), any());
+        verify(vehicleRepository, times(1)).findAllByDriverId(any(), any(), any(), any());
     }
 
     @Test
@@ -183,7 +185,7 @@ class VehicleServiceTest {
     void isCarExists_shouldReturnTrueIfCarExists() {
         when(vehicleRepository.exists(any())).thenReturn(true);
 
-        boolean exists = vehicleService.isVehicleExists(vehicle);
+        boolean exists = vehicleService.isVehicleExist(vehicle);
 
         assertTrue(exists);
     }
@@ -192,7 +194,7 @@ class VehicleServiceTest {
     void isCarExists_shouldReturnFalseIfCarDoesNotExist() {
         when(vehicleRepository.exists(any())).thenReturn(false);
 
-        boolean exists = vehicleService.isVehicleExists(vehicle);
+        boolean exists = vehicleService.isVehicleExist(vehicle);
 
         assertFalse(exists);
     }

@@ -20,6 +20,7 @@ import {
 } from '../../_helpers';
 import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
 import { AuthService } from '../../service/auth.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-register',
@@ -45,7 +46,8 @@ export class RegisterComponent {
 
     constructor(
         private authService: AuthService,
-        public snackBarService: SnackbarService
+        public snackBarService: SnackbarService,
+        private titleService: Title
     ) {
         this.registerForm = new FormGroup(
             {
@@ -68,7 +70,9 @@ export class RegisterComponent {
             { validators: passwordMatchValidator }
         );
     }
-
+    ngOnInit(): void {
+        this.titleService.setTitle('FA - Register');
+    }
     onSubmit(): void {
         if (this.registerForm.valid) {
             const formValues = this.registerForm.value;

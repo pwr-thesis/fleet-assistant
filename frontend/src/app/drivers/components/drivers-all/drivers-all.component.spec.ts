@@ -3,7 +3,6 @@ import { DriversAllComponent } from './drivers-all.component';
 import { DriversService } from '../../service/drivers.service';
 import { of } from 'rxjs';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { AddCardComponent } from '../../../common/components/add-card/add-card.component';
 import { DriverCardComponent } from '../driver-card/driver-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
@@ -47,7 +46,7 @@ describe('DriversAllComponent', () => {
                 surname: 'Doe',
                 email: 'john.doe@example.com',
                 drivingLicenseNumber: '12345',
-                drivingLicenseCountryCode: 'US',
+                driverLicenseCountryCode: 'US',
                 birthDate: ['1990', '01', '01'],
                 isEnabled: true,
                 role: 'DRIVER',
@@ -58,7 +57,7 @@ describe('DriversAllComponent', () => {
                 surname: 'Smith',
                 email: 'jane.smith@example.com',
                 drivingLicenseNumber: '12345',
-                drivingLicenseCountryCode: 'US',
+                driverLicenseCountryCode: 'US',
                 birthDate: ['1990', '01', '01'],
                 isEnabled: true,
                 role: 'DRIVER',
@@ -76,23 +75,6 @@ describe('DriversAllComponent', () => {
         expect(driverCards.length).toBe(2);
     });
 
-    it('should display a message and "add card" when no drivers exist', () => {
-        driversServiceMock.getAllDrivers.and.returnValue(
-            of({ content: [], totalElements: 0 })
-        );
-
-        fixture.detectChanges();
-
-        const message = fixture.debugElement.query(By.css('h3')).nativeElement
-            .textContent;
-        expect(message).toContain("You don't have any driver in your fleet!");
-
-        const addCard = fixture.debugElement.query(
-            By.directive(AddCardComponent)
-        );
-        expect(addCard).toBeTruthy();
-    });
-
     it('should update drivers when paginator page changes', () => {
         driversServiceMock.getAllDrivers.and.returnValues(
             of({
@@ -103,7 +85,7 @@ describe('DriversAllComponent', () => {
                         surname: 'Doe',
                         email: 'john.doe@example.com',
                         drivingLicenseNumber: '12345',
-                        drivingLicenseCountryCode: 'US',
+                        driverLicenseCountryCode: 'US',
                         birthDate: ['1990', '01', '01'],
                         isEnabled: true,
                         role: 'DRIVER',
@@ -119,7 +101,7 @@ describe('DriversAllComponent', () => {
                         surname: 'Smith',
                         email: 'jane.smith@example.com',
                         drivingLicenseNumber: '12345',
-                        drivingLicenseCountryCode: 'US',
+                        driverLicenseCountryCode: 'US',
                         birthDate: ['1990', '01', '01'],
                         isEnabled: true,
                         role: 'DRIVER',

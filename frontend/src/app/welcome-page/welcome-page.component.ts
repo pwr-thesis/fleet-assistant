@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { DoubleColumnParagraphComponent } from '../common/components/double-column-paragraph/double-column-paragraph.component';
 import { ContactFormComponent } from '../common/components/contact-form/contact-form.component';
 import { ChatComponent } from '../common/components/chat/chat.component';
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-welcome-page',
@@ -16,4 +17,11 @@ import { ChatComponent } from '../common/components/chat/chat.component';
     templateUrl: './welcome-page.component.html',
     styleUrl: './welcome-page.component.scss',
 })
-export class WelcomePageComponent {}
+export class WelcomePageComponent {
+
+    constructor(private titleService: Title) {}
+
+    ngOnInit(): void {
+        this.titleService.setTitle('FA - Welcome');
+    }
+}

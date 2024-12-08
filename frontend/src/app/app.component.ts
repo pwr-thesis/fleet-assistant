@@ -9,6 +9,8 @@ import { SidenavComponent } from './common/components/sidenav/sidenav.component'
 import { BottomNavComponent } from './common/components/bottom-nav/bottom-nav.component';
 import { environment } from '../environments/environment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChatComponent } from './common/components/chat/chat.component';
+import { ChatDisplayService } from '../utilities/services/chat.display.service';
 
 @Component({
     selector: 'app-root',
@@ -21,22 +23,31 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         NgIf,
         SidenavComponent,
         BottomNavComponent,
+        ChatComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
     showNavbar = true;
+    showChat = true;
 
     constructor(
         private destroyRef: DestroyRef,
         private navbarService: NavbarService,
+        private chatDisplayService: ChatDisplayService,
         private renderer: Renderer2
     ) {
         this.navbarService.showNavbar$
             .pipe(takeUntilDestroyed(destroyRef))
             .subscribe((show) => {
                 this.showNavbar = show;
+            });
+
+        this.chatDisplayService.showChat$
+            .pipe(takeUntilDestroyed(destroyRef))
+            .subscribe((show) => {
+                this.showChat = show;
             });
     }
 

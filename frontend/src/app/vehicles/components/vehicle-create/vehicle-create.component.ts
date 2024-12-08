@@ -98,14 +98,24 @@ export class VehicleCreateComponent implements OnInit {
         private driverService: DriversService
     ) {
         this.createVehicleForm = new FormGroup({
-            name: new FormControl('', Validators.required),
+            name: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(255),
+                Validators.minLength(3)
+            ]),
             vin: new FormControl('', [
                 Validators.required,
                 Validators.maxLength(17),
                 Validators.minLength(17),
             ]),
-            plateNumber: new FormControl('', Validators.required),
-            countryCode: new FormControl('', Validators.required),
+            plateNumber: new FormControl('', [
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(15)]),
+            countryCode: new FormControl('', [
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(3)]),
             productionDate: new FormControl('', [
                 Validators.required,
                 pastDateValidator(),
@@ -147,7 +157,7 @@ export class VehicleCreateComponent implements OnInit {
                 lastInspectionDate: moment(
                     vehicleFormValue.lastVehicleInspectionDate
                 ).format('YYYY-MM-DD'),
-                productionDate: moment(vehicleFormValue.vehicleYear).format(
+                productionDate: moment(vehicleFormValue.productionDate).format(
                     'YYYY-MM-DD'
                 ),
                 driver: vehicleFormValue.driver

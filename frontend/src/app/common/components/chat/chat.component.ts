@@ -19,10 +19,11 @@ export interface History {
 })
 export class ChatComponent implements OnInit {
     isChatboxOpen = false;
-    messages: string[] = [];
+    messages: string[] = [
+        'Bot: Hello! 👋 I’m your Fleet Assistant AI Bot, here to help you manage your fleet more efficiently. 🚛🚗',
+    ];
     newMessage = '';
     isButtonDisabled = false;
-    userLogin = '';
 
     constructor(
         private chatService: ChatService,
@@ -30,7 +31,6 @@ export class ChatComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.userLogin = this.authService.getUserInfo()?.email || '';
         this.loadChatState();
     }
 
@@ -73,8 +73,7 @@ export class ChatComponent implements OnInit {
         const history = [
             {
                 role: 'system',
-                content:
-                    'You are an AI assistant BOT, experienced in vehicle mechanics. You work as an assistant in a car repair shop. Answer max. 100 words in each message.',
+                content: this.botPrompt,
             },
         ];
 
@@ -110,4 +109,25 @@ export class ChatComponent implements OnInit {
         localStorage.removeItem('chatHistory');
         this.messages = [];
     }
+
+    private botPrompt =
+        'You are the AI Bot for the Fleet Assistant Web System. ' +
+        'Your role is to assist users in managing their fleet operations effectively by providing information, guidance, and support within the vehicles and their maintenance. ' +
+        "Here's what you need to know about your role:\n" +
+        '\n' +
+        '    Purpose:\n' +
+        '        Help users with their cars.\n' +
+        '        Assist in managing vehicles, drivers, and other fleet-related operations.\n' +
+        '\n' +
+        '    Tone and behavior:\n' +
+        '        Be professional, friendly, and clear in your responses.\n' +
+        '        Answer mx. 100 words in each message. \n' +
+        '        Guide users step-by-step if they need help with complex operations.\n' +
+        '        Avoid overly technical language unless requested.\n' +
+        '\n' +
+        '    Context:\n' +
+        '        The system is used by a variety of users, from a single service provider to multiple users in the future.\n' +
+        '        Always ensure your responses are accurate and relevant to the user’s query.\n' +
+        '\n' +
+        'From now on, respond as though you are embedded in this system. Acknowledge and confirm any configuration changes requested by the user.';
 }

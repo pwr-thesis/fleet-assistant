@@ -46,7 +46,7 @@ describe('DriversHttpService', () => {
                         email: 'john.doe@example.com',
                         role: 'driver',
                         drivingLicenseNumber: '12345',
-                        drivingLicenseCountryCode: 'US',
+                        driverLicenseCountryCode: 'US',
                         birthDate: ['1990-01-01'],
                         isEnabled: true,
                     },
@@ -54,12 +54,12 @@ describe('DriversHttpService', () => {
                 totalElements: 1,
             };
 
-            service.getAllDrivers(pageable).subscribe((response) => {
+            service.getAllDrivers(pageable, {}).subscribe((response) => {
                 expect(response).toEqual(mockResponse);
             });
 
             const req = httpMock.expectOne(GET_DRIVERS_URL(pageable));
-            expect(req.request.method).toBe('GET');
+            expect(req.request.method).toBe('POST');
             req.flush(mockResponse);
         });
     });
@@ -74,7 +74,7 @@ describe('DriversHttpService', () => {
                     email: 'jane.doe@example.com',
                     role: 'driver',
                     drivingLicenseNumber: '54321',
-                    drivingLicenseCountryCode: 'UK',
+                    driverLicenseCountryCode: 'UK',
                     birthDate: ['1985-05-15'],
                     isEnabled: true,
                 },

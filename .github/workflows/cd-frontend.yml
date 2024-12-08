@@ -43,6 +43,8 @@ jobs:
           OIDC_CLIENT_ID: ${{ secrets.OIDC_CLIENT_ID }}
           API_URL: ${{ secrets.API_URL }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          AZURE_ENDPOINT: ${{ secrets.AZURE_ENDPOINT }}
+          AZURE_API_KEY: ${{ secrets.AZURE_API_KEY }}
 
       - name: Run ng build
         run: npm run build
