@@ -2,10 +2,10 @@ name: CD for Backend
 
 on:
   pull_request:
-    branches:
-      - release-*
-    paths:
-      - 'backend/**'
+#    branches:
+#      - release-*
+#    paths:
+#      - 'backend/**'
 
 jobs:
   cd:
