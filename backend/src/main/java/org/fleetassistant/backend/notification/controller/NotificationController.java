@@ -22,7 +22,7 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @PostMapping
-    public ResponseEntity<Void> sendNotification(NotificationRequest notificationRequest) {
+    public ResponseEntity<Void> sendNotification(@RequestBody NotificationRequest notificationRequest) {
         try {
             sqsProducer.send(notificationRequest);
             return ResponseEntity.ok().build();
