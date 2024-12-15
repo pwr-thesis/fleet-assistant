@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -70,35 +71,42 @@ class NotificationServiceTest {
 
     @Test
     void getUserNotifications_success() {
-        // Given
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<org.fleetassistant.backend.notification.model.Notification> notificationEntities = new PageImpl<>(List.of(notificationEntity));
-        when(CredentialsService.getCredentials()).thenReturn(credentials);
-        when(notificationRepository.findAllByUserId(credentials.getId(), pageable)).thenReturn(notificationEntities);
-        when(entityToDtoMapper.notificationToNotificationDto(notificationEntity)).thenReturn(notificationDto);
+        try (MockedStatic<CredentialsService> mockedStatic = mockStatic(CredentialsService.class)) {
+            // Given
+            mockedStatic.when(CredentialsService::getCredentials).thenReturn(credentials);
+            Pageable pageable = PageRequest.of(0, 10);
+            Page<org.fleetassistant.backend.notification.model.Notification> notificationEntities = new PageImpl<>(List.of(notificationEntity));
 
-        // When
-        Page<Notification> notifications = notificationService.getUserNotifications(pageable);
+            when(notificationRepository.findAllByUserId(credentials.getId(), pageable)).thenReturn(notificationEntities);
+            when(entityToDtoMapper.notificationToNotificationDto(notificationEntity)).thenReturn(notificationDto);
 
-        // Then
-        assertNotNull(notifications);
-        assertEquals(1, notifications.getTotalElements());
-        assertEquals(notificationDto, notifications.getContent().getFirst());
-        verify(notificationRepository).findAllByUserId(credentials.getId(), pageable);
+            // When
+            Page<Notification> notifications = notificationService.getUserNotifications(pageable);
+
+            // Then
+            assertNotNull(notifications);
+            assertEquals(1, notifications.getTotalElements());
+            assertEquals(notificationDto, notifications.getContent().getFirst());
+            verify(notificationRepository).findAllByUserId(credentials.getId(), pageable);
+        }
     }
 
     @Test
     void getUserNotifications_noCredentials_throwsException() {
-        // Given
-        Pageable pageable = PageRequest.of(0, 10);
-        when(CredentialsService.getCredentials()).thenReturn(null);
+        try (MockedStatic<CredentialsService> mockedStatic = mockStatic(CredentialsService.class)) {
+            // Given
+            mockedStatic.when(CredentialsService::getCredentials).thenReturn(null);
+            Pageable pageable = PageRequest.of(0, 10);
 
-        // When
-        WrongAuthenticationInstanceException exception = assertThrows(WrongAuthenticationInstanceException.class,
-                () -> notificationService.getUserNotifications(pageable));
+            // When
+            WrongAuthenticationInstanceException exception = assertThrows(
+                    WrongAuthenticationInstanceException.class,
+                    () -> notificationService.getUserNotifications(pageable)
+            );
 
-        // Then
-        assertEquals("Invalid credentials", exception.getMessage());
-        verifyNoInteractions(notificationRepository);
+            // Then
+            assertEquals("Invalid credentials", exception.getMessage());
+            verifyNoInteractions(notificationRepository);
+        }
     }
 }
