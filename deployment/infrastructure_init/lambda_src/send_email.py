@@ -60,7 +60,7 @@ def send_email(sender_email, recipient_email, subject, body):
         response = ses.send_email(
             Source=sender_email,
             Destination={
-                'ToAddresses': ["267193@student.pwr.edu.pl"]
+                'ToAddresses': [recipient_email]
             },
             Message={
                 'Subject': {
