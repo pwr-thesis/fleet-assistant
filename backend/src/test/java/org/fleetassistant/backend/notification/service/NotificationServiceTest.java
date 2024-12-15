@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import java.util.List;
 
@@ -37,6 +39,16 @@ class NotificationServiceTest {
     private Credentials credentials;
     private Notification notificationDto;
     private org.fleetassistant.backend.notification.model.Notification notificationEntity;
+
+    @BeforeEach
+    void setUpSecurityContext() {
+        var credentials = new Credentials();
+        credentials.setId(1L); // Example credentials
+
+        var authentication = new UsernamePasswordAuthenticationToken(credentials, null);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
 
     @BeforeEach
     void setUp() {
@@ -71,7 +83,7 @@ class NotificationServiceTest {
         // Then
         assertNotNull(notifications);
         assertEquals(1, notifications.getTotalElements());
-        assertEquals(notificationDto, notifications.getContent().get(0));
+        assertEquals(notificationDto, notifications.getContent().getFirst());
         verify(notificationRepository).findAllByUserId(credentials.getId(), pageable);
     }
 
