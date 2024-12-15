@@ -19,6 +19,7 @@ def lambda_handler(event, context):
         database=database,
         user=user,
         password=password
+        port='5432'
     )
 
     logger.info(event)

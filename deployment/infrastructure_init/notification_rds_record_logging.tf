@@ -7,9 +7,13 @@ data "archive_file" "rds_logging_lambda_source_code" {
 resource "aws_lambda_function" "notification_rds_logging_lambda" {
   function_name = "notification-rds-record-logging"
   role          = aws_iam_role.notification_rds_logging_lambda_role.arn
-  handler       = "send_email.lambda_handler"
+  handler       = "notification_logging.lambda_handler"
   runtime       = "python3.9"
   timeout       = 10
+
+  layers = [
+    "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-p39-psycopg2-binary:1"
+  ]
 
   environment {
     variables = {
@@ -29,7 +33,7 @@ resource "aws_lambda_function" "notification_rds_logging_lambda" {
 }
 
 resource "aws_iam_role" "notification_rds_logging_lambda_role" {
-  name = "notification-rds-logging-lambda-sqs-role"
+  name = "notification-rds-logging-lambda-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
