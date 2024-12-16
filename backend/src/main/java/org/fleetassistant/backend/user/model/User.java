@@ -6,6 +6,9 @@ import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
+import org.fleetassistant.backend.notification.model.Notification;
+
+import java.util.List;
 
 @Entity
 @Table(name = "fauser")
@@ -28,6 +31,8 @@ public abstract class User {
     private String phone;
     @OneToOne
     private Credentials credentials;
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
 
     @Override
     public boolean equals(Object o) {

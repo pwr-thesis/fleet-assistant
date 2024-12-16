@@ -6,7 +6,7 @@ from botocore.exceptions import ClientError
 
 ses = boto3.client('ses')
 
-subject = "Fleet Assistant notification!"
+subject = "Fleet Assistant notificationRequest!"
 sender_email = os.environ.get('EMAIL_ID')
 
 

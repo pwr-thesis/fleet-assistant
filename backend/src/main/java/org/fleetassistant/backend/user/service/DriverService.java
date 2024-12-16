@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.CredentialsService;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.auth.credentials.model.Role;
-import org.fleetassistant.backend.dto.Notification;
+import org.fleetassistant.backend.dto.NotificationRequest;
 import org.fleetassistant.backend.dto.DriverSearchRequest;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.jwt.service.TokenGenerator;
@@ -59,11 +59,11 @@ public class DriverService {
 
         String verificationLink = verificationServer + "?token=" + token;
         String message = "Please click the link to verify your account: " + verificationLink;
-        Notification notification = Notification.builder()
+        NotificationRequest notificationRequest = NotificationRequest.builder()
                 .email(credentials.getEmail())
                 .message(message)
                 .build();
-        sqsProducer.send(notification);
+        sqsProducer.send(notificationRequest);
 
         return token;
     }
