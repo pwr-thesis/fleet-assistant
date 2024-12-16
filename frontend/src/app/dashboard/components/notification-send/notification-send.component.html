@@ -1,0 +1,85 @@
+<div class="send-notification">
+    <div [ngClass]="{ hidden: !isNotificationSendBlockOpen }" class="send-notification-container">
+        <div class="send-notification-header ">
+            {{isDriver() ? 'Send Notification to Your Manager': 'Send Notification'}}
+            <mat-icon class="text-white close-btn" (click)="toggleNotificationForm()">close</mat-icon>
+        </div>
+        <form
+          class="flex flex-col justify-center align-middle mb-8"
+          [formGroup]="notificationForm"
+          (ngSubmit)="sendNotification()"
+          >
+          <mat-form-field *ngIf="drivers.length > 0 && !isDriver()">
+            <mat-label>To:</mat-label>
+            <input
+                #driverInput
+                type="text"
+                matInput
+                formControlName="email"
+                [matAutocomplete]="auto"
+                (input)="filter()"
+                (focus)="filter()"
+            />
+            <mat-autocomplete
+                #auto="matAutocomplete"
+                requireSelection
+                [displayWith]="displayFn"
+            >
+                <mat-option *ngFor="let driver of filteredDrivers" [value]="driver">
+                    {{ getDriverText(driver) }}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="notificationForm.get('email')?.getError('required')">
+                Please provide email!
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="send-notification-title">
+            <mat-label>Title</mat-label>
+            <input
+                #inputText
+                type="text"
+                matInput
+                formControlName="title"
+            />
+            <mat-error *ngIf="notificationForm.get('title')?.getError('required')">
+              Please provide title!
+            </mat-error>
+            <mat-error *ngIf="notificationForm.get('title')?.getError('maxlength')">
+              Title must be less then 50 symbols!
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="height: 25vh">
+            <mat-label>Provide your text here</mat-label>
+            <textarea
+                #inputText
+                matInput
+                formControlName="message"
+                rows="4"
+                style="resize: none;"
+            ></textarea>
+            <mat-error *ngIf="notificationForm.get('message')?.getError('required')">
+              Please provide message!
+            </mat-error>
+            <mat-error *ngIf="notificationForm.get('message')?.getError('maxlength')">
+              Message must be less then 255 symbols!
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-flat-button 
+                  class="accent send-btn" 
+                  type="submit" 
+                  [disabled]="isNotificationButtonDisabled" >
+            Send
+          </button>
+
+        </form>
+    </div>
+  </div>
+
+  <mat-icon
+    class="text-white chat-button"
+    (click)="toggleNotificationForm()"
+    *ngIf="!isNotificationSendBlockOpen"
+  >mms</mat-icon>

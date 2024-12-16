@@ -1,0 +1,104 @@
+$border-radius: 20px;
+$basic_color: #002A50;
+$border-color: #ddd;
+$button-text-color: white;
+$button-bg-color: #005cbb;
+
+
+.send-notification {
+    position: fixed;
+    top: auto;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000;
+    
+    .send-notification-container {
+        height: 500px;
+        width: 400px;
+        border-radius: $border-radius;
+        background-color: $border-color;
+        position: relative;
+        
+        
+        .send-notification-header {
+            background-color: $basic_color;
+            border-radius: $border-radius $border-radius 0 0;
+            border: 1px $border-color;
+            height: 40px;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            font-weight: 500;
+            line-height: 40px;
+  
+            .close-btn {
+                position: absolute;
+                z-index: 1;
+                cursor: pointer;
+                right: 8px;
+                top: 8px;
+            }
+        }
+  
+        .send-btn {
+            color: $button-text-color;
+            border-radius: $border-radius;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: $basic_color;
+            border-radius: 50vh;
+            padding: 15px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+  
+        mat-form-field {
+          width: calc(100% - 20px);
+          margin: 0 10px;
+        }
+  
+        .full-height mat-form-field {
+            flex-grow: 1;
+        }
+    }
+  }
+  
+  .chat-button {
+    height: 65px;
+    width: 65px;
+    background-color: $basic_color;
+    border-radius: 50%;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    cursor: pointer;
+}
+
+  
+
+
+@media (max-width: 767px) {
+    .send-notification {
+        bottom: 70px;
+    }
+
+    .chat-button{
+        bottom: 70px;
+    }
+}
+
+@media (max-width: 425px) {
+    .send-notification {
+        left: 0;
+        right: 0;
+        .send-notification-container {
+            width: 100%;
+        }
+    }
+}
