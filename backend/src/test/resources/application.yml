@@ -8,5 +8,13 @@ spring:
         jwt:
           issuer-uri: https://accounts.google.com
           jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+  verification:
+        server: test-verification-server
+  cloud:
+    aws:
+      region:
+        static: test-region
+      sqs:
+        endpoint: test-endpoint
   jwt:
     secret: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMGBoG93o/faIHuvPr0eryGKSX3FsQUkdeWJo62tTU8xD8hFqDlj7iMrZFz/I7e01bpqx8sGr4sVM8gmoIUj1zUCAwEAAQ==

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.fleetassistant.backend.auth.credentials.CredentialsService;
 import org.fleetassistant.backend.auth.credentials.model.Credentials;
 import org.fleetassistant.backend.auth.credentials.model.Role;
+import org.fleetassistant.backend.dto.VehicleSearchRequest;
 import org.fleetassistant.backend.exceptionhandler.rest.NoSuchObjectException;
 import org.fleetassistant.backend.exceptionhandler.rest.ObjectAlreadyExistsException;
 import org.fleetassistant.backend.location.LocationService;
@@ -40,15 +41,15 @@ public class VehicleService {
     @Transactional
     public org.fleetassistant.backend.dto.Vehicle create(org.fleetassistant.backend.dto.Vehicle vehicleDTO) {
         Vehicle vehicle = entityToDtoMapper.vehicleDtoToVehicle(vehicleDTO);
-        if (isVehicleExists(vehicle))
+        if (isVehicleExist(vehicle))
             throw new ObjectAlreadyExistsException(String.format(CAR_WITH_VIN_ALREADY_EXISTS, vehicle.getVin()));
 
         Credentials credentials = CredentialsService.getCredentials();
         Manager manager = managerService.getManagerByEmail(credentials.getEmail());
         vehicle.setManager(manager);
 
-        if (vehicleDTO.driverId() != null) {
-            var driver = driverService.getDriverById(vehicleDTO.driverId());
+        if (vehicleDTO.driver() != null) {
+            var driver = driverService.getDriverById(vehicleDTO.driver().id());
             vehicle.setDriver(driver);
         }
 
@@ -56,13 +57,23 @@ public class VehicleService {
         return entityToDtoMapper.vehicleToVehicleDto(vehicleRepository.save(vehicle));
     }
 
-    public Page<org.fleetassistant.backend.dto.Vehicle> readAll(Pageable pageable) {
+    public Page<org.fleetassistant.backend.dto.Vehicle> readAll(Pageable pageable, VehicleSearchRequest vehicleSearchRequest) {
         Credentials credentials = CredentialsService.getCredentials();
         Long id = userService.getUserIdByEmail(credentials.getEmail());
         if (credentials.getRole().equals(Role.MANAGER)) {
-            return vehicleRepository.findAllByManagerId(id, pageable).map(entityToDtoMapper::vehicleToVehicleDto);
+            return vehicleRepository.findAllByManagerId(id,
+                        vehicleSearchRequest.name(),
+                        vehicleSearchRequest.countryCode(),
+                        vehicleSearchRequest.driverId(),
+                        vehicleSearchRequest.isDriverAssigned(),
+                        pageable
+                    ).map(entityToDtoMapper::vehicleToVehicleDto);
         } else {
-            return vehicleRepository.findAllByDriverId(id, pageable).map(entityToDtoMapper::vehicleToVehicleDto);
+            return vehicleRepository.findAllByDriverId(id,
+                        vehicleSearchRequest.name(),
+                        vehicleSearchRequest.countryCode(),
+                        pageable
+                    ).map(entityToDtoMapper::vehicleToVehicleDto);
         }
     }
 
@@ -71,7 +82,7 @@ public class VehicleService {
         return entityToDtoMapper.vehicleToVehicleDto(readVehicleById(id));
     }
 
-    public boolean isVehicleExists(Vehicle car) {
+    public boolean isVehicleExist(Vehicle car) {
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withIgnorePaths("id")
                 .withIgnorePaths("driver")

@@ -1,16 +1,62 @@
 <div class="min-h-screen p-10">
-    <div *ngIf="drivers.length > 0">
-        <h3 class="text-center">Your drivers:</h3>
+    <div *ngIf="drivers">
+        <h3 class="text-center">Your drivers</h3>
+        <form
+            class="flex flex-col justify-center align-middle mb-8"
+            [formGroup]="driverSearchForm"
+            (ngSubmit)="onSearch()"
+        >
+            <div class="w-full flex flex-wrap justify-center gap-x-10">
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" formControlName="name" />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Surname</mat-label>
+                    <input matInput type="text" formControlName="surname" />
+                </mat-form-field>
+                <mat-form-field class="">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email" />
+                </mat-form-field>
+            </div>
+            <div class="flex w-full justify-center gap-5">
+                <button mat-raised-button type="button" (click)="onReset()">
+                    Reset
+                </button>
+                <button mat-flat-button class="accent" type="submit">
+                    Search
+                </button>
+            </div>
+        </form>
         <div class="flex flex-wrap gap-10 justify-center">
-            <app-add-card routerLink="/create-driver" />
             <app-driver-card *ngFor="let driver of drivers" [driver]="driver" />
         </div>
-    </div>
-    <div
-        *ngIf="drivers.length === 0"
-        class="text-center flex flex-col items-center gap-5"
-    >
-        <h3>You don't have any driver in your fleet!</h3>
-        <app-add-card routerLink="/create-driver" />
+        <p *ngIf="drivers.length === 0" class="text-center">
+            Drivers not found.
+        </p>
+        <mat-paginator
+            class="flex mt-5"
+            aria-label="Select page"
+            (page)="handlePageEvent($event)"
+            [length]="totalElements"
+            [pageSize]="pageSize"
+            [showFirstLastButtons]="true"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="pageIndex"
+        >
+        </mat-paginator>
+        <button
+            routerLink="/create-driver"
+            class="fixed right-5 bottom-20 sm:right-5 sm:bottom-5 sm:left-auto left-5 w-12 h-12 sm:w-16 sm:h-16 bg-[#002a50] rounded-full shadow-lg flex items-center justify-center hover:bg-[#3498db] focus:outline-none transition duration-200"
+            aria-label="Add new vehicle"
+        >
+            <svg viewBox="0 0 20 20" class="w-4 h-4 sm:w-6 sm:h-6 text-white">
+                <path
+                    d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601 C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399 C15.952,9,16,9.447,16,10z"
+                    fill="currentColor"
+                />
+            </svg>
+        </button>
     </div>
 </div>

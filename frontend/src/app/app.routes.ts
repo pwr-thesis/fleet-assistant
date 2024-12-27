@@ -16,6 +16,7 @@ import { AllLocationsComponent } from './locations/components/all-locations/all-
 import { managerRoleGuard } from '../utilities/guards/manager-role.guard';
 import { DriversAllComponent } from './drivers/components/drivers-all/drivers-all.component';
 import { DriverCreateComponent } from './drivers/components/driver-create/driver-create.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
     { path: 'management-info', component: WelcomeManagementComponent },
@@ -67,6 +68,7 @@ export const routes: Routes = [
         component: DriverCreateComponent,
         canActivate: [authGuard, managerRoleGuard],
     },
+    { path: 'dashboard', component: DashboardComponent },
     { path: '', component: WelcomePageComponent },
     { path: '**', redirectTo: '' },
 ];

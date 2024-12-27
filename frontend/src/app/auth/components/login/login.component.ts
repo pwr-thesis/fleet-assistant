@@ -14,6 +14,7 @@ import { SignComponent } from '../sign/sign.component';
 import { SnackbarService } from '../../../../utilities/services/snackbar.service';
 import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
 import { AuthService } from '../../service/auth.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-login',
@@ -36,7 +37,8 @@ export class LoginComponent {
 
     constructor(
         private authService: AuthService,
-        public snackbarService: SnackbarService
+        public snackbarService: SnackbarService,
+        private titleService: Title
     ) {
         this.loginForm = new FormGroup({
             email: new FormControl('', [Validators.required, Validators.email]),
@@ -45,6 +47,9 @@ export class LoginComponent {
         });
     }
 
+    ngOnInit(): void {
+        this.titleService.setTitle('FA - Login');
+    }
     onSubmit(): void {
         if (this.loginForm.valid) {
             const formValues = this.loginForm.value;

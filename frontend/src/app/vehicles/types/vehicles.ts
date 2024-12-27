@@ -33,5 +33,12 @@ export interface VehicleCreateRequest {
     insuranceDate: string;
     lastInspectionDate: string;
     productionDate: string;
-    driver?: Driver;
+    driver?: { id: number };
+}
+
+export interface VehicleSearch {
+    name?: string;
+    countryCode?: string;
+    driverId: number | null;
+    isDriverAssigned: boolean | undefined;
 }

@@ -1,0 +1,43 @@
+<div *ngIf="isLoggedIn()" class="chat">
+    <div [ngClass]="{ hidden: !isChatboxOpen }" class="chat-container">
+        <div class="chat-header">
+            AI BOT to answer your questions
+            <mat-icon class="text-white close-btn" (click)="toggleChatbox()"
+                >close</mat-icon
+            >
+            <mat-icon class="text-white clear-btn" (click)="clearChatHistory()"
+                >cached</mat-icon
+            >
+        </div>
+        <div class="messages" id="style3">
+            <p
+                *ngFor="let message of messages; let i = index"
+                [ngClass]="{
+                    'bot-message': message.startsWith('Bot:'),
+                    'user-message': message.startsWith('You:'),
+                }"
+            >
+                {{ message }}
+            </p>
+        </div>
+        <div class="input-area">
+            <input
+                [(ngModel)]="newMessage"
+                placeholder="Type your message here..."
+            />
+            <button
+                (click)="sendMessage()"
+                [disabled]="isButtonDisabled"
+                [ngClass]="{ 'disabled-button': isButtonDisabled }"
+            >
+                Send
+            </button>
+        </div>
+    </div>
+    <mat-icon
+        class="text-white chat-button"
+        (click)="toggleChatbox()"
+        *ngIf="!isChatboxOpen"
+        >support_agent</mat-icon
+    >
+</div>

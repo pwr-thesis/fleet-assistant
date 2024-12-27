@@ -52,20 +52,20 @@ public class DefaultExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
+    @ExceptionHandler({BadCredentialsException.class,AuthException.class})
     public ResponseEntity<Problem> handleBadCredentials() {
         Problem problem = buildProblem(Status.UNAUTHORIZED, AUTHENTICATION_EXCEPTION, WRONG_EMAIL_OR_PASSWORD);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(problem);
     }
 
-    @ExceptionHandler({CacheException.class, IncorrectTokenTypeException.class})
+    @ExceptionHandler({CacheException.class, IncorrectTokenTypeException.class, NotificationSendException.class})
     public ResponseEntity<Problem> handleCacheError() {
         Problem problem = buildProblem(Status.SERVICE_UNAVAILABLE, Status.SERVICE_UNAVAILABLE.toString(),
                 "Service unavailable");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(problem);
     }
 
-    @ExceptionHandler({InvalidTokenException.class, TokenRequiredException.class})
+    @ExceptionHandler({InvalidTokenException.class, TokenRequiredException.class, AccountIsActiveException.class})
     public ResponseEntity<Problem> handleTokenExceptions(RuntimeException ex) {
         Problem problem = buildProblem(Status.BAD_REQUEST, TOKEN_ERROR, ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);

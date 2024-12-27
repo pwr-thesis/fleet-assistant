@@ -11,6 +11,8 @@ spring:
     username: ${SQL_USERNAME:admin}
     url: ${SQL_URI:jdbc:postgresql://localhost:5432/fleet_assistant}
     password: ${SQL_PASSWORD:admin}
+    hikari:
+      connection-timeout: 1000
   jpa:
     hibernate:
       ddl-auto: none
@@ -30,6 +32,14 @@ spring:
           jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
   jwt:
     secret:   ${JWT_SECRET:MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMGBoG93o/faIHuvPr0eryGKSX3FsQUkdeWJo62tTU8xD8hFqDlj7iMrZFz/I7e01bpqx8sGr4sVM8gmoIUj1zUCAwEAAQ==}
+  verification:
+    server: ${VERIFICATION_SERVER:http://localhost:8080/auth/activation}
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:eu-west-1}
+      sqs:
+        endpoint: ${AWS_SQS_ENDPOINT}
 logging:
   level:
     org.springframework.security: DEBUG

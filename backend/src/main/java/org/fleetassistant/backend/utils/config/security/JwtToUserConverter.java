@@ -29,7 +29,7 @@ public class JwtToUserConverter implements Converter<Jwt, UsernamePasswordAuthen
         String email = jwt.getClaim("email");
         Credentials credentials = credentialsService.loadUserByUsername(email);
         if (credentials == null) {
-            credentials = credentialsService.create(email, Role.MANAGER);
+            credentials = credentialsService.create(email, Role.MANAGER, true);
             User user = managerService.createManager(jwt);
             user.setCredentials(credentials);
         }

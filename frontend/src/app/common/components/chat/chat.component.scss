@@ -1,0 +1,168 @@
+$border-color: #ddd;
+$button-bg-color: #005cbb;
+$button-text-color: white;
+$border-radius: 20px;
+@import 'variables';
+
+.chat {
+    position: fixed;
+    top: auto;
+    bottom: 10px;
+    z-index: 1000;
+    right: 10px;
+
+    .chat-container {
+        height: 400px;
+        width: 400px;
+        border-radius: $border-radius;
+        background-color: $border-color;
+        position: relative;
+        bottom: 10px;
+
+        .chat-header {
+            background-color: $basic_color;
+            border-radius: $border-radius $border-radius 0 0;
+            border: 1px $border-color;
+            height: 40px;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            font-weight: 500;
+            line-height: 40px;
+
+            .close-btn {
+                position: absolute;
+                z-index: 1;
+                cursor: pointer;
+                right: 8px;
+                top: 8px;
+            }
+
+            .clear-btn {
+                position: absolute;
+                z-index: 1;
+                cursor: pointer;
+                right: 34px;
+                top: 8px;
+            }
+        }
+
+        .messages {
+            height: calc(100% - 100px);
+            overflow-y: auto;
+            margin-bottom: 10px;
+            flex-direction: column-reverse;
+            scrollbar-color: #000000 #f5f5f5;
+            scrollbar-width: thin;
+
+            #style-3::-webkit-scrollbar-track {
+                background-color: #ddd;
+                border-radius: 4px;
+            }
+
+            #style-3::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+
+            #style-3::-webkit-scrollbar-thumb {
+                background-color: #000000;
+            }
+
+            #style-3::-webkit-scrollbar-button {
+                display: none;
+            }
+
+            p {
+                width: 80%;
+                font-family: Roboto, sans-serif;
+                font-size: 14px;
+                margin-top: 10px;
+                padding: 7px 10px;
+                border-radius: 14px;
+                line-height: 16px;
+                color: white;
+
+                &.bot-message {
+                    font-style: italic;
+                    background-color: #005cbb;
+                    margin: 5px auto 0 10px;
+                }
+
+                &.user-message {
+                    background-color: $basic_color;
+                    margin: 5px 10px 0 auto;
+                }
+            }
+        }
+
+        .input-area {
+            width: calc(100%);
+            display: flex;
+            gap: 15px;
+            position: absolute;
+            bottom: 3%;
+            margin: 0 auto;
+            padding: 0 10px;
+
+            input {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid $border-color;
+                border-radius: $border-radius;
+            }
+
+            button {
+                padding: 8px 20px;
+                background-color: $basic_color;
+                color: $button-text-color;
+                border: none;
+                border-radius: 50vh;
+                cursor: pointer;
+            }
+
+            .disabled-button {
+                background-color: #d3d3d3;
+                color: #a9a9a9;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .chat-button {
+        height: 65px;
+        width: 65px;
+        background-color: $basic_color;
+        border-radius: 50%;
+        color: white;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 768px) {
+    .chat {
+        .chat-container {
+            bottom: 70px;
+        }
+        .chat-button {
+            bottom: 70px;
+        }
+    }
+}
+
+@media (max-width: 425px) {
+    .chat {
+        left: 0;
+        right: 0;
+        .chat-container {
+            width: 100%;
+        }
+    }
+}

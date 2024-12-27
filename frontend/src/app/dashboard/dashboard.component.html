@@ -1,0 +1,27 @@
+<app-notification-send />
+<div class="min-h-screen p-10">
+  <div class="flex items-center justify-center">
+    <h3>Notifications</h3>
+  </div>
+
+  <div *ngIf="notifications.length === 0">
+    You don't have notifications.
+  </div>
+
+  <div *ngFor="let notification of notifications; let i = index" class="notification">
+    <div class="content">
+      <h6 class="notification-header">
+        {{ notification.title }}
+        <span class="date">{{ notification.createdOn | date: 'longDate' }}</span>
+      </h6>
+      
+      <p class="message-text" #messageText [ngClass]="{'expanded': notification.expanded}">
+        {{ notification.message }}
+      </p>
+
+      <button *ngIf="notification.showMore" class="toggle-btn" (click)="toggleMessage(i)">
+        {{ notification.expanded ? 'Show Less' : 'Show More' }}
+      </button>
+    </div>
+  </div>
+</div>

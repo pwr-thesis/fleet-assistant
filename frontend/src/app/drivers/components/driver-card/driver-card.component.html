@@ -10,10 +10,7 @@
         </mat-card-title>
         <mat-card-subtitle>
             <app-card-field [fieldValue]="driver.email" fieldName="E-mail" />
-            <span
-                class="font-bold text-red-700"
-                *ngIf="!driver.isEnabled"
-            >
+            <span class="font-bold text-red-700" *ngIf="!driver.isEnabled">
                 In registration process
             </span>
         </mat-card-subtitle>
@@ -25,7 +22,7 @@
             fieldName="License number"
         />
         <app-card-field
-            [fieldValue]="driver.drivingLicenseCountryCode"
+            [fieldValue]="driver.driverLicenseCountryCode"
             fieldName="License country code"
         />
         <app-card-field

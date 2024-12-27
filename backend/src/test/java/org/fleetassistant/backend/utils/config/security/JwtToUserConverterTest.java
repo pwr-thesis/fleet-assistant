@@ -65,7 +65,7 @@ class JwtToUserConverterTest {
     void convert_newUser_success() {
         // Given
         when(credentialsService.loadUserByUsername("manager@example.com")).thenReturn(null);
-        when(credentialsService.create("manager@example.com", Role.MANAGER)).thenReturn(credentials);
+        when(credentialsService.create("manager@example.com", Role.MANAGER,true)).thenReturn(credentials);
         Manager manager = Manager.builder().name("John").surname("Doe").build();
         when(managerService.createManager(jwt)).thenReturn(manager);
         // When
@@ -77,7 +77,7 @@ class JwtToUserConverterTest {
         assertEquals(1, authToken.getAuthorities().size());
         assertTrue(authToken.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(auth -> auth.equals("MANAGER")));
         verify(credentialsService).loadUserByUsername("manager@example.com");
-        verify(credentialsService).create("manager@example.com", Role.MANAGER);
+        verify(credentialsService).create("manager@example.com", Role.MANAGER, true);
         verify(managerService).createManager(jwt);
     }
 }

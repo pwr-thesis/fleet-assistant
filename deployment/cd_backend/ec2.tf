@@ -3,9 +3,9 @@ resource "aws_instance" "ec2_backend" {
   instance_type = "t2.micro"
 
   vpc_security_group_ids = [var.rds_connection_sg_id]
-  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
+  iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
 
-  depends_on = [ aws_s3_object.backend_source_code ]
+  depends_on = [aws_s3_object.backend_source_code]
 
   lifecycle {
     create_before_destroy = true
@@ -16,6 +16,8 @@ resource "aws_instance" "ec2_backend" {
     export SQL_USERNAME="${var.rds_instance_username}"
     export SQL_PASSWORD="${var.rds_instance_password}"
     export SQL_URI="${var.rds_instance_endpoint}"
+    export AWS_SQS_ENDPOINT="${var.sqs_endpoint}"
+    export AWS_REGION="${var.aws_region}"
 
     sudo yum install -y unzip aws-cli java-21
 

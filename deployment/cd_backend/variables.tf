@@ -19,5 +19,13 @@ variable "rds_instance_password" {
 }
 
 variable "rds_instance_endpoint" {
- type = string 
+  type = string
+}
+
+variable "sqs_endpoint" {
+  type = string
+}
+
+variable "aws_region" {
+  type = string
 }

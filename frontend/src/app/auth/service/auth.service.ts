@@ -66,6 +66,7 @@ export class AuthService {
 
         localStorage.removeItem('userInfo');
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('chatHistory');
     }
 
     loginViaGoogle(): void {

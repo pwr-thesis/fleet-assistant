@@ -11,6 +11,9 @@
             <mat-form-field class="w-full">
                 <mat-label>Name</mat-label>
                 <input matInput type="text" required formControlName="name" />
+                <mat-error>
+                    Name length must be between 3 and 50 characters
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
                 <mat-label>Surname</mat-label>
@@ -20,6 +23,9 @@
                     required
                     formControlName="surname"
                 />
+                <mat-error>
+                    Surname length must be between 3 and 50 characters
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
                 <mat-label>Email</mat-label>
@@ -27,7 +33,7 @@
                 <mat-error
                     *ngIf="createDriverForm.get('email')?.hasError('email')"
                 >
-                    Please enter a valid email address
+                    Please enter a valid email address (max 50 chars)
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
@@ -58,6 +64,9 @@
                     required
                     formControlName="driverLicenseCountryCode"
                 />
+                <mat-error>
+                    Country code must be between 1 and 3 characters
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full">
                 <mat-label>Driver license number</mat-label>
@@ -67,6 +76,9 @@
                     required
                     formControlName="driverLicenseNumber"
                 />
+                <mat-error>
+                    License length must be between 2 and 20 characters
+                </mat-error>
             </mat-form-field>
             <div class="flex w-full justify-center gap-5">
                 <button

@@ -1,4 +1,10 @@
-import { Component, DestroyRef } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    ElementRef,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import {
     FormControl,
     FormGroup,
@@ -23,11 +29,12 @@ import {
     DateAdapter,
     MAT_DATE_FORMATS,
     MAT_DATE_LOCALE,
+    MatOption,
 } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { SnackbarService } from '../../../../utilities/services/snackbar.service';
 import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import {
     CUSTOM_DATEFORMAT,
     futureDateValidator,
@@ -38,6 +45,11 @@ import { VehiclesService } from '../../service/vehicles.service';
 import moment from 'moment/moment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Driver } from '../../../drivers/types/drivers';
+import { DriversService } from '../../../drivers/service/drivers.service';
+import {
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 
 @Component({
     selector: 'app-vehicle-create',
@@ -55,6 +67,10 @@ import { Driver } from '../../../drivers/types/drivers';
         MatError,
         RouterLink,
         ReactiveFormsModule,
+        MatAutocomplete,
+        MatAutocompleteTrigger,
+        AsyncPipe,
+        MatOption,
     ],
     providers: [
         {
@@ -67,25 +83,39 @@ import { Driver } from '../../../drivers/types/drivers';
     templateUrl: './vehicle-create.component.html',
     styleUrl: './vehicle-create.component.scss',
 })
-export class VehicleCreateComponent {
+export class VehicleCreateComponent implements OnInit {
+    @ViewChild('driverInput') driverInput!: ElementRef<HTMLInputElement>;
+
     createVehicleForm!: FormGroup;
     drivers: Driver[] = [];
+    filteredDrivers!: Driver[];
 
     constructor(
         private router: Router,
         private snackBarService: SnackbarService,
         private vehicleService: VehiclesService,
-        private destroyRef: DestroyRef
+        private destroyRef: DestroyRef,
+        private driverService: DriversService
     ) {
         this.createVehicleForm = new FormGroup({
-            name: new FormControl('', Validators.required),
+            name: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(255),
+                Validators.minLength(3)
+            ]),
             vin: new FormControl('', [
                 Validators.required,
                 Validators.maxLength(17),
                 Validators.minLength(17),
             ]),
-            plateNumber: new FormControl('', Validators.required),
-            countryCode: new FormControl('', Validators.required),
+            plateNumber: new FormControl('', [
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(15)]),
+            countryCode: new FormControl('', [
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(3)]),
             productionDate: new FormControl('', [
                 Validators.required,
                 pastDateValidator(),
@@ -102,6 +132,17 @@ export class VehicleCreateComponent {
         });
     }
 
+    ngOnInit(): void {
+        this.driverService
+            .getRegisteredDrivers()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((response) => {
+                this.drivers = response;
+            });
+
+        this.filteredDrivers = this.drivers.slice();
+    }
+
     onCreateVehicle(): void {
         if (this.createVehicleForm.valid) {
             const vehicleFormValue = this.createVehicleForm.value;
@@ -116,9 +157,12 @@ export class VehicleCreateComponent {
                 lastInspectionDate: moment(
                     vehicleFormValue.lastVehicleInspectionDate
                 ).format('YYYY-MM-DD'),
-                productionDate: moment(vehicleFormValue.vehicleYear).format(
+                productionDate: moment(vehicleFormValue.productionDate).format(
                     'YYYY-MM-DD'
                 ),
+                driver: vehicleFormValue.driver
+                    ? { id: vehicleFormValue.driver.id }
+                    : undefined,
             };
 
             this.vehicleService
@@ -137,7 +181,20 @@ export class VehicleCreateComponent {
         }
     }
 
-    getDriverText(): string {
-        return '';
+    getDriverText(driver: Driver): string {
+        return driver.name + ' ' + driver.surname + ', ' + driver.email;
+    }
+
+    displayFn(driver: Driver): string {
+        return driver
+            ? driver.name + ' ' + driver.surname + ', ' + driver.email
+            : '';
+    }
+
+    filter(): void {
+        const filterValue = this.driverInput.nativeElement.value.toLowerCase();
+        this.filteredDrivers = this.drivers.filter((driver) =>
+            this.getDriverText(driver).toLowerCase().includes(filterValue)
+        );
     }
 }

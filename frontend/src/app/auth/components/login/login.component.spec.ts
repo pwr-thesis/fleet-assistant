@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterTestingModule } from '@angular/router/testing';
 import { INVALID_FORM_MESSAGE } from '../../../../utilities/_constants';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -19,8 +19,13 @@ describe('LoginComponent', () => {
     let snackbarService: jasmine.SpyObj<SnackbarService>;
 
     beforeEach(async () => {
-        const authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'loginViaGoogle']);
-        const snackbarServiceSpy = jasmine.createSpyObj('SnackbarService', ['openSnackBar']);
+        const authServiceSpy = jasmine.createSpyObj('AuthService', [
+            'login',
+            'loginViaGoogle',
+        ]);
+        const snackbarServiceSpy = jasmine.createSpyObj('SnackbarService', [
+            'openSnackBar',
+        ]);
 
         await TestBed.configureTestingModule({
             imports: [
@@ -31,17 +36,21 @@ describe('LoginComponent', () => {
                 MatCheckboxModule,
                 MatButtonModule,
                 RouterTestingModule,
-                BrowserAnimationsModule
+                BrowserAnimationsModule,
             ],
             declarations: [],
             providers: [
                 { provide: AuthService, useValue: authServiceSpy },
-                { provide: SnackbarService, useValue: snackbarServiceSpy }
-            ]
+                { provide: SnackbarService, useValue: snackbarServiceSpy },
+            ],
         }).compileComponents();
 
-        authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-        snackbarService = TestBed.inject(SnackbarService) as jasmine.SpyObj<SnackbarService>;
+        authService = TestBed.inject(
+            AuthService
+        ) as jasmine.SpyObj<AuthService>;
+        snackbarService = TestBed.inject(
+            SnackbarService
+        ) as jasmine.SpyObj<SnackbarService>;
 
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
@@ -75,7 +84,7 @@ describe('LoginComponent', () => {
         const formValues = {
             email: 'test@example.com',
             password: 'password123',
-            rememberMe: true
+            rememberMe: true,
         };
         component.loginForm.setValue(formValues);
 
@@ -83,7 +92,7 @@ describe('LoginComponent', () => {
 
         expect(authService.login).toHaveBeenCalledWith({
             email: formValues.email,
-            password: formValues.password
+            password: formValues.password,
         });
         expect(snackbarService.openSnackBar).not.toHaveBeenCalled();
     });
@@ -92,13 +101,15 @@ describe('LoginComponent', () => {
         component.loginForm.setValue({
             email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
         });
 
         component.onSubmit();
 
         expect(authService.login).not.toHaveBeenCalled();
-        expect(snackbarService.openSnackBar).toHaveBeenCalledWith(INVALID_FORM_MESSAGE);
+        expect(snackbarService.openSnackBar).toHaveBeenCalledWith(
+            INVALID_FORM_MESSAGE
+        );
     });
 
     it('should call authService.loginViaGoogle when onGoogleLogin is called', () => {
@@ -110,11 +121,13 @@ describe('LoginComponent', () => {
         component.loginForm.setValue({
             email: 'test@example.com',
             password: 'password123',
-            rememberMe: false
+            rememberMe: false,
         });
         fixture.detectChanges();
 
-        const submitButton = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
+        const submitButton = fixture.debugElement.query(
+            By.css('button[type="submit"]')
+        ).nativeElement;
         expect(submitButton.disabled).toBeFalsy();
     });
 });

@@ -13,3 +13,4 @@ environment.ts
 **terraform**
 **/.venv
 **/coverage
+**/lambda_src/**.zip
